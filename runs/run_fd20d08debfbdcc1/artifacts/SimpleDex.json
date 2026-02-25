@@ -1,0 +1,127 @@
+{
+  "contractName": "SimpleDex",
+  "sourceFile": "FlashloanContracts.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "stateMutability": "payable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "ethReserve",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "tokenReserve",
+          "type": "uint256"
+        }
+      ],
+      "name": "PriceUpdated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "ethIn",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "tokensOut",
+          "type": "uint256"
+        }
+      ],
+      "name": "Swapped",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "ethReserve",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getSpotPrice",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "ethIn",
+          "type": "uint256"
+        }
+      ],
+      "name": "getTokensOut",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "swapEthForTokens",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokensOut",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "tokenReserve",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x6080604052345f81905550683635c9adc5dea00000600181905550610467806100275f395ff3fe608060405260043610610049575f3560e01c8063281a320f1461004d578063b14e055e14610089578063cbcb3171146100a7578063d62ccb3f146100d1578063dc76fabc146100fb575b5f5ffd5b348015610058575f5ffd5b50610073600480360381019061006e9190610286565b610125565b60405161008091906102c0565b60405180910390f35b610091610152565b60405161009e91906102c0565b60405180910390f35b3480156100b2575f5ffd5b506100bb61021c565b6040516100c891906102c0565b60405180910390f35b3480156100dc575f5ffd5b506100e5610222565b6040516100f291906102c0565b60405180910390f35b348015610106575f5ffd5b5061010f610227565b60405161011c91906102c0565b60405180910390f35b5f815f546101339190610306565b600154836101419190610339565b61014b91906103a7565b9050919050565b5f61015c34610125565b9050345f5f82825461016e9190610306565b925050819055508060015f82825461018691906103d7565b925050819055503373ffffffffffffffffffffffffffffffffffffffff167f3a9a9f34f5831e9c8ecb66ab3aa308b2ff31eaca434615f6c9cadc656a9af71c34836040516101d592919061040a565b60405180910390a27f945c1c4e99aa89f648fbfe3df471b916f719e16d960fcec0737d4d56bd6968385f5460015460405161021192919061040a565b60405180910390a190565b60015481565b5f5481565b5f600154670de0b6b3a76400005f546102409190610339565b61024a91906103a7565b905090565b5f5ffd5b5f819050919050565b61026581610253565b811461026f575f5ffd5b50565b5f813590506102808161025c565b92915050565b5f6020828403121561029b5761029a61024f565b5b5f6102a884828501610272565b91505092915050565b6102ba81610253565b82525050565b5f6020820190506102d35f8301846102b1565b92915050565b7f4e487b71000000000000000000000000000000000000000000000000000000005f52601160045260245ffd5b5f61031082610253565b915061031b83610253565b9250828201905080821115610333576103326102d9565b5b92915050565b5f61034382610253565b915061034e83610253565b925082820261035c81610253565b91508282048414831517610373576103726102d9565b5b5092915050565b7f4e487b71000000000000000000000000000000000000000000000000000000005f52601260045260245ffd5b5f6103b182610253565b91506103bc83610253565b9250826103cc576103cb61037a565b5b828204905092915050565b5f6103e182610253565b91506103ec83610253565b9250828203905081811115610404576104036102d9565b5b92915050565b5f60408201905061041d5f8301856102b1565b61042a60208301846102b1565b939250505056fea2646970667358221220518422eff9bd67ebf51e5e9a63a3126fd86017a6909b0a004a12c90babeeee0664736f6c63430008210033"
+}

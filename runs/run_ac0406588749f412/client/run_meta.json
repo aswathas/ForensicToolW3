@@ -1,0 +1,90 @@
+{
+  "run_id": "ac0406588749f412",
+  "scenario": "market_manipulation",
+  "started_at": "2026-02-18T13:25:54.007Z",
+  "config": {
+    "anvil": {
+      "port": 8545,
+      "accounts": 60,
+      "balance": 100000
+    },
+    "simulation": {
+      "numAttackers": 5,
+      "numUsers": 2,
+      "numUserTxsPerRound": 1,
+      "attackRepeatCount": 1,
+      "mineBlocksBetween": 2
+    },
+    "attacks": {
+      "attack1_depositPerUser": "200",
+      "attack1_attackValue": "3",
+      "attack1_maxDepth": 3,
+      "attack2_depositPerUser": "200",
+      "attack2_attackValue": "3",
+      "attack2_prefund": "10",
+      "attack3_attackValue": "3",
+      "attack3_depositPerUser": "200",
+      "attack4_depositPerUser": "200",
+      "attack4_attackValue": "3",
+      "attack5_attackValue": "2",
+      "attack5_flashPoolFund": "500",
+      "attack5_victimFund": "200",
+      "attack5_dexFund": "100"
+    },
+    "output": {
+      "baseDir": "./runs"
+    },
+    "gas": {
+      "attackGasLimit": 2000000,
+      "deployGasLimit": 5000000
+    },
+    "enabledAttacks": {
+      "classic_reentrancy": true,
+      "cross_func_reentrancy": true,
+      "readonly_reentrancy": true,
+      "erc777_hook": true,
+      "flashloan_price_manip": true
+    }
+  },
+  "block_range": {
+    "from": 461,
+    "to": 500
+  },
+  "attacks": [
+    {
+      "attack": "flashloan_manipulation",
+      "status": "failed",
+      "error": "transaction execution reverted (action=\"sendTransaction\", data=null, reason=null, invocation=null, revert=null, transaction={ \"data\": \"\", \"from\": \"0x90F79bf6EB2c4f870365E785982E1f101E93b906\", \"to\": \"0x11c81c1A7979cdd309096D1ea53F887EA9f8D14d\" }, receipt={ \"_type\": \"TransactionReceipt\", \"blobGasPrice\": \"1\", \"blobGasUsed\": null, \"blockHash\": \"0x96c88276ce3969bb91b6094d1808651317040721319813dd7067f870e7018bd2\", \"blockNumber\": 476, \"contractAddress\": null, \"cumulativeGasUsed\": \"104030\", \"from\": \"0x90F79bf6EB2c4f870365E785982E1f101E93b906\", \"gasPrice\": \"7\", \"gasUsed\": \"104030\", \"hash\": \"0xcaf19e14a49c41823faac3dc42aaf8af22a66520f5ef4398fc3ca55f4cf65309\", \"index\": 0, \"logs\": [  ], \"logsBloom\": \"0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000\", \"root\": null, \"status\": 0, \"to\": \"0x11c81c1A7979cdd309096D1ea53F887EA9f8D14d\" }, code=CALL_EXCEPTION, version=6.16.0)"
+    },
+    {
+      "attack": "flashloan_manipulation",
+      "status": "failed",
+      "error": "transaction execution reverted (action=\"sendTransaction\", data=null, reason=null, invocation=null, revert=null, transaction={ \"data\": \"\", \"from\": \"0x90F79bf6EB2c4f870365E785982E1f101E93b906\", \"to\": \"0x11c81c1A7979cdd309096D1ea53F887EA9f8D14d\" }, receipt={ \"_type\": \"TransactionReceipt\", \"blobGasPrice\": \"1\", \"blobGasUsed\": null, \"blockHash\": \"0xdb29a0054e0b845394e93fac3ca9466d603d26f7a26a3c322be61ffec591c96c\", \"blockNumber\": 481, \"contractAddress\": null, \"cumulativeGasUsed\": \"104030\", \"from\": \"0x90F79bf6EB2c4f870365E785982E1f101E93b906\", \"gasPrice\": \"7\", \"gasUsed\": \"104030\", \"hash\": \"0xcac5ca67f5251838bafc5b569dab0026acf49b098bfe410b409a7b4d3b9b0a7c\", \"index\": 0, \"logs\": [  ], \"logsBloom\": \"0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000\", \"root\": null, \"status\": 0, \"to\": \"0x11c81c1A7979cdd309096D1ea53F887EA9f8D14d\" }, code=CALL_EXCEPTION, version=6.16.0)"
+    },
+    {
+      "attack": "flashloan_manipulation",
+      "status": "failed",
+      "error": "transaction execution reverted (action=\"sendTransaction\", data=null, reason=null, invocation=null, revert=null, transaction={ \"data\": \"\", \"from\": \"0x90F79bf6EB2c4f870365E785982E1f101E93b906\", \"to\": \"0x11c81c1A7979cdd309096D1ea53F887EA9f8D14d\" }, receipt={ \"_type\": \"TransactionReceipt\", \"blobGasPrice\": \"1\", \"blobGasUsed\": null, \"blockHash\": \"0x3afa67206c8ff4b5ecd0a8d0b9baa4ca896a99a5284f75c58e98d4de9e047f1b\", \"blockNumber\": 486, \"contractAddress\": null, \"cumulativeGasUsed\": \"104030\", \"from\": \"0x90F79bf6EB2c4f870365E785982E1f101E93b906\", \"gasPrice\": \"7\", \"gasUsed\": \"104030\", \"hash\": \"0x9f477e7b390c39803db4bc4942793a1eb6299e74b11eb583f6bb986e06214cf9\", \"index\": 0, \"logs\": [  ], \"logsBloom\": \"0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000\", \"root\": null, \"status\": 0, \"to\": \"0x11c81c1A7979cdd309096D1ea53F887EA9f8D14d\" }, code=CALL_EXCEPTION, version=6.16.0)"
+    },
+    {
+      "attack": "flashloan_manipulation",
+      "status": "failed",
+      "error": "transaction execution reverted (action=\"sendTransaction\", data=null, reason=null, invocation=null, revert=null, transaction={ \"data\": \"\", \"from\": \"0x90F79bf6EB2c4f870365E785982E1f101E93b906\", \"to\": \"0x11c81c1A7979cdd309096D1ea53F887EA9f8D14d\" }, receipt={ \"_type\": \"TransactionReceipt\", \"blobGasPrice\": \"1\", \"blobGasUsed\": null, \"blockHash\": \"0x3471578fbbc579fd2769718a10dd9a995d62e8e64aa88432b0e0853900d6290e\", \"blockNumber\": 491, \"contractAddress\": null, \"cumulativeGasUsed\": \"104030\", \"from\": \"0x90F79bf6EB2c4f870365E785982E1f101E93b906\", \"gasPrice\": \"7\", \"gasUsed\": \"104030\", \"hash\": \"0xdf2184d17119cc328202dfcee8b26383c8057a1b8337814718809c8468b063f8\", \"index\": 0, \"logs\": [  ], \"logsBloom\": \"0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000\", \"root\": null, \"status\": 0, \"to\": \"0x11c81c1A7979cdd309096D1ea53F887EA9f8D14d\" }, code=CALL_EXCEPTION, version=6.16.0)"
+    },
+    {
+      "attack": "flashloan_manipulation",
+      "status": "failed",
+      "error": "transaction execution reverted (action=\"sendTransaction\", data=null, reason=null, invocation=null, revert=null, transaction={ \"data\": \"\", \"from\": \"0x90F79bf6EB2c4f870365E785982E1f101E93b906\", \"to\": \"0x11c81c1A7979cdd309096D1ea53F887EA9f8D14d\" }, receipt={ \"_type\": \"TransactionReceipt\", \"blobGasPrice\": \"1\", \"blobGasUsed\": null, \"blockHash\": \"0x2520123bcf36f38041fcc2881f8a8c08ea237a4afa60626f8ca79eb932df0cec\", \"blockNumber\": 496, \"contractAddress\": null, \"cumulativeGasUsed\": \"104030\", \"from\": \"0x90F79bf6EB2c4f870365E785982E1f101E93b906\", \"gasPrice\": \"7\", \"gasUsed\": \"104030\", \"hash\": \"0xe884ec14a2f0ef466fdb6772c2bb9916a4fe0a72e56445d04c9b41598a0b1927\", \"index\": 0, \"logs\": [  ], \"logsBloom\": \"0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000\", \"root\": null, \"status\": 0, \"to\": \"0x11c81c1A7979cdd309096D1ea53F887EA9f8D14d\" }, code=CALL_EXCEPTION, version=6.16.0)"
+    }
+  ],
+  "contracts": {
+    "dex": "0x9d4454B023096f34B160D6B654540c56A1F81688",
+    "pool": "0x8f86403A4DE0BB5791fa46B8e795C547942fE4Cf",
+    "victim": "0x5eb3Bc0a489C5A8288765d2336659EbCA68FCd00"
+  },
+  "output": {
+    "client_dir": "C:\\Users\\aswat\\ForensicToolW3\\runs\\run_ac0406588749f412\\client",
+    "forensic_bundle_dir": "C:\\Users\\aswat\\ForensicToolW3\\runs\\run_ac0406588749f412\\forensic_bundle",
+    "raw_dir": "C:\\Users\\aswat\\ForensicToolW3\\runs\\run_ac0406588749f412\\client\\01_raw"
+  }
+}

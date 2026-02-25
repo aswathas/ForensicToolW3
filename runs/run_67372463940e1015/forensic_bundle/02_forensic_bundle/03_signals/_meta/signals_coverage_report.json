@@ -1,0 +1,182 @@
+[
+  {
+    "rule_id": "REENTRANCY_SAME_FUNCTION_LOOP",
+    "fired": true,
+    "count": 3
+  },
+  {
+    "rule_id": "REENTRANCY_CROSS_FUNCTION",
+    "fired": true,
+    "count": 5
+  },
+  {
+    "rule_id": "REENTRANCY_EXTERNAL_CALLBACK_BEFORE_STATE_UPDATE",
+    "fired": true,
+    "count": 5
+  },
+  {
+    "rule_id": "DELEGATECALL_IN_SENSITIVE_PATH",
+    "fired": false,
+    "count": 0
+  },
+  {
+    "rule_id": "MULTIPLE_WITHDRAWS_SINGLE_TX",
+    "fired": true,
+    "count": 4
+  },
+  {
+    "rule_id": "REVERT_AFTER_PARTIAL_STATE_CHANGE",
+    "fired": true,
+    "count": 2
+  },
+  {
+    "rule_id": "APPROVAL_UNLIMITED_TO_NEW_SPENDER",
+    "fired": false,
+    "count": 0
+  },
+  {
+    "rule_id": "ALLOWANCE_DRAIN_BURST_TRANSFERFROM",
+    "fired": false,
+    "count": 0
+  },
+  {
+    "rule_id": "APPROVAL_AND_DRAIN_WITHIN_SHORT_WINDOW",
+    "fired": false,
+    "count": 0
+  },
+  {
+    "rule_id": "ALLOWANCE_SPENDER_ROLE_ANOMALY",
+    "fired": false,
+    "count": 0
+  },
+  {
+    "rule_id": "FLASHLOAN_BORROW_REPAY_SAME_TX",
+    "fired": false,
+    "count": 0
+  },
+  {
+    "rule_id": "FLASHLOAN_MULTI_POOL_HOPS",
+    "fired": true,
+    "count": 1
+  },
+  {
+    "rule_id": "FLASHLOAN_ENABLING_LARGE_PRICE_IMPACT",
+    "fired": true,
+    "count": 4
+  },
+  {
+    "rule_id": "FLASHLOAN_WITH_EXTRACTION_OUTFLOW",
+    "fired": true,
+    "count": 5
+  },
+  {
+    "rule_id": "ORACLE_PRICE_DEVIATION_SAME_BLOCK",
+    "fired": false,
+    "count": 0
+  },
+  {
+    "rule_id": "DEX_SPOT_PRICE_IMPACT_SPIKE",
+    "fired": true,
+    "count": 10
+  },
+  {
+    "rule_id": "SANDWICH_LIKE_PRICE_IMPACT_AROUND_TARGET",
+    "fired": false,
+    "count": 0
+  },
+  {
+    "rule_id": "ARBITRAGE_LOOP_WITH_VICTIM_INTERACTION",
+    "fired": false,
+    "count": 0
+  },
+  {
+    "rule_id": "PROXY_IMPLEMENTATION_CHANGED",
+    "fired": false,
+    "count": 0
+  },
+  {
+    "rule_id": "PRIVILEGED_ROLE_CHANGED",
+    "fired": false,
+    "count": 0
+  },
+  {
+    "rule_id": "SUSPICIOUS_ADMIN_CALL_SEQUENCE",
+    "fired": false,
+    "count": 0
+  },
+  {
+    "rule_id": "UPGRADE_FOLLOWED_BY_ASSET_OUTFLOW",
+    "fired": false,
+    "count": 0
+  },
+  {
+    "rule_id": "VICTIM_NET_OUTFLOW_SPIKE",
+    "fired": true,
+    "count": 12
+  },
+  {
+    "rule_id": "NEW_RECEIVER_FIRST_SEEN_AND_LARGE_INFLOW",
+    "fired": false,
+    "count": 0
+  },
+  {
+    "rule_id": "PEEL_CHAIN_PATTERN",
+    "fired": false,
+    "count": 0
+  },
+  {
+    "rule_id": "CONSOLIDATION_TO_FEW_SINKS",
+    "fired": true,
+    "count": 2
+  },
+  {
+    "rule_id": "HOP_TO_KNOWN_RISKY_DESTINATION",
+    "fired": false,
+    "count": 0
+  },
+  {
+    "rule_id": "ASSET_DIVERSIFICATION_POST_EXPLOIT",
+    "fired": false,
+    "count": 0
+  },
+  {
+    "rule_id": "STATE_DIFF_CONTRACT_BALANCE_DRAINED",
+    "fired": true,
+    "count": 1
+  },
+  {
+    "rule_id": "STATE_DIFF_UNEXPECTED_ETH_GAIN",
+    "fired": true,
+    "count": 3
+  },
+  {
+    "rule_id": "STATE_DIFF_STORAGE_SLOT_ZEROED",
+    "fired": false,
+    "count": 0
+  },
+  {
+    "rule_id": "STATE_DIFF_MULTI_CONTRACT_BALANCE_CHANGE",
+    "fired": true,
+    "count": 3
+  },
+  {
+    "rule_id": "STATE_DIFF_NET_GAINER_IS_NEW_CONTRACT",
+    "fired": true,
+    "count": 5
+  },
+  {
+    "rule_id": "STATE_DIFF_REENTRANCY_PATTERN_CONFIRMED",
+    "fired": true,
+    "count": 6
+  },
+  {
+    "rule_id": "STATE_DIFF_STORAGE_LARGE_VALUE_CHANGE",
+    "fired": true,
+    "count": 22
+  },
+  {
+    "rule_id": "STATE_DIFF_VICTIM_LOSES_ATTACKER_GAINS",
+    "fired": true,
+    "count": 1
+  }
+]

@@ -1,0 +1,37 @@
+{
+  "name": "evm-forensics-agent",
+  "version": "1.0.0",
+  "description": "Enterprise-grade EVM blockchain forensics tool",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "go": "node go.mjs",
+    "go:old": "powershell -ExecutionPolicy Bypass -File run_pipeline.ps1",
+    "go:skip-sim": "node go.mjs --skip-sim",
+    "go:skip-ai": "node go.mjs --skip-ai",
+    "go:dry-run": "node go.mjs --dry-run",
+    "sim": "node scripts/simulations/sim_runner.mjs --scenario reentrancy",
+    "sim:precision": "node scripts/simulations/sim_runner.mjs --scenario reentrancy --repeat 1 --num-users 2 --user-txs 1",
+    "sim:quick": "node scripts/simulations/sim_runner.mjs --scenario reentrancy --repeat 1 --num-attackers 5 --num-users 3 --user-txs 2",
+    "sim:heavy": "node scripts/simulations/sim_runner.mjs --scenario reentrancy --repeat 4 --num-attackers 5 --num-users 8 --user-txs 5",
+    "simulate": "node scripts/simulations/sim_runner.mjs",
+    "forensics": "node src/index.js",
+    "forensics:import": "node src/index.js --mode raw_import",
+    "forensics:live": "node src/index.js --mode rpc_live --rpc-url http://127.0.0.1:8545 --window markers_onchain",
+    "ai:analyze": "node src/ai/ollama_analyst.js"
+  },
+  "keywords": [
+    "forensics",
+    "evm",
+    "blockchain",
+    "security"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "ethers": "^6.13.5",
+    "fs-extra": "^11.2.0",
+    "solc": "^0.8.28"
+  }
+}

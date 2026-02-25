@@ -1,0 +1,1792 @@
+{
+  "generated_at": "2026-02-18T10:31:15.969Z",
+  "summary": {
+    "total_signals": 62,
+    "incidents": 2,
+    "txs_analyzed": 105,
+    "rules_fired": [
+      "REENTRANCY_SAME_FUNCTION_LOOP",
+      "REENTRANCY_CROSS_FUNCTION",
+      "REENTRANCY_EXTERNAL_CALLBACK_BEFORE_STATE_UPDATE",
+      "MULTIPLE_WITHDRAWS_SINGLE_TX",
+      "REVERT_AFTER_PARTIAL_STATE_CHANGE",
+      "FLASHLOAN_MULTI_POOL_HOPS",
+      "FLASHLOAN_ENABLING_LARGE_PRICE_IMPACT",
+      "FLASHLOAN_WITH_EXTRACTION_OUTFLOW",
+      "VICTIM_NET_OUTFLOW_SPIKE",
+      "CONSOLIDATION_TO_FEW_SINKS",
+      "STATE_DIFF_CONTRACT_BALANCE_DRAINED",
+      "STATE_DIFF_UNEXPECTED_ETH_GAIN",
+      "STATE_DIFF_MULTI_CONTRACT_BALANCE_CHANGE",
+      "STATE_DIFF_NET_GAINER_IS_NEW_CONTRACT",
+      "STATE_DIFF_REENTRANCY_PATTERN_CONFIRMED",
+      "STATE_DIFF_VICTIM_LOSES_ATTACKER_GAINS"
+    ]
+  },
+  "incidents": [
+    {
+      "incident_id": "2b303bffb9ca7a7d",
+      "incident_index": 1,
+      "tx_count": 6,
+      "tx_hashes": [
+        "0x2f7c6a462c51ca8aec7b4f5a4250e3ca332f0e9ce706a92485fd4c7430b8a5c5",
+        "0x718353cf002a3e6a120d95227b43da5b6b20a10ef78b3e24fcb9b3004c720e61",
+        "0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c",
+        "0xac454721ab934e16ea14083f90b10b09ad7a59d856d464f4f45d4eec5301d527",
+        "0xd8c95bdc69ae8f5dcdec2d18e6c41dd59797cd155fccc78cb0b3d1c8ddb56455",
+        "0xdd9c9229d080bf93017db9f7c45281b65d95157874c3dbeafe57e41003026d1a"
+      ],
+      "signal_count": 39,
+      "rules_fired": [
+        "REENTRANCY_SAME_FUNCTION_LOOP",
+        "REENTRANCY_CROSS_FUNCTION",
+        "REENTRANCY_EXTERNAL_CALLBACK_BEFORE_STATE_UPDATE",
+        "MULTIPLE_WITHDRAWS_SINGLE_TX",
+        "FLASHLOAN_ENABLING_LARGE_PRICE_IMPACT",
+        "FLASHLOAN_WITH_EXTRACTION_OUTFLOW",
+        "STATE_DIFF_MULTI_CONTRACT_BALANCE_CHANGE",
+        "STATE_DIFF_VICTIM_LOSES_ATTACKER_GAINS",
+        "STATE_DIFF_UNEXPECTED_ETH_GAIN",
+        "STATE_DIFF_REENTRANCY_PATTERN_CONFIRMED",
+        "REVERT_AFTER_PARTIAL_STATE_CHANGE",
+        "FLASHLOAN_MULTI_POOL_HOPS",
+        "STATE_DIFF_NET_GAINER_IS_NEW_CONTRACT",
+        "STATE_DIFF_CONTRACT_BALANCE_DRAINED"
+      ],
+      "suspect_addresses": [
+        "0x71be63f3384f5fb98995898a86b02fb2426c5788",
+        "0x72bb9c7ffbe2ed234e53bc64862dda6d9fff333b",
+        "0x33a61df860c1170c903f5ba1ef979570c962395e",
+        "0x937cf819746221324b7ffd131b4920234b9ede53",
+        "0x63e0e8cd1618d51d07e645d9e34326ca5ff714af",
+        "0x954c90761d6cb86cd0ef6f2785904ed439fb580d"
+      ],
+      "block_range": {
+        "from": 48,
+        "to": 112
+      },
+      "severity": "HIGH",
+      "evidence_refs": [
+        {
+          "dataset": "signals",
+          "record_id": "signal:REENTRANCY_SAME_FUNCTION_LOOP:0xac454721ab934e16ea14083f90b10b09ad7a59d856d464f4f45d4eec5301d527:1771410675923"
+        },
+        {
+          "dataset": "signals",
+          "record_id": "signal:REENTRANCY_CROSS_FUNCTION:0xac454721ab934e16ea14083f90b10b09ad7a59d856d464f4f45d4eec5301d527:1771410675924"
+        },
+        {
+          "dataset": "signals",
+          "record_id": "signal:REENTRANCY_EXTERNAL_CALLBACK_BEFORE_STATE_UPDATE:0xac454721ab934e16ea14083f90b10b09ad7a59d856d464f4f45d4eec5301d527:1771410675925"
+        }
+      ]
+    },
+    {
+      "incident_id": "993149032ac8daef",
+      "incident_index": 2,
+      "tx_count": 8,
+      "tx_hashes": [
+        "0x0da0a94da11195b318e54f2daebf3c1b86a4fe520cb7659dedbd725baa8e2b77",
+        "0x9dabf79e884c66c44c14d0c3a8d3696b73abe5d29750eba8e6eefedece46a5ce",
+        "0xa707c910f20b2d1a10e967a58a2841c1195b04b927869bad23307e42c9eec82e",
+        "0xb6031534ccd2606c565c9ca3c980587045654e7022a41b4c77fd55e05b0bc827",
+        "0xbb2d0ba2e61e6f3818e744611b21768cd18bc630439dc0b33676a6869e028645",
+        "0xcb1b6cfae812bd66aba07447defd1603c74b2f8b82b654b0350f81844350a88b",
+        "0xcbbb14a1587045c91f5bd6ee44a4362a5376db7c4b022da2df6132ce1aad66db",
+        "0xe00b7227399e7b72668387cd345697e4306f871648a6a116f0c747f7f8660221"
+      ],
+      "signal_count": 9,
+      "rules_fired": [
+        "STATE_DIFF_UNEXPECTED_ETH_GAIN",
+        "STATE_DIFF_REENTRANCY_PATTERN_CONFIRMED",
+        "STATE_DIFF_NET_GAINER_IS_NEW_CONTRACT"
+      ],
+      "suspect_addresses": [
+        "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266",
+        "0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0",
+        "0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9",
+        "0x0165878a594ca255338adfa4d48449f69242eb8f",
+        "0x8a791620dd6260079bf849dc5567adc3f2fdc318",
+        "0xdc64a140aa3e981100a9beca4e685f962f0cf6c9",
+        "0xa513e6e4b8f2a923d98304ec87f64353c4d5c853"
+      ],
+      "block_range": {
+        "from": 9,
+        "to": 20
+      },
+      "severity": "HIGH",
+      "evidence_refs": [
+        {
+          "dataset": "signals",
+          "record_id": "signal:STATE_DIFF_UNEXPECTED_ETH_GAIN:0xa707c910f20b2d1a10e967a58a2841c1195b04b927869bad23307e42c9eec82e:1771410675930"
+        },
+        {
+          "dataset": "signals",
+          "record_id": "signal:STATE_DIFF_REENTRANCY_PATTERN_CONFIRMED:0xa707c910f20b2d1a10e967a58a2841c1195b04b927869bad23307e42c9eec82e:1771410675931"
+        },
+        {
+          "dataset": "signals",
+          "record_id": "signal:STATE_DIFF_NET_GAINER_IS_NEW_CONTRACT:0xcbbb14a1587045c91f5bd6ee44a4362a5376db7c4b022da2df6132ce1aad66db:1771410675931"
+        }
+      ]
+    }
+  ],
+  "signals_by_rule": [
+    {
+      "rule_id": "REENTRANCY_SAME_FUNCTION_LOOP",
+      "count": 3,
+      "signals": [
+        {
+          "record_id": "signal:REENTRANCY_SAME_FUNCTION_LOOP:0xac454721ab934e16ea14083f90b10b09ad7a59d856d464f4f45d4eec5301d527:1771410675923",
+          "rule_id": "REENTRANCY_SAME_FUNCTION_LOOP",
+          "rule_name": "Reentrancy: Same Function Loop",
+          "tx_hash": "0xac454721ab934e16ea14083f90b10b09ad7a59d856d464f4f45d4eec5301d527",
+          "confidence": "HIGH",
+          "details": {
+            "repeated_calls": [
+              {
+                "call": "0x72bb9c7ffbe2ed234e53bc64862dda6d9fff333b|0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0|0x3ccfd60b",
+                "count": 3
+              },
+              {
+                "call": "0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0|0x72bb9c7ffbe2ed234e53bc64862dda6d9fff333b|null",
+                "count": 3
+              }
+            ],
+            "max_depth": 6
+          },
+          "evidence_refs": [
+            {
+              "dataset": "trace_edges",
+              "record_id": "edge:0xac454721ab934e16ea14083f90b10b09ad7a59d856d464f4f45d4eec5301d527:0"
+            },
+            {
+              "dataset": "trace_edges",
+              "record_id": "edge:0xac454721ab934e16ea14083f90b10b09ad7a59d856d464f4f45d4eec5301d527:0.0"
+            },
+            {
+              "dataset": "trace_edges",
+              "record_id": "edge:0xac454721ab934e16ea14083f90b10b09ad7a59d856d464f4f45d4eec5301d527:0.1"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.923Z"
+        },
+        {
+          "record_id": "signal:REENTRANCY_SAME_FUNCTION_LOOP:0xd8c95bdc69ae8f5dcdec2d18e6c41dd59797cd155fccc78cb0b3d1c8ddb56455:1771410675924",
+          "rule_id": "REENTRANCY_SAME_FUNCTION_LOOP",
+          "rule_name": "Reentrancy: Same Function Loop",
+          "tx_hash": "0xd8c95bdc69ae8f5dcdec2d18e6c41dd59797cd155fccc78cb0b3d1c8ddb56455",
+          "confidence": "HIGH",
+          "details": {
+            "repeated_calls": [
+              {
+                "call": "0x33a61df860c1170c903f5ba1ef979570c962395e|0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9|0xd0e30db0",
+                "count": 2
+              }
+            ],
+            "max_depth": 3
+          },
+          "evidence_refs": [
+            {
+              "dataset": "trace_edges",
+              "record_id": "edge:0xd8c95bdc69ae8f5dcdec2d18e6c41dd59797cd155fccc78cb0b3d1c8ddb56455:0"
+            },
+            {
+              "dataset": "trace_edges",
+              "record_id": "edge:0xd8c95bdc69ae8f5dcdec2d18e6c41dd59797cd155fccc78cb0b3d1c8ddb56455:0.0"
+            },
+            {
+              "dataset": "trace_edges",
+              "record_id": "edge:0xd8c95bdc69ae8f5dcdec2d18e6c41dd59797cd155fccc78cb0b3d1c8ddb56455:0.1"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.924Z"
+        },
+        {
+          "record_id": "signal:REENTRANCY_SAME_FUNCTION_LOOP:0xdd9c9229d080bf93017db9f7c45281b65d95157874c3dbeafe57e41003026d1a:1771410675924",
+          "rule_id": "REENTRANCY_SAME_FUNCTION_LOOP",
+          "rule_name": "Reentrancy: Same Function Loop",
+          "tx_hash": "0xdd9c9229d080bf93017db9f7c45281b65d95157874c3dbeafe57e41003026d1a",
+          "confidence": "HIGH",
+          "details": {
+            "repeated_calls": [
+              {
+                "call": "0x937cf819746221324b7ffd131b4920234b9ede53|0x0165878a594ca255338adfa4d48449f69242eb8f|0x315a095d",
+                "count": 2
+              },
+              {
+                "call": "0x0165878a594ca255338adfa4d48449f69242eb8f|0x937cf819746221324b7ffd131b4920234b9ede53|0x24a756d1",
+                "count": 2
+              },
+              {
+                "call": "0x0165878a594ca255338adfa4d48449f69242eb8f|0x937cf819746221324b7ffd131b4920234b9ede53|null",
+                "count": 2
+              }
+            ],
+            "max_depth": 4
+          },
+          "evidence_refs": [
+            {
+              "dataset": "trace_edges",
+              "record_id": "edge:0xdd9c9229d080bf93017db9f7c45281b65d95157874c3dbeafe57e41003026d1a:0"
+            },
+            {
+              "dataset": "trace_edges",
+              "record_id": "edge:0xdd9c9229d080bf93017db9f7c45281b65d95157874c3dbeafe57e41003026d1a:0.0"
+            },
+            {
+              "dataset": "trace_edges",
+              "record_id": "edge:0xdd9c9229d080bf93017db9f7c45281b65d95157874c3dbeafe57e41003026d1a:0.1"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.924Z"
+        }
+      ]
+    },
+    {
+      "rule_id": "REENTRANCY_CROSS_FUNCTION",
+      "count": 5,
+      "signals": [
+        {
+          "record_id": "signal:REENTRANCY_CROSS_FUNCTION:0xac454721ab934e16ea14083f90b10b09ad7a59d856d464f4f45d4eec5301d527:1771410675924",
+          "rule_id": "REENTRANCY_CROSS_FUNCTION",
+          "rule_name": "Reentrancy: Cross-Function",
+          "tx_hash": "0xac454721ab934e16ea14083f90b10b09ad7a59d856d464f4f45d4eec5301d527",
+          "confidence": "MEDIUM",
+          "details": {
+            "contracts_with_multi_selectors": [
+              {
+                "addr": "0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0",
+                "selectors": [
+                  "0xd0e30db0",
+                  "0x3ccfd60b"
+                ]
+              }
+            ]
+          },
+          "evidence_refs": [
+            {
+              "dataset": "trace_edges",
+              "record_id": "edge:0xac454721ab934e16ea14083f90b10b09ad7a59d856d464f4f45d4eec5301d527:0"
+            },
+            {
+              "dataset": "trace_edges",
+              "record_id": "edge:0xac454721ab934e16ea14083f90b10b09ad7a59d856d464f4f45d4eec5301d527:0.0"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.924Z"
+        },
+        {
+          "record_id": "signal:REENTRANCY_CROSS_FUNCTION:0xd8c95bdc69ae8f5dcdec2d18e6c41dd59797cd155fccc78cb0b3d1c8ddb56455:1771410675924",
+          "rule_id": "REENTRANCY_CROSS_FUNCTION",
+          "rule_name": "Reentrancy: Cross-Function",
+          "tx_hash": "0xd8c95bdc69ae8f5dcdec2d18e6c41dd59797cd155fccc78cb0b3d1c8ddb56455",
+          "confidence": "MEDIUM",
+          "details": {
+            "contracts_with_multi_selectors": [
+              {
+                "addr": "0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9",
+                "selectors": [
+                  "0xd0e30db0",
+                  "0x2e1a7d4d"
+                ]
+              }
+            ]
+          },
+          "evidence_refs": [
+            {
+              "dataset": "trace_edges",
+              "record_id": "edge:0xd8c95bdc69ae8f5dcdec2d18e6c41dd59797cd155fccc78cb0b3d1c8ddb56455:0"
+            },
+            {
+              "dataset": "trace_edges",
+              "record_id": "edge:0xd8c95bdc69ae8f5dcdec2d18e6c41dd59797cd155fccc78cb0b3d1c8ddb56455:0.0"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.924Z"
+        },
+        {
+          "record_id": "signal:REENTRANCY_CROSS_FUNCTION:0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c:1771410675924",
+          "rule_id": "REENTRANCY_CROSS_FUNCTION",
+          "rule_name": "Reentrancy: Cross-Function",
+          "tx_hash": "0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c",
+          "confidence": "MEDIUM",
+          "details": {
+            "contracts_with_multi_selectors": [
+              {
+                "addr": "0x5fc8d32690cc91d4c39d9d3abcbd16989f875707",
+                "selectors": [
+                  "0x6f758140",
+                  "0xe68d3569"
+                ]
+              },
+              {
+                "addr": "0xdc64a140aa3e981100a9beca4e685f962f0cf6c9",
+                "selectors": [
+                  "0xd0e30db0",
+                  "0x3ccfd60b",
+                  "0x98d5fdca"
+                ]
+              }
+            ]
+          },
+          "evidence_refs": [
+            {
+              "dataset": "trace_edges",
+              "record_id": "edge:0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c:0"
+            },
+            {
+              "dataset": "trace_edges",
+              "record_id": "edge:0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c:0.0"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.924Z"
+        },
+        {
+          "record_id": "signal:REENTRANCY_CROSS_FUNCTION:0xdd9c9229d080bf93017db9f7c45281b65d95157874c3dbeafe57e41003026d1a:1771410675924",
+          "rule_id": "REENTRANCY_CROSS_FUNCTION",
+          "rule_name": "Reentrancy: Cross-Function",
+          "tx_hash": "0xdd9c9229d080bf93017db9f7c45281b65d95157874c3dbeafe57e41003026d1a",
+          "confidence": "MEDIUM",
+          "details": {
+            "contracts_with_multi_selectors": [
+              {
+                "addr": "0x937cf819746221324b7ffd131b4920234b9ede53",
+                "selectors": [
+                  "0x9e5faafc",
+                  "0x24a756d1"
+                ]
+              },
+              {
+                "addr": "0x0165878a594ca255338adfa4d48449f69242eb8f",
+                "selectors": [
+                  "0x7c4b414d",
+                  "0x315a095d"
+                ]
+              }
+            ]
+          },
+          "evidence_refs": [
+            {
+              "dataset": "trace_edges",
+              "record_id": "edge:0xdd9c9229d080bf93017db9f7c45281b65d95157874c3dbeafe57e41003026d1a:0"
+            },
+            {
+              "dataset": "trace_edges",
+              "record_id": "edge:0xdd9c9229d080bf93017db9f7c45281b65d95157874c3dbeafe57e41003026d1a:0.0"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.924Z"
+        },
+        {
+          "record_id": "signal:REENTRANCY_CROSS_FUNCTION:0x2f7c6a462c51ca8aec7b4f5a4250e3ca332f0e9ce706a92485fd4c7430b8a5c5:1771410675925",
+          "rule_id": "REENTRANCY_CROSS_FUNCTION",
+          "rule_name": "Reentrancy: Cross-Function",
+          "tx_hash": "0x2f7c6a462c51ca8aec7b4f5a4250e3ca332f0e9ce706a92485fd4c7430b8a5c5",
+          "confidence": "MEDIUM",
+          "details": {
+            "contracts_with_multi_selectors": [
+              {
+                "addr": "0x954c90761d6cb86cd0ef6f2785904ed439fb580d",
+                "selectors": [
+                  "0x9e5faafc",
+                  "0x206be296"
+                ]
+              },
+              {
+                "addr": "0x2279b7a0a67db372996a5fab50d91eaa73d2ebe6",
+                "selectors": [
+                  "0xb14e055e",
+                  "0xdc76fabc"
+                ]
+              }
+            ]
+          },
+          "evidence_refs": [
+            {
+              "dataset": "trace_edges",
+              "record_id": "edge:0x2f7c6a462c51ca8aec7b4f5a4250e3ca332f0e9ce706a92485fd4c7430b8a5c5:0"
+            },
+            {
+              "dataset": "trace_edges",
+              "record_id": "edge:0x2f7c6a462c51ca8aec7b4f5a4250e3ca332f0e9ce706a92485fd4c7430b8a5c5:0.0"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.925Z"
+        }
+      ]
+    },
+    {
+      "rule_id": "REENTRANCY_EXTERNAL_CALLBACK_BEFORE_STATE_UPDATE",
+      "count": 5,
+      "signals": [
+        {
+          "record_id": "signal:REENTRANCY_EXTERNAL_CALLBACK_BEFORE_STATE_UPDATE:0xac454721ab934e16ea14083f90b10b09ad7a59d856d464f4f45d4eec5301d527:1771410675925",
+          "rule_id": "REENTRANCY_EXTERNAL_CALLBACK_BEFORE_STATE_UPDATE",
+          "rule_name": "Reentrancy: External Callback Before State Update",
+          "tx_hash": "0xac454721ab934e16ea14083f90b10b09ad7a59d856d464f4f45d4eec5301d527",
+          "confidence": "MEDIUM",
+          "details": {
+            "deep_call_count": 7
+          },
+          "evidence_refs": [
+            {
+              "dataset": "trace_calls_flat",
+              "record_id": "tracecall:0xac454721ab934e16ea14083f90b10b09ad7a59d856d464f4f45d4eec5301d527:0.0"
+            },
+            {
+              "dataset": "trace_calls_flat",
+              "record_id": "tracecall:0xac454721ab934e16ea14083f90b10b09ad7a59d856d464f4f45d4eec5301d527:0.1"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.925Z"
+        },
+        {
+          "record_id": "signal:REENTRANCY_EXTERNAL_CALLBACK_BEFORE_STATE_UPDATE:0xd8c95bdc69ae8f5dcdec2d18e6c41dd59797cd155fccc78cb0b3d1c8ddb56455:1771410675925",
+          "rule_id": "REENTRANCY_EXTERNAL_CALLBACK_BEFORE_STATE_UPDATE",
+          "rule_name": "Reentrancy: External Callback Before State Update",
+          "tx_hash": "0xd8c95bdc69ae8f5dcdec2d18e6c41dd59797cd155fccc78cb0b3d1c8ddb56455",
+          "confidence": "MEDIUM",
+          "details": {
+            "deep_call_count": 4
+          },
+          "evidence_refs": [
+            {
+              "dataset": "trace_calls_flat",
+              "record_id": "tracecall:0xd8c95bdc69ae8f5dcdec2d18e6c41dd59797cd155fccc78cb0b3d1c8ddb56455:0.0"
+            },
+            {
+              "dataset": "trace_calls_flat",
+              "record_id": "tracecall:0xd8c95bdc69ae8f5dcdec2d18e6c41dd59797cd155fccc78cb0b3d1c8ddb56455:0.1"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.925Z"
+        },
+        {
+          "record_id": "signal:REENTRANCY_EXTERNAL_CALLBACK_BEFORE_STATE_UPDATE:0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c:1771410675925",
+          "rule_id": "REENTRANCY_EXTERNAL_CALLBACK_BEFORE_STATE_UPDATE",
+          "rule_name": "Reentrancy: External Callback Before State Update",
+          "tx_hash": "0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c",
+          "confidence": "MEDIUM",
+          "details": {
+            "deep_call_count": 5
+          },
+          "evidence_refs": [
+            {
+              "dataset": "trace_calls_flat",
+              "record_id": "tracecall:0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c:0.0"
+            },
+            {
+              "dataset": "trace_calls_flat",
+              "record_id": "tracecall:0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c:0.1"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.925Z"
+        },
+        {
+          "record_id": "signal:REENTRANCY_EXTERNAL_CALLBACK_BEFORE_STATE_UPDATE:0xdd9c9229d080bf93017db9f7c45281b65d95157874c3dbeafe57e41003026d1a:1771410675925",
+          "rule_id": "REENTRANCY_EXTERNAL_CALLBACK_BEFORE_STATE_UPDATE",
+          "rule_name": "Reentrancy: External Callback Before State Update",
+          "tx_hash": "0xdd9c9229d080bf93017db9f7c45281b65d95157874c3dbeafe57e41003026d1a",
+          "confidence": "MEDIUM",
+          "details": {
+            "deep_call_count": 7
+          },
+          "evidence_refs": [
+            {
+              "dataset": "trace_calls_flat",
+              "record_id": "tracecall:0xdd9c9229d080bf93017db9f7c45281b65d95157874c3dbeafe57e41003026d1a:0.0"
+            },
+            {
+              "dataset": "trace_calls_flat",
+              "record_id": "tracecall:0xdd9c9229d080bf93017db9f7c45281b65d95157874c3dbeafe57e41003026d1a:0.1"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.925Z"
+        },
+        {
+          "record_id": "signal:REENTRANCY_EXTERNAL_CALLBACK_BEFORE_STATE_UPDATE:0x2f7c6a462c51ca8aec7b4f5a4250e3ca332f0e9ce706a92485fd4c7430b8a5c5:1771410675925",
+          "rule_id": "REENTRANCY_EXTERNAL_CALLBACK_BEFORE_STATE_UPDATE",
+          "rule_name": "Reentrancy: External Callback Before State Update",
+          "tx_hash": "0x2f7c6a462c51ca8aec7b4f5a4250e3ca332f0e9ce706a92485fd4c7430b8a5c5",
+          "confidence": "MEDIUM",
+          "details": {
+            "deep_call_count": 4
+          },
+          "evidence_refs": [
+            {
+              "dataset": "trace_calls_flat",
+              "record_id": "tracecall:0x2f7c6a462c51ca8aec7b4f5a4250e3ca332f0e9ce706a92485fd4c7430b8a5c5:0.0"
+            },
+            {
+              "dataset": "trace_calls_flat",
+              "record_id": "tracecall:0x2f7c6a462c51ca8aec7b4f5a4250e3ca332f0e9ce706a92485fd4c7430b8a5c5:0.0.0"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.925Z"
+        }
+      ]
+    },
+    {
+      "rule_id": "MULTIPLE_WITHDRAWS_SINGLE_TX",
+      "count": 4,
+      "signals": [
+        {
+          "record_id": "signal:MULTIPLE_WITHDRAWS_SINGLE_TX:0xac454721ab934e16ea14083f90b10b09ad7a59d856d464f4f45d4eec5301d527:1771410675926",
+          "rule_id": "MULTIPLE_WITHDRAWS_SINGLE_TX",
+          "rule_name": "Multiple Withdraws in Single TX",
+          "tx_hash": "0xac454721ab934e16ea14083f90b10b09ad7a59d856d464f4f45d4eec5301d527",
+          "confidence": "HIGH",
+          "details": {
+            "repeated_calls": [
+              {
+                "call": "0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0|0x3ccfd60b",
+                "count": 3
+              },
+              {
+                "call": "0x72bb9c7ffbe2ed234e53bc64862dda6d9fff333b|null",
+                "count": 3
+              }
+            ]
+          },
+          "evidence_refs": [
+            {
+              "dataset": "trace_edges",
+              "record_id": "edge:0xac454721ab934e16ea14083f90b10b09ad7a59d856d464f4f45d4eec5301d527:0"
+            },
+            {
+              "dataset": "trace_edges",
+              "record_id": "edge:0xac454721ab934e16ea14083f90b10b09ad7a59d856d464f4f45d4eec5301d527:0.0"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.926Z"
+        },
+        {
+          "record_id": "signal:MULTIPLE_WITHDRAWS_SINGLE_TX:0xd8c95bdc69ae8f5dcdec2d18e6c41dd59797cd155fccc78cb0b3d1c8ddb56455:1771410675926",
+          "rule_id": "MULTIPLE_WITHDRAWS_SINGLE_TX",
+          "rule_name": "Multiple Withdraws in Single TX",
+          "tx_hash": "0xd8c95bdc69ae8f5dcdec2d18e6c41dd59797cd155fccc78cb0b3d1c8ddb56455",
+          "confidence": "HIGH",
+          "details": {
+            "repeated_calls": [
+              {
+                "call": "0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9|0xd0e30db0",
+                "count": 2
+              }
+            ]
+          },
+          "evidence_refs": [
+            {
+              "dataset": "trace_edges",
+              "record_id": "edge:0xd8c95bdc69ae8f5dcdec2d18e6c41dd59797cd155fccc78cb0b3d1c8ddb56455:0"
+            },
+            {
+              "dataset": "trace_edges",
+              "record_id": "edge:0xd8c95bdc69ae8f5dcdec2d18e6c41dd59797cd155fccc78cb0b3d1c8ddb56455:0.0"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.926Z"
+        },
+        {
+          "record_id": "signal:MULTIPLE_WITHDRAWS_SINGLE_TX:0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c:1771410675926",
+          "rule_id": "MULTIPLE_WITHDRAWS_SINGLE_TX",
+          "rule_name": "Multiple Withdraws in Single TX",
+          "tx_hash": "0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c",
+          "confidence": "HIGH",
+          "details": {
+            "repeated_calls": [
+              {
+                "call": "0xdc64a140aa3e981100a9beca4e685f962f0cf6c9|0x98d5fdca",
+                "count": 2
+              }
+            ]
+          },
+          "evidence_refs": [
+            {
+              "dataset": "trace_edges",
+              "record_id": "edge:0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c:0"
+            },
+            {
+              "dataset": "trace_edges",
+              "record_id": "edge:0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c:0.0"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.926Z"
+        },
+        {
+          "record_id": "signal:MULTIPLE_WITHDRAWS_SINGLE_TX:0xdd9c9229d080bf93017db9f7c45281b65d95157874c3dbeafe57e41003026d1a:1771410675926",
+          "rule_id": "MULTIPLE_WITHDRAWS_SINGLE_TX",
+          "rule_name": "Multiple Withdraws in Single TX",
+          "tx_hash": "0xdd9c9229d080bf93017db9f7c45281b65d95157874c3dbeafe57e41003026d1a",
+          "confidence": "HIGH",
+          "details": {
+            "repeated_calls": [
+              {
+                "call": "0x0165878a594ca255338adfa4d48449f69242eb8f|0x315a095d",
+                "count": 2
+              },
+              {
+                "call": "0x937cf819746221324b7ffd131b4920234b9ede53|0x24a756d1",
+                "count": 2
+              },
+              {
+                "call": "0x937cf819746221324b7ffd131b4920234b9ede53|null",
+                "count": 2
+              }
+            ]
+          },
+          "evidence_refs": [
+            {
+              "dataset": "trace_edges",
+              "record_id": "edge:0xdd9c9229d080bf93017db9f7c45281b65d95157874c3dbeafe57e41003026d1a:0"
+            },
+            {
+              "dataset": "trace_edges",
+              "record_id": "edge:0xdd9c9229d080bf93017db9f7c45281b65d95157874c3dbeafe57e41003026d1a:0.0"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.926Z"
+        }
+      ]
+    },
+    {
+      "rule_id": "REVERT_AFTER_PARTIAL_STATE_CHANGE",
+      "count": 2,
+      "signals": [
+        {
+          "record_id": "signal:REVERT_AFTER_PARTIAL_STATE_CHANGE:0xdd9c9229d080bf93017db9f7c45281b65d95157874c3dbeafe57e41003026d1a:1771410675926",
+          "rule_id": "REVERT_AFTER_PARTIAL_STATE_CHANGE",
+          "rule_name": "Revert After Partial State Change",
+          "tx_hash": "0xdd9c9229d080bf93017db9f7c45281b65d95157874c3dbeafe57e41003026d1a",
+          "confidence": "LOW",
+          "details": {
+            "reverted_calls": 2
+          },
+          "evidence_refs": [
+            {
+              "dataset": "trace_calls_flat",
+              "record_id": "tracecall:0xdd9c9229d080bf93017db9f7c45281b65d95157874c3dbeafe57e41003026d1a:0"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.926Z"
+        },
+        {
+          "record_id": "signal:REVERT_AFTER_PARTIAL_STATE_CHANGE:0x2f7c6a462c51ca8aec7b4f5a4250e3ca332f0e9ce706a92485fd4c7430b8a5c5:1771410675926",
+          "rule_id": "REVERT_AFTER_PARTIAL_STATE_CHANGE",
+          "rule_name": "Revert After Partial State Change",
+          "tx_hash": "0x2f7c6a462c51ca8aec7b4f5a4250e3ca332f0e9ce706a92485fd4c7430b8a5c5",
+          "confidence": "LOW",
+          "details": {
+            "reverted_calls": 3
+          },
+          "evidence_refs": [
+            {
+              "dataset": "trace_calls_flat",
+              "record_id": "tracecall:0x2f7c6a462c51ca8aec7b4f5a4250e3ca332f0e9ce706a92485fd4c7430b8a5c5:0"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.926Z"
+        }
+      ]
+    },
+    {
+      "rule_id": "FLASHLOAN_MULTI_POOL_HOPS",
+      "count": 1,
+      "signals": [
+        {
+          "record_id": "signal:FLASHLOAN_MULTI_POOL_HOPS:0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c:1771410675927",
+          "rule_id": "FLASHLOAN_MULTI_POOL_HOPS",
+          "rule_name": "Flashloan: Multi-Pool Hops",
+          "tx_hash": "0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c",
+          "confidence": "MEDIUM",
+          "details": {
+            "pool_count": 3,
+            "pools": [
+              "0x63e0e8cd1618d51d07e645d9e34326ca5ff714af",
+              "0x5fc8d32690cc91d4c39d9d3abcbd16989f875707",
+              "0xdc64a140aa3e981100a9beca4e685f962f0cf6c9"
+            ]
+          },
+          "evidence_refs": [
+            {
+              "dataset": "trace_edges",
+              "record_id": "edge:0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c:0"
+            },
+            {
+              "dataset": "trace_edges",
+              "record_id": "edge:0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c:0.0"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.927Z"
+        }
+      ]
+    },
+    {
+      "rule_id": "FLASHLOAN_ENABLING_LARGE_PRICE_IMPACT",
+      "count": 4,
+      "signals": [
+        {
+          "record_id": "signal:FLASHLOAN_ENABLING_LARGE_PRICE_IMPACT:0xac454721ab934e16ea14083f90b10b09ad7a59d856d464f4f45d4eec5301d527:1771410675927",
+          "rule_id": "FLASHLOAN_ENABLING_LARGE_PRICE_IMPACT",
+          "rule_name": "Flashloan Enabling Large Price Impact",
+          "tx_hash": "0xac454721ab934e16ea14083f90b10b09ad7a59d856d464f4f45d4eec5301d527",
+          "confidence": "MEDIUM",
+          "details": {
+            "max_depth": 6,
+            "value_moved_wei": "15000000000000000000"
+          },
+          "evidence_refs": [
+            {
+              "dataset": "trace_calls_flat",
+              "record_id": "tracecall:0xac454721ab934e16ea14083f90b10b09ad7a59d856d464f4f45d4eec5301d527:0"
+            },
+            {
+              "dataset": "trace_calls_flat",
+              "record_id": "tracecall:0xac454721ab934e16ea14083f90b10b09ad7a59d856d464f4f45d4eec5301d527:0.0"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.927Z"
+        },
+        {
+          "record_id": "signal:FLASHLOAN_ENABLING_LARGE_PRICE_IMPACT:0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c:1771410675927",
+          "rule_id": "FLASHLOAN_ENABLING_LARGE_PRICE_IMPACT",
+          "rule_name": "Flashloan Enabling Large Price Impact",
+          "tx_hash": "0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c",
+          "confidence": "MEDIUM",
+          "details": {
+            "max_depth": 4,
+            "value_moved_wei": "8000000000000000000"
+          },
+          "evidence_refs": [
+            {
+              "dataset": "trace_calls_flat",
+              "record_id": "tracecall:0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c:0"
+            },
+            {
+              "dataset": "trace_calls_flat",
+              "record_id": "tracecall:0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c:0.0"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.927Z"
+        },
+        {
+          "record_id": "signal:FLASHLOAN_ENABLING_LARGE_PRICE_IMPACT:0xdd9c9229d080bf93017db9f7c45281b65d95157874c3dbeafe57e41003026d1a:1771410675927",
+          "rule_id": "FLASHLOAN_ENABLING_LARGE_PRICE_IMPACT",
+          "rule_name": "Flashloan Enabling Large Price Impact",
+          "tx_hash": "0xdd9c9229d080bf93017db9f7c45281b65d95157874c3dbeafe57e41003026d1a",
+          "confidence": "MEDIUM",
+          "details": {
+            "max_depth": 4,
+            "value_moved_wei": "12000000000000000000"
+          },
+          "evidence_refs": [
+            {
+              "dataset": "trace_calls_flat",
+              "record_id": "tracecall:0xdd9c9229d080bf93017db9f7c45281b65d95157874c3dbeafe57e41003026d1a:0"
+            },
+            {
+              "dataset": "trace_calls_flat",
+              "record_id": "tracecall:0xdd9c9229d080bf93017db9f7c45281b65d95157874c3dbeafe57e41003026d1a:0.0"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.927Z"
+        },
+        {
+          "record_id": "signal:FLASHLOAN_ENABLING_LARGE_PRICE_IMPACT:0x2f7c6a462c51ca8aec7b4f5a4250e3ca332f0e9ce706a92485fd4c7430b8a5c5:1771410675927",
+          "rule_id": "FLASHLOAN_ENABLING_LARGE_PRICE_IMPACT",
+          "rule_name": "Flashloan Enabling Large Price Impact",
+          "tx_hash": "0x2f7c6a462c51ca8aec7b4f5a4250e3ca332f0e9ce706a92485fd4c7430b8a5c5",
+          "confidence": "MEDIUM",
+          "details": {
+            "max_depth": 4,
+            "value_moved_wei": "402000000000000000000"
+          },
+          "evidence_refs": [
+            {
+              "dataset": "trace_calls_flat",
+              "record_id": "tracecall:0x2f7c6a462c51ca8aec7b4f5a4250e3ca332f0e9ce706a92485fd4c7430b8a5c5:0"
+            },
+            {
+              "dataset": "trace_calls_flat",
+              "record_id": "tracecall:0x2f7c6a462c51ca8aec7b4f5a4250e3ca332f0e9ce706a92485fd4c7430b8a5c5:0.0"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.927Z"
+        }
+      ]
+    },
+    {
+      "rule_id": "FLASHLOAN_WITH_EXTRACTION_OUTFLOW",
+      "count": 5,
+      "signals": [
+        {
+          "record_id": "signal:FLASHLOAN_WITH_EXTRACTION_OUTFLOW:0xac454721ab934e16ea14083f90b10b09ad7a59d856d464f4f45d4eec5301d527:1771410675928",
+          "rule_id": "FLASHLOAN_WITH_EXTRACTION_OUTFLOW",
+          "rule_name": "Flashloan with Extraction Outflow",
+          "tx_hash": "0xac454721ab934e16ea14083f90b10b09ad7a59d856d464f4f45d4eec5301d527",
+          "confidence": "HIGH",
+          "details": {
+            "extraction_targets": [
+              "0x72bb9c7ffbe2ed234e53bc64862dda6d9fff333b"
+            ]
+          },
+          "evidence_refs": [
+            {
+              "dataset": "fund_flow_edges",
+              "record_id": "flow:native:0xac454721ab934e16ea14083f90b10b09ad7a59d856d464f4f45d4eec5301d527"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.928Z"
+        },
+        {
+          "record_id": "signal:FLASHLOAN_WITH_EXTRACTION_OUTFLOW:0xd8c95bdc69ae8f5dcdec2d18e6c41dd59797cd155fccc78cb0b3d1c8ddb56455:1771410675928",
+          "rule_id": "FLASHLOAN_WITH_EXTRACTION_OUTFLOW",
+          "rule_name": "Flashloan with Extraction Outflow",
+          "tx_hash": "0xd8c95bdc69ae8f5dcdec2d18e6c41dd59797cd155fccc78cb0b3d1c8ddb56455",
+          "confidence": "HIGH",
+          "details": {
+            "extraction_targets": [
+              "0x33a61df860c1170c903f5ba1ef979570c962395e"
+            ]
+          },
+          "evidence_refs": [
+            {
+              "dataset": "fund_flow_edges",
+              "record_id": "flow:native:0xd8c95bdc69ae8f5dcdec2d18e6c41dd59797cd155fccc78cb0b3d1c8ddb56455"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.928Z"
+        },
+        {
+          "record_id": "signal:FLASHLOAN_WITH_EXTRACTION_OUTFLOW:0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c:1771410675928",
+          "rule_id": "FLASHLOAN_WITH_EXTRACTION_OUTFLOW",
+          "rule_name": "Flashloan with Extraction Outflow",
+          "tx_hash": "0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c",
+          "confidence": "HIGH",
+          "details": {
+            "extraction_targets": [
+              "0x63e0e8cd1618d51d07e645d9e34326ca5ff714af"
+            ]
+          },
+          "evidence_refs": [
+            {
+              "dataset": "fund_flow_edges",
+              "record_id": "flow:native:0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.928Z"
+        },
+        {
+          "record_id": "signal:FLASHLOAN_WITH_EXTRACTION_OUTFLOW:0xdd9c9229d080bf93017db9f7c45281b65d95157874c3dbeafe57e41003026d1a:1771410675928",
+          "rule_id": "FLASHLOAN_WITH_EXTRACTION_OUTFLOW",
+          "rule_name": "Flashloan with Extraction Outflow",
+          "tx_hash": "0xdd9c9229d080bf93017db9f7c45281b65d95157874c3dbeafe57e41003026d1a",
+          "confidence": "HIGH",
+          "details": {
+            "extraction_targets": [
+              "0x937cf819746221324b7ffd131b4920234b9ede53"
+            ]
+          },
+          "evidence_refs": [
+            {
+              "dataset": "fund_flow_edges",
+              "record_id": "flow:native:0xdd9c9229d080bf93017db9f7c45281b65d95157874c3dbeafe57e41003026d1a"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.928Z"
+        },
+        {
+          "record_id": "signal:FLASHLOAN_WITH_EXTRACTION_OUTFLOW:0x2f7c6a462c51ca8aec7b4f5a4250e3ca332f0e9ce706a92485fd4c7430b8a5c5:1771410675928",
+          "rule_id": "FLASHLOAN_WITH_EXTRACTION_OUTFLOW",
+          "rule_name": "Flashloan with Extraction Outflow",
+          "tx_hash": "0x2f7c6a462c51ca8aec7b4f5a4250e3ca332f0e9ce706a92485fd4c7430b8a5c5",
+          "confidence": "HIGH",
+          "details": {
+            "extraction_targets": [
+              "0x954c90761d6cb86cd0ef6f2785904ed439fb580d"
+            ]
+          },
+          "evidence_refs": [
+            {
+              "dataset": "fund_flow_edges",
+              "record_id": "flow:native:0x2f7c6a462c51ca8aec7b4f5a4250e3ca332f0e9ce706a92485fd4c7430b8a5c5"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.928Z"
+        }
+      ]
+    },
+    {
+      "rule_id": "VICTIM_NET_OUTFLOW_SPIKE",
+      "count": 12,
+      "signals": [
+        {
+          "record_id": "signal:VICTIM_NET_OUTFLOW_SPIKE:N/A:1771410675928",
+          "rule_id": "VICTIM_NET_OUTFLOW_SPIKE",
+          "rule_name": "Victim Net Outflow Spike",
+          "tx_hash": "N/A",
+          "confidence": "HIGH",
+          "details": {
+            "address": "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266",
+            "outflow_eth": "1800.0",
+            "net_flow_wei": "-1800000000000000000000"
+          },
+          "evidence_refs": [
+            {
+              "dataset": "address_profile",
+              "record_id": "profile:0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.928Z"
+        },
+        {
+          "record_id": "signal:VICTIM_NET_OUTFLOW_SPIKE:N/A:1771410675928",
+          "rule_id": "VICTIM_NET_OUTFLOW_SPIKE",
+          "rule_name": "Victim Net Outflow Spike",
+          "tx_hash": "N/A",
+          "confidence": "HIGH",
+          "details": {
+            "address": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
+            "outflow_eth": "7.0",
+            "net_flow_wei": "-7000000000000000000"
+          },
+          "evidence_refs": [
+            {
+              "dataset": "address_profile",
+              "record_id": "profile:0x70997970c51812dc3a010c7d01b50e0d17dc79c8"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.928Z"
+        },
+        {
+          "record_id": "signal:VICTIM_NET_OUTFLOW_SPIKE:N/A:1771410675928",
+          "rule_id": "VICTIM_NET_OUTFLOW_SPIKE",
+          "rule_name": "Victim Net Outflow Spike",
+          "tx_hash": "N/A",
+          "confidence": "HIGH",
+          "details": {
+            "address": "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc",
+            "outflow_eth": "7.0",
+            "net_flow_wei": "-7000000000000000000"
+          },
+          "evidence_refs": [
+            {
+              "dataset": "address_profile",
+              "record_id": "profile:0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.928Z"
+        },
+        {
+          "record_id": "signal:VICTIM_NET_OUTFLOW_SPIKE:N/A:1771410675928",
+          "rule_id": "VICTIM_NET_OUTFLOW_SPIKE",
+          "rule_name": "Victim Net Outflow Spike",
+          "tx_hash": "N/A",
+          "confidence": "HIGH",
+          "details": {
+            "address": "0x90f79bf6eb2c4f870365e785982e1f101e93b906",
+            "outflow_eth": "7.0",
+            "net_flow_wei": "-7000000000000000000"
+          },
+          "evidence_refs": [
+            {
+              "dataset": "address_profile",
+              "record_id": "profile:0x90f79bf6eb2c4f870365e785982e1f101e93b906"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.928Z"
+        },
+        {
+          "record_id": "signal:VICTIM_NET_OUTFLOW_SPIKE:N/A:1771410675928",
+          "rule_id": "VICTIM_NET_OUTFLOW_SPIKE",
+          "rule_name": "Victim Net Outflow Spike",
+          "tx_hash": "N/A",
+          "confidence": "HIGH",
+          "details": {
+            "address": "0x15d34aaf54267db7d7c367839aaf71a00a2c6a65",
+            "outflow_eth": "7.0",
+            "net_flow_wei": "-7000000000000000000"
+          },
+          "evidence_refs": [
+            {
+              "dataset": "address_profile",
+              "record_id": "profile:0x15d34aaf54267db7d7c367839aaf71a00a2c6a65"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.928Z"
+        },
+        {
+          "record_id": "signal:VICTIM_NET_OUTFLOW_SPIKE:N/A:1771410675928",
+          "rule_id": "VICTIM_NET_OUTFLOW_SPIKE",
+          "rule_name": "Victim Net Outflow Spike",
+          "tx_hash": "N/A",
+          "confidence": "HIGH",
+          "details": {
+            "address": "0x9965507d1a55bcc2695c58ba16fb37d819b0a4dc",
+            "outflow_eth": "7.0",
+            "net_flow_wei": "-7000000000000000000"
+          },
+          "evidence_refs": [
+            {
+              "dataset": "address_profile",
+              "record_id": "profile:0x9965507d1a55bcc2695c58ba16fb37d819b0a4dc"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.928Z"
+        },
+        {
+          "record_id": "signal:VICTIM_NET_OUTFLOW_SPIKE:N/A:1771410675928",
+          "rule_id": "VICTIM_NET_OUTFLOW_SPIKE",
+          "rule_name": "Victim Net Outflow Spike",
+          "tx_hash": "N/A",
+          "confidence": "HIGH",
+          "details": {
+            "address": "0x976ea74026e726554db657fa54763abd0c3a0aa9",
+            "outflow_eth": "7.0",
+            "net_flow_wei": "-7000000000000000000"
+          },
+          "evidence_refs": [
+            {
+              "dataset": "address_profile",
+              "record_id": "profile:0x976ea74026e726554db657fa54763abd0c3a0aa9"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.928Z"
+        },
+        {
+          "record_id": "signal:VICTIM_NET_OUTFLOW_SPIKE:N/A:1771410675928",
+          "rule_id": "VICTIM_NET_OUTFLOW_SPIKE",
+          "rule_name": "Victim Net Outflow Spike",
+          "tx_hash": "N/A",
+          "confidence": "HIGH",
+          "details": {
+            "address": "0x14dc79964da2c08b23698b3d3cc7ca32193d9955",
+            "outflow_eth": "7.0",
+            "net_flow_wei": "-7000000000000000000"
+          },
+          "evidence_refs": [
+            {
+              "dataset": "address_profile",
+              "record_id": "profile:0x14dc79964da2c08b23698b3d3cc7ca32193d9955"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.928Z"
+        },
+        {
+          "record_id": "signal:VICTIM_NET_OUTFLOW_SPIKE:N/A:1771410675928",
+          "rule_id": "VICTIM_NET_OUTFLOW_SPIKE",
+          "rule_name": "Victim Net Outflow Spike",
+          "tx_hash": "N/A",
+          "confidence": "HIGH",
+          "details": {
+            "address": "0x23618e81e3f5cdf7f54c3d65f7fbc0abf5b21e8f",
+            "outflow_eth": "7.0",
+            "net_flow_wei": "-7000000000000000000"
+          },
+          "evidence_refs": [
+            {
+              "dataset": "address_profile",
+              "record_id": "profile:0x23618e81e3f5cdf7f54c3d65f7fbc0abf5b21e8f"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.928Z"
+        },
+        {
+          "record_id": "signal:VICTIM_NET_OUTFLOW_SPIKE:N/A:1771410675928",
+          "rule_id": "VICTIM_NET_OUTFLOW_SPIKE",
+          "rule_name": "Victim Net Outflow Spike",
+          "tx_hash": "N/A",
+          "confidence": "HIGH",
+          "details": {
+            "address": "0xa0ee7a142d267c1f36714e4a8f75612f20a79720",
+            "outflow_eth": "7.0",
+            "net_flow_wei": "-7000000000000000000"
+          },
+          "evidence_refs": [
+            {
+              "dataset": "address_profile",
+              "record_id": "profile:0xa0ee7a142d267c1f36714e4a8f75612f20a79720"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.928Z"
+        },
+        {
+          "record_id": "signal:VICTIM_NET_OUTFLOW_SPIKE:N/A:1771410675928",
+          "rule_id": "VICTIM_NET_OUTFLOW_SPIKE",
+          "rule_name": "Victim Net Outflow Spike",
+          "tx_hash": "N/A",
+          "confidence": "HIGH",
+          "details": {
+            "address": "0xbcd4042de499d14e55001ccbb24a551f3b954096",
+            "outflow_eth": "7.0",
+            "net_flow_wei": "-7000000000000000000"
+          },
+          "evidence_refs": [
+            {
+              "dataset": "address_profile",
+              "record_id": "profile:0xbcd4042de499d14e55001ccbb24a551f3b954096"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.928Z"
+        },
+        {
+          "record_id": "signal:VICTIM_NET_OUTFLOW_SPIKE:N/A:1771410675928",
+          "rule_id": "VICTIM_NET_OUTFLOW_SPIKE",
+          "rule_name": "Victim Net Outflow Spike",
+          "tx_hash": "N/A",
+          "confidence": "HIGH",
+          "details": {
+            "address": "0x71be63f3384f5fb98995898a86b02fb2426c5788",
+            "outflow_eth": "49.0",
+            "net_flow_wei": "-49000000000000000000"
+          },
+          "evidence_refs": [
+            {
+              "dataset": "address_profile",
+              "record_id": "profile:0x71be63f3384f5fb98995898a86b02fb2426c5788"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.928Z"
+        }
+      ]
+    },
+    {
+      "rule_id": "CONSOLIDATION_TO_FEW_SINKS",
+      "count": 2,
+      "signals": [
+        {
+          "record_id": "signal:CONSOLIDATION_TO_FEW_SINKS:N/A:1771410675929",
+          "rule_id": "CONSOLIDATION_TO_FEW_SINKS",
+          "rule_name": "Consolidation to Few Sinks",
+          "tx_hash": "N/A",
+          "confidence": "MEDIUM",
+          "details": {
+            "sink": "0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0",
+            "inflow_count": 72
+          },
+          "evidence_refs": [],
+          "fired_at": "2026-02-18T10:31:15.929Z"
+        },
+        {
+          "record_id": "signal:CONSOLIDATION_TO_FEW_SINKS:N/A:1771410675929",
+          "rule_id": "CONSOLIDATION_TO_FEW_SINKS",
+          "rule_name": "Consolidation to Few Sinks",
+          "tx_hash": "N/A",
+          "confidence": "MEDIUM",
+          "details": {
+            "sink": "0x0165878a594ca255338adfa4d48449f69242eb8f",
+            "inflow_count": 3
+          },
+          "evidence_refs": [],
+          "fired_at": "2026-02-18T10:31:15.929Z"
+        }
+      ]
+    },
+    {
+      "rule_id": "STATE_DIFF_CONTRACT_BALANCE_DRAINED",
+      "count": 1,
+      "signals": [
+        {
+          "record_id": "signal:STATE_DIFF_CONTRACT_BALANCE_DRAINED:0x718353cf002a3e6a120d95227b43da5b6b20a10ef78b3e24fcb9b3004c720e61:1771410675930",
+          "rule_id": "STATE_DIFF_CONTRACT_BALANCE_DRAINED",
+          "rule_name": "State Diff: Contract Balance Drained ≥70%",
+          "tx_hash": "0x718353cf002a3e6a120d95227b43da5b6b20a10ef78b3e24fcb9b3004c720e61",
+          "confidence": "HIGH",
+          "details": {
+            "address": "0x0165878a594ca255338adfa4d48449f69242eb8f",
+            "balance_before_eth": "250.0",
+            "drained_pct": 100,
+            "delta_eth": "-250.0"
+          },
+          "evidence_refs": [
+            {
+              "dataset": "balance_diffs",
+              "record_id": "baldiff:0x718353cf002a3e6a120d95227b43da5b6b20a10ef78b3e24fcb9b3004c720e61:0x0165878a594ca255338adfa4d48449f69242eb8f"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.930Z"
+        }
+      ]
+    },
+    {
+      "rule_id": "STATE_DIFF_UNEXPECTED_ETH_GAIN",
+      "count": 3,
+      "signals": [
+        {
+          "record_id": "signal:STATE_DIFF_UNEXPECTED_ETH_GAIN:0xa707c910f20b2d1a10e967a58a2841c1195b04b927869bad23307e42c9eec82e:1771410675930",
+          "rule_id": "STATE_DIFF_UNEXPECTED_ETH_GAIN",
+          "rule_name": "State Diff: Unexpected ETH Gain (Not TX Recipient)",
+          "tx_hash": "0xa707c910f20b2d1a10e967a58a2841c1195b04b927869bad23307e42c9eec82e",
+          "confidence": "HIGH",
+          "details": {
+            "gainer": "0x2279b7a0a67db372996a5fab50d91eaa73d2ebe6",
+            "gain_eth": "100.0"
+          },
+          "evidence_refs": [
+            {
+              "dataset": "balance_diffs",
+              "record_id": "baldiff:0xa707c910f20b2d1a10e967a58a2841c1195b04b927869bad23307e42c9eec82e:0x2279b7a0a67db372996a5fab50d91eaa73d2ebe6"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.930Z"
+        },
+        {
+          "record_id": "signal:STATE_DIFF_UNEXPECTED_ETH_GAIN:0xd8c95bdc69ae8f5dcdec2d18e6c41dd59797cd155fccc78cb0b3d1c8ddb56455:1771410675930",
+          "rule_id": "STATE_DIFF_UNEXPECTED_ETH_GAIN",
+          "rule_name": "State Diff: Unexpected ETH Gain (Not TX Recipient)",
+          "tx_hash": "0xd8c95bdc69ae8f5dcdec2d18e6c41dd59797cd155fccc78cb0b3d1c8ddb56455",
+          "confidence": "HIGH",
+          "details": {
+            "gainer": "0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9",
+            "tx_recipient": "0x33a61df860c1170c903f5ba1ef979570c962395e",
+            "gain_eth": "1.0"
+          },
+          "evidence_refs": [
+            {
+              "dataset": "balance_diffs",
+              "record_id": "baldiff:0xd8c95bdc69ae8f5dcdec2d18e6c41dd59797cd155fccc78cb0b3d1c8ddb56455:0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.930Z"
+        },
+        {
+          "record_id": "signal:STATE_DIFF_UNEXPECTED_ETH_GAIN:0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c:1771410675930",
+          "rule_id": "STATE_DIFF_UNEXPECTED_ETH_GAIN",
+          "rule_name": "State Diff: Unexpected ETH Gain (Not TX Recipient)",
+          "tx_hash": "0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c",
+          "confidence": "HIGH",
+          "details": {
+            "gainer": "0x5fc8d32690cc91d4c39d9d3abcbd16989f875707",
+            "tx_recipient": "0x63e0e8cd1618d51d07e645d9e34326ca5ff714af",
+            "gain_eth": "1.0"
+          },
+          "evidence_refs": [
+            {
+              "dataset": "balance_diffs",
+              "record_id": "baldiff:0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c:0x5fc8d32690cc91d4c39d9d3abcbd16989f875707"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.930Z"
+        }
+      ]
+    },
+    {
+      "rule_id": "STATE_DIFF_MULTI_CONTRACT_BALANCE_CHANGE",
+      "count": 3,
+      "signals": [
+        {
+          "record_id": "signal:STATE_DIFF_MULTI_CONTRACT_BALANCE_CHANGE:0xac454721ab934e16ea14083f90b10b09ad7a59d856d464f4f45d4eec5301d527:1771410675931",
+          "rule_id": "STATE_DIFF_MULTI_CONTRACT_BALANCE_CHANGE",
+          "rule_name": "State Diff: Multi-Contract Balance Change (Complex Attack)",
+          "tx_hash": "0xac454721ab934e16ea14083f90b10b09ad7a59d856d464f4f45d4eec5301d527",
+          "confidence": "HIGH",
+          "details": {
+            "total_addresses_changed": 3,
+            "losers": [
+              {
+                "addr": "0x71be63f3384f5fb98995898a86b02fb2426c5788",
+                "delta_eth": "-3.000000183414450081"
+              },
+              {
+                "addr": "0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0",
+                "delta_eth": "-6.0"
+              }
+            ],
+            "gainers": [
+              {
+                "addr": "0x72bb9c7ffbe2ed234e53bc64862dda6d9fff333b",
+                "delta_eth": "9.0"
+              }
+            ]
+          },
+          "evidence_refs": [
+            {
+              "dataset": "balance_diffs",
+              "record_id": "baldiff:0xac454721ab934e16ea14083f90b10b09ad7a59d856d464f4f45d4eec5301d527:0x71be63f3384f5fb98995898a86b02fb2426c5788"
+            },
+            {
+              "dataset": "balance_diffs",
+              "record_id": "baldiff:0xac454721ab934e16ea14083f90b10b09ad7a59d856d464f4f45d4eec5301d527:0x72bb9c7ffbe2ed234e53bc64862dda6d9fff333b"
+            },
+            {
+              "dataset": "balance_diffs",
+              "record_id": "baldiff:0xac454721ab934e16ea14083f90b10b09ad7a59d856d464f4f45d4eec5301d527:0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.931Z"
+        },
+        {
+          "record_id": "signal:STATE_DIFF_MULTI_CONTRACT_BALANCE_CHANGE:0xd8c95bdc69ae8f5dcdec2d18e6c41dd59797cd155fccc78cb0b3d1c8ddb56455:1771410675931",
+          "rule_id": "STATE_DIFF_MULTI_CONTRACT_BALANCE_CHANGE",
+          "rule_name": "State Diff: Multi-Contract Balance Change (Complex Attack)",
+          "tx_hash": "0xd8c95bdc69ae8f5dcdec2d18e6c41dd59797cd155fccc78cb0b3d1c8ddb56455",
+          "confidence": "HIGH",
+          "details": {
+            "total_addresses_changed": 3,
+            "losers": [
+              {
+                "addr": "0x71be63f3384f5fb98995898a86b02fb2426c5788",
+                "delta_eth": "-3.000000025102260106"
+              }
+            ],
+            "gainers": [
+              {
+                "addr": "0x33a61df860c1170c903f5ba1ef979570c962395e",
+                "delta_eth": "2.0"
+              },
+              {
+                "addr": "0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9",
+                "delta_eth": "1.0"
+              }
+            ]
+          },
+          "evidence_refs": [
+            {
+              "dataset": "balance_diffs",
+              "record_id": "baldiff:0xd8c95bdc69ae8f5dcdec2d18e6c41dd59797cd155fccc78cb0b3d1c8ddb56455:0x33a61df860c1170c903f5ba1ef979570c962395e"
+            },
+            {
+              "dataset": "balance_diffs",
+              "record_id": "baldiff:0xd8c95bdc69ae8f5dcdec2d18e6c41dd59797cd155fccc78cb0b3d1c8ddb56455:0x71be63f3384f5fb98995898a86b02fb2426c5788"
+            },
+            {
+              "dataset": "balance_diffs",
+              "record_id": "baldiff:0xd8c95bdc69ae8f5dcdec2d18e6c41dd59797cd155fccc78cb0b3d1c8ddb56455:0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.931Z"
+        },
+        {
+          "record_id": "signal:STATE_DIFF_MULTI_CONTRACT_BALANCE_CHANGE:0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c:1771410675931",
+          "rule_id": "STATE_DIFF_MULTI_CONTRACT_BALANCE_CHANGE",
+          "rule_name": "State Diff: Multi-Contract Balance Change (Complex Attack)",
+          "tx_hash": "0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c",
+          "confidence": "HIGH",
+          "details": {
+            "total_addresses_changed": 3,
+            "losers": [
+              {
+                "addr": "0x71be63f3384f5fb98995898a86b02fb2426c5788",
+                "delta_eth": "-3.000000003657572847"
+              }
+            ],
+            "gainers": [
+              {
+                "addr": "0x5fc8d32690cc91d4c39d9d3abcbd16989f875707",
+                "delta_eth": "1.0"
+              },
+              {
+                "addr": "0x63e0e8cd1618d51d07e645d9e34326ca5ff714af",
+                "delta_eth": "2.0"
+              }
+            ]
+          },
+          "evidence_refs": [
+            {
+              "dataset": "balance_diffs",
+              "record_id": "baldiff:0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c:0x5fc8d32690cc91d4c39d9d3abcbd16989f875707"
+            },
+            {
+              "dataset": "balance_diffs",
+              "record_id": "baldiff:0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c:0x63e0e8cd1618d51d07e645d9e34326ca5ff714af"
+            },
+            {
+              "dataset": "balance_diffs",
+              "record_id": "baldiff:0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c:0x71be63f3384f5fb98995898a86b02fb2426c5788"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.931Z"
+        }
+      ]
+    },
+    {
+      "rule_id": "STATE_DIFF_NET_GAINER_IS_NEW_CONTRACT",
+      "count": 5,
+      "signals": [
+        {
+          "record_id": "signal:STATE_DIFF_NET_GAINER_IS_NEW_CONTRACT:0xcbbb14a1587045c91f5bd6ee44a4362a5376db7c4b022da2df6132ce1aad66db:1771410675931",
+          "rule_id": "STATE_DIFF_NET_GAINER_IS_NEW_CONTRACT",
+          "rule_name": "State Diff: New Contract is Net ETH Gainer (Attacker Extraction)",
+          "tx_hash": "0xcbbb14a1587045c91f5bd6ee44a4362a5376db7c4b022da2df6132ce1aad66db",
+          "confidence": "HIGH",
+          "details": {
+            "contract": "0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0",
+            "net_gain_eth": "314.0",
+            "tx_count": 73,
+            "note": "Contains non-deployer funding"
+          },
+          "evidence_refs": [
+            {
+              "dataset": "net_balance_changes",
+              "record_id": "netbal:0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.931Z"
+        },
+        {
+          "record_id": "signal:STATE_DIFF_NET_GAINER_IS_NEW_CONTRACT:0x9dabf79e884c66c44c14d0c3a8d3696b73abe5d29750eba8e6eefedece46a5ce:1771410675931",
+          "rule_id": "STATE_DIFF_NET_GAINER_IS_NEW_CONTRACT",
+          "rule_name": "State Diff: New Contract is Net ETH Gainer (Attacker Extraction)",
+          "tx_hash": "0x9dabf79e884c66c44c14d0c3a8d3696b73abe5d29750eba8e6eefedece46a5ce",
+          "confidence": "HIGH",
+          "details": {
+            "contract": "0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9",
+            "net_gain_eth": "251.0",
+            "tx_count": 3,
+            "note": "Contains non-deployer funding"
+          },
+          "evidence_refs": [
+            {
+              "dataset": "net_balance_changes",
+              "record_id": "netbal:0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.931Z"
+        },
+        {
+          "record_id": "signal:STATE_DIFF_NET_GAINER_IS_NEW_CONTRACT:0x0da0a94da11195b318e54f2daebf3c1b86a4fe520cb7659dedbd725baa8e2b77:1771410675931",
+          "rule_id": "STATE_DIFF_NET_GAINER_IS_NEW_CONTRACT",
+          "rule_name": "State Diff: New Contract is Net ETH Gainer (Attacker Extraction)",
+          "tx_hash": "0x0da0a94da11195b318e54f2daebf3c1b86a4fe520cb7659dedbd725baa8e2b77",
+          "confidence": "HIGH",
+          "details": {
+            "contract": "0x0165878a594ca255338adfa4d48449f69242eb8f",
+            "net_gain_eth": "20.0",
+            "tx_count": 4,
+            "note": "Contains non-deployer funding"
+          },
+          "evidence_refs": [
+            {
+              "dataset": "net_balance_changes",
+              "record_id": "netbal:0x0165878a594ca255338adfa4d48449f69242eb8f"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.931Z"
+        },
+        {
+          "record_id": "signal:STATE_DIFF_NET_GAINER_IS_NEW_CONTRACT:0xcb1b6cfae812bd66aba07447defd1603c74b2f8b82b654b0350f81844350a88b:1771410675931",
+          "rule_id": "STATE_DIFF_NET_GAINER_IS_NEW_CONTRACT",
+          "rule_name": "State Diff: New Contract is Net ETH Gainer (Attacker Extraction)",
+          "tx_hash": "0xcb1b6cfae812bd66aba07447defd1603c74b2f8b82b654b0350f81844350a88b",
+          "confidence": "HIGH",
+          "details": {
+            "contract": "0x8a791620dd6260079bf849dc5567adc3f2fdc318",
+            "net_gain_eth": "205.0",
+            "tx_count": 2,
+            "note": "Contains non-deployer funding"
+          },
+          "evidence_refs": [
+            {
+              "dataset": "net_balance_changes",
+              "record_id": "netbal:0x8a791620dd6260079bf849dc5567adc3f2fdc318"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.931Z"
+        },
+        {
+          "record_id": "signal:STATE_DIFF_NET_GAINER_IS_NEW_CONTRACT:0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c:1771410675931",
+          "rule_id": "STATE_DIFF_NET_GAINER_IS_NEW_CONTRACT",
+          "rule_name": "State Diff: New Contract is Net ETH Gainer (Attacker Extraction)",
+          "tx_hash": "0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c",
+          "confidence": "HIGH",
+          "details": {
+            "contract": "0x5fc8d32690cc91d4c39d9d3abcbd16989f875707",
+            "net_gain_eth": "1.0",
+            "tx_count": 1,
+            "note": "Contains non-deployer funding"
+          },
+          "evidence_refs": [
+            {
+              "dataset": "net_balance_changes",
+              "record_id": "netbal:0x5fc8d32690cc91d4c39d9d3abcbd16989f875707"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.931Z"
+        }
+      ]
+    },
+    {
+      "rule_id": "STATE_DIFF_REENTRANCY_PATTERN_CONFIRMED",
+      "count": 6,
+      "signals": [
+        {
+          "record_id": "signal:STATE_DIFF_REENTRANCY_PATTERN_CONFIRMED:0xa707c910f20b2d1a10e967a58a2841c1195b04b927869bad23307e42c9eec82e:1771410675931",
+          "rule_id": "STATE_DIFF_REENTRANCY_PATTERN_CONFIRMED",
+          "rule_name": "State Diff: Reentrancy Pattern Confirmed",
+          "tx_hash": "0xa707c910f20b2d1a10e967a58a2841c1195b04b927869bad23307e42c9eec82e",
+          "confidence": "HIGH",
+          "details": {
+            "suspicion_score": 8,
+            "eth_losers": [
+              {
+                "address": "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266",
+                "delta_eth": "-100.000120352048134505"
+              }
+            ],
+            "eth_gainers": [
+              {
+                "address": "0x2279b7a0a67db372996a5fab50d91eaa73d2ebe6",
+                "delta_eth": "100.0"
+              }
+            ],
+            "storage_changes": 2,
+            "contracts_with_storage_change": [
+              "0x2279b7a0a67db372996a5fab50d91eaa73d2ebe6"
+            ],
+            "total_eth_lost": 100.00012035204813
+          },
+          "evidence_refs": [
+            {
+              "dataset": "balance_diffs",
+              "tx_hash": "0xa707c910f20b2d1a10e967a58a2841c1195b04b927869bad23307e42c9eec82e"
+            },
+            {
+              "dataset": "storage_diffs",
+              "tx_hash": "0xa707c910f20b2d1a10e967a58a2841c1195b04b927869bad23307e42c9eec82e"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.931Z"
+        },
+        {
+          "record_id": "signal:STATE_DIFF_REENTRANCY_PATTERN_CONFIRMED:0xe00b7227399e7b72668387cd345697e4306f871648a6a116f0c747f7f8660221:1771410675931",
+          "rule_id": "STATE_DIFF_REENTRANCY_PATTERN_CONFIRMED",
+          "rule_name": "State Diff: Reentrancy Pattern Confirmed",
+          "tx_hash": "0xe00b7227399e7b72668387cd345697e4306f871648a6a116f0c747f7f8660221",
+          "confidence": "HIGH",
+          "details": {
+            "suspicion_score": 8,
+            "eth_losers": [
+              {
+                "address": "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266",
+                "delta_eth": "-200.000008274968795046"
+              }
+            ],
+            "eth_gainers": [
+              {
+                "address": "0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9",
+                "delta_eth": "200.0"
+              }
+            ],
+            "storage_changes": 2,
+            "contracts_with_storage_change": [
+              "0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9"
+            ],
+            "total_eth_lost": 200.0000082749688
+          },
+          "evidence_refs": [
+            {
+              "dataset": "balance_diffs",
+              "tx_hash": "0xe00b7227399e7b72668387cd345697e4306f871648a6a116f0c747f7f8660221"
+            },
+            {
+              "dataset": "storage_diffs",
+              "tx_hash": "0xe00b7227399e7b72668387cd345697e4306f871648a6a116f0c747f7f8660221"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.931Z"
+        },
+        {
+          "record_id": "signal:STATE_DIFF_REENTRANCY_PATTERN_CONFIRMED:0xbb2d0ba2e61e6f3818e744611b21768cd18bc630439dc0b33676a6869e028645:1771410675931",
+          "rule_id": "STATE_DIFF_REENTRANCY_PATTERN_CONFIRMED",
+          "rule_name": "State Diff: Reentrancy Pattern Confirmed",
+          "tx_hash": "0xbb2d0ba2e61e6f3818e744611b21768cd18bc630439dc0b33676a6869e028645",
+          "confidence": "HIGH",
+          "details": {
+            "suspicion_score": 8,
+            "eth_losers": [
+              {
+                "address": "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266",
+                "delta_eth": "-200.000007247613895125"
+              }
+            ],
+            "eth_gainers": [
+              {
+                "address": "0xdc64a140aa3e981100a9beca4e685f962f0cf6c9",
+                "delta_eth": "200.0"
+              }
+            ],
+            "storage_changes": 2,
+            "contracts_with_storage_change": [
+              "0xdc64a140aa3e981100a9beca4e685f962f0cf6c9"
+            ],
+            "total_eth_lost": 200.0000072476139
+          },
+          "evidence_refs": [
+            {
+              "dataset": "balance_diffs",
+              "tx_hash": "0xbb2d0ba2e61e6f3818e744611b21768cd18bc630439dc0b33676a6869e028645"
+            },
+            {
+              "dataset": "storage_diffs",
+              "tx_hash": "0xbb2d0ba2e61e6f3818e744611b21768cd18bc630439dc0b33676a6869e028645"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.931Z"
+        },
+        {
+          "record_id": "signal:STATE_DIFF_REENTRANCY_PATTERN_CONFIRMED:0xb6031534ccd2606c565c9ca3c980587045654e7022a41b4c77fd55e05b0bc827:1771410675931",
+          "rule_id": "STATE_DIFF_REENTRANCY_PATTERN_CONFIRMED",
+          "rule_name": "State Diff: Reentrancy Pattern Confirmed",
+          "tx_hash": "0xb6031534ccd2606c565c9ca3c980587045654e7022a41b4c77fd55e05b0bc827",
+          "confidence": "HIGH",
+          "details": {
+            "suspicion_score": 8,
+            "eth_losers": [
+              {
+                "address": "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266",
+                "delta_eth": "-500.000005422136711809"
+              }
+            ],
+            "eth_gainers": [
+              {
+                "address": "0xa513e6e4b8f2a923d98304ec87f64353c4d5c853",
+                "delta_eth": "500.0"
+              }
+            ],
+            "storage_changes": 2,
+            "contracts_with_storage_change": [
+              "0xa513e6e4b8f2a923d98304ec87f64353c4d5c853"
+            ],
+            "total_eth_lost": 500.0000054221367
+          },
+          "evidence_refs": [
+            {
+              "dataset": "balance_diffs",
+              "tx_hash": "0xb6031534ccd2606c565c9ca3c980587045654e7022a41b4c77fd55e05b0bc827"
+            },
+            {
+              "dataset": "storage_diffs",
+              "tx_hash": "0xb6031534ccd2606c565c9ca3c980587045654e7022a41b4c77fd55e05b0bc827"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.931Z"
+        },
+        {
+          "record_id": "signal:STATE_DIFF_REENTRANCY_PATTERN_CONFIRMED:0xd8c95bdc69ae8f5dcdec2d18e6c41dd59797cd155fccc78cb0b3d1c8ddb56455:1771410675931",
+          "rule_id": "STATE_DIFF_REENTRANCY_PATTERN_CONFIRMED",
+          "rule_name": "State Diff: Reentrancy Pattern Confirmed",
+          "tx_hash": "0xd8c95bdc69ae8f5dcdec2d18e6c41dd59797cd155fccc78cb0b3d1c8ddb56455",
+          "confidence": "HIGH",
+          "details": {
+            "suspicion_score": 10,
+            "eth_losers": [
+              {
+                "address": "0x71be63f3384f5fb98995898a86b02fb2426c5788",
+                "delta_eth": "-3.000000025102260106"
+              }
+            ],
+            "eth_gainers": [
+              {
+                "address": "0x33a61df860c1170c903f5ba1ef979570c962395e",
+                "delta_eth": "2.0"
+              },
+              {
+                "address": "0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9",
+                "delta_eth": "1.0"
+              }
+            ],
+            "storage_changes": 3,
+            "contracts_with_storage_change": [
+              "0x33a61df860c1170c903f5ba1ef979570c962395e",
+              "0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9"
+            ],
+            "total_eth_lost": 3.0000000251022603
+          },
+          "evidence_refs": [
+            {
+              "dataset": "balance_diffs",
+              "tx_hash": "0xd8c95bdc69ae8f5dcdec2d18e6c41dd59797cd155fccc78cb0b3d1c8ddb56455"
+            },
+            {
+              "dataset": "storage_diffs",
+              "tx_hash": "0xd8c95bdc69ae8f5dcdec2d18e6c41dd59797cd155fccc78cb0b3d1c8ddb56455"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.931Z"
+        },
+        {
+          "record_id": "signal:STATE_DIFF_REENTRANCY_PATTERN_CONFIRMED:0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c:1771410675931",
+          "rule_id": "STATE_DIFF_REENTRANCY_PATTERN_CONFIRMED",
+          "rule_name": "State Diff: Reentrancy Pattern Confirmed",
+          "tx_hash": "0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c",
+          "confidence": "HIGH",
+          "details": {
+            "suspicion_score": 9,
+            "eth_losers": [
+              {
+                "address": "0x71be63f3384f5fb98995898a86b02fb2426c5788",
+                "delta_eth": "-3.000000003657572847"
+              }
+            ],
+            "eth_gainers": [
+              {
+                "address": "0x5fc8d32690cc91d4c39d9d3abcbd16989f875707",
+                "delta_eth": "1.0"
+              },
+              {
+                "address": "0x63e0e8cd1618d51d07e645d9e34326ca5ff714af",
+                "delta_eth": "2.0"
+              }
+            ],
+            "storage_changes": 2,
+            "contracts_with_storage_change": [
+              "0x5fc8d32690cc91d4c39d9d3abcbd16989f875707",
+              "0x63e0e8cd1618d51d07e645d9e34326ca5ff714af"
+            ],
+            "total_eth_lost": 3.000000003657573
+          },
+          "evidence_refs": [
+            {
+              "dataset": "balance_diffs",
+              "tx_hash": "0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c"
+            },
+            {
+              "dataset": "storage_diffs",
+              "tx_hash": "0x8e25e74c10c69066f5ad7ed9ca192c0ed4fb541a63de49b02407b56a8ed6f48c"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.931Z"
+        }
+      ]
+    },
+    {
+      "rule_id": "STATE_DIFF_VICTIM_LOSES_ATTACKER_GAINS",
+      "count": 1,
+      "signals": [
+        {
+          "record_id": "signal:STATE_DIFF_VICTIM_LOSES_ATTACKER_GAINS:0xac454721ab934e16ea14083f90b10b09ad7a59d856d464f4f45d4eec5301d527:1771410675932",
+          "rule_id": "STATE_DIFF_VICTIM_LOSES_ATTACKER_GAINS",
+          "rule_name": "State Diff: Victim Loses ETH, New Contract Gains (Confirmed Exploit)",
+          "tx_hash": "0xac454721ab934e16ea14083f90b10b09ad7a59d856d464f4f45d4eec5301d527",
+          "confidence": "HIGH",
+          "details": {
+            "victim_losers": [
+              {
+                "addr": "0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0",
+                "delta_eth": "-6.0"
+              }
+            ],
+            "attacker_gainers": [
+              {
+                "addr": "0x72bb9c7ffbe2ed234e53bc64862dda6d9fff333b",
+                "delta_eth": "9.0"
+              }
+            ],
+            "storage_changes_in_tx": 1
+          },
+          "evidence_refs": [
+            {
+              "dataset": "balance_diffs",
+              "record_id": "baldiff:0xac454721ab934e16ea14083f90b10b09ad7a59d856d464f4f45d4eec5301d527:0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0"
+            },
+            {
+              "dataset": "balance_diffs",
+              "record_id": "baldiff:0xac454721ab934e16ea14083f90b10b09ad7a59d856d464f4f45d4eec5301d527:0x72bb9c7ffbe2ed234e53bc64862dda6d9fff333b"
+            }
+          ],
+          "fired_at": "2026-02-18T10:31:15.932Z"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+{"from_block":0,"to_block":406,"blocks_fetched":407,"txs_fetched":385,"receipts_fetched":385,"event_logs_fetched":365,"call_traces_fetched":385,"call_trace_errors":0,"state_diffs_fetched":385,"state_diff_errors":0,"balance_diffs_extracted":756,"storage_diffs_extracted":381,"trace_coverage_pct":"100.0","state_diff_coverage_pct":"100.0","generated_at":"2026-02-18T13:06:40.557Z"}

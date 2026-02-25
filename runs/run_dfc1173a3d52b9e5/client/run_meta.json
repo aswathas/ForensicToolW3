@@ -1,0 +1,101 @@
+{
+  "run_id": "dfc1173a3d52b9e5",
+  "scenario": "reentrancy",
+  "started_at": "2026-02-18T13:24:53.276Z",
+  "config": {
+    "anvil": {
+      "port": 8545,
+      "accounts": 60,
+      "balance": 100000
+    },
+    "simulation": {
+      "numAttackers": 5,
+      "numUsers": 2,
+      "numUserTxsPerRound": 1,
+      "attackRepeatCount": 1,
+      "mineBlocksBetween": 2
+    },
+    "attacks": {
+      "attack1_depositPerUser": "200",
+      "attack1_attackValue": "3",
+      "attack1_maxDepth": 3,
+      "attack2_depositPerUser": "200",
+      "attack2_attackValue": "3",
+      "attack2_prefund": "10",
+      "attack3_attackValue": "3",
+      "attack3_depositPerUser": "200",
+      "attack4_depositPerUser": "200",
+      "attack4_attackValue": "3",
+      "attack5_attackValue": "2",
+      "attack5_flashPoolFund": "500",
+      "attack5_victimFund": "200",
+      "attack5_dexFund": "100"
+    },
+    "output": {
+      "baseDir": "./runs"
+    },
+    "gas": {
+      "attackGasLimit": 2000000,
+      "deployGasLimit": 5000000
+    },
+    "enabledAttacks": {
+      "classic_reentrancy": true,
+      "cross_func_reentrancy": true,
+      "readonly_reentrancy": true,
+      "erc777_hook": true,
+      "flashloan_price_manip": true
+    }
+  },
+  "block_range": {
+    "from": 407,
+    "to": 460
+  },
+  "attacks": [
+    {
+      "attack": "classic_reentrancy",
+      "tx": "0xf1288e2dcbb254fdff6366b495b223fde70d05acab21af4cf466867f00ee199c",
+      "attacker": "0x6179FBb91b239b574A4565e2c55A6fD38C3372d3",
+      "victim": "0x322813Fd9A801c5507c9de605d63CEA4f2CE6c44",
+      "status": "ok"
+    },
+    {
+      "attack": "cross_func_reentrancy",
+      "tx": "0x2c9cf9276594ce9b39f86221e7fcd6311f2f4583e3a50e949873697ccc65d77a",
+      "attacker": "0xd2D7715BAe07e5B9d7c0Ec0b671B9bAD6b9dBEBb",
+      "victim": "0xa85233C63b9Ee964Add6F2cffe00Fd84eb32338f",
+      "status": "ok"
+    },
+    {
+      "attack": "readonly_reentrancy",
+      "tx": "0x973282b40af6251102b6b2558d2948df592ea741a35e28f8801f4bd70726d4a4",
+      "attacker": "0x33c0024ebC7A8989c1aE32988d5402295c8fd42B",
+      "victim": "0x4A679253410272dd5232B3Ff7cF5dbB88f295319",
+      "status": "ok"
+    },
+    {
+      "attack": "erc777_hook_reentrancy",
+      "status": "failed",
+      "error": "transaction execution reverted (action=\"sendTransaction\", data=null, reason=null, invocation=null, revert=null, transaction={ \"data\": \"\", \"from\": \"0x90F79bf6EB2c4f870365E785982E1f101E93b906\", \"to\": \"0x4af802b3010e07845b2B8C2250126e9Ac0BDb6B9\" }, receipt={ \"_type\": \"TransactionReceipt\", \"blobGasPrice"
+    },
+    {
+      "attack": "flashloan_price_manip",
+      "status": "failed",
+      "error": "transaction execution reverted (action=\"sendTransaction\", data=null, reason=null, invocation=null, revert=null, transaction={ \"data\": \"\", \"from\": \"0x90F79bf6EB2c4f870365E785982E1f101E93b906\", \"to\": \"0x4d8eC2972eb0bC4210c64E651638D4a00ad3B400\" }, receipt={ \"_type\": \"TransactionReceipt\", \"blobGasPrice"
+    }
+  ],
+  "contracts": {
+    "vault1": "0x322813Fd9A801c5507c9de605d63CEA4f2CE6c44",
+    "vault2": "0xa85233C63b9Ee964Add6F2cffe00Fd84eb32338f",
+    "readOnlyVault": "0x4A679253410272dd5232B3Ff7cF5dbB88f295319",
+    "dependent": "0x7a2088a1bFc9d81c55368AE168C2C02570cB814F",
+    "erc777Vault": "0x09635F643e140090A9A8Dcd712eD6285858ceBef",
+    "flashPool": "0xc5a5C42992dECbae36851359345FE25997F5C42d",
+    "dex": "0x67d269191c92Caf3cD7723F116c85e6E9bf55933",
+    "flashVictim": "0xE6E340D132b5f46d1e472DebcD681B2aBc16e57E"
+  },
+  "output": {
+    "client_dir": "C:\\Users\\aswat\\ForensicToolW3\\runs\\run_dfc1173a3d52b9e5\\client",
+    "forensic_bundle_dir": "C:\\Users\\aswat\\ForensicToolW3\\runs\\run_dfc1173a3d52b9e5\\forensic_bundle",
+    "raw_dir": "C:\\Users\\aswat\\ForensicToolW3\\runs\\run_dfc1173a3d52b9e5\\client\\01_raw"
+  }
+}

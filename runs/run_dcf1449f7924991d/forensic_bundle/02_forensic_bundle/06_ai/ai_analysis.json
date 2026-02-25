@@ -1,0 +1,11 @@
+{
+  "generated_at": "2026-02-18T13:57:28.458Z",
+  "model": "gemma3:1b",
+  "narrative": "**Executive Summary**\n\nThis analysis of 5035 EVM transactions reveals a significant and potentially active attack pattern centered around VICTIM_NET_OUTFLOW_SPIKE events. We’ve detected 1 incident, with a severity of MEDIUM, triggered by a rule specifically targeting state differences within the VICTIM_NET_OUTFLOW_SPIKE protocol.  The detected signals are overwhelmingly focused on high-value transactions, with a significant volume of transactions involving the ‘0x90f79bf6eb2c4f870365e785982e1f101e93b906’ address, indicating a targeted attempt to exploit vulnerabilities within the VICTIM_NET_OUTFLOW_SPIKE protocol.  Based on the data, we are confident in identifying this as a sophisticated attack, likely aiming to disrupt network functionality and potentially steal funds.\n\nThe evidence supporting this attack is primarily concentrated on the high volume of VICTIM_NET_OUTFLOW_SPIKE events, specifically the high-value transactions associated with the identified address.  Furthermore, the presence of 11 state diff features available suggests a deliberate attempt to manipulate network state, potentially to trigger further malicious actions.  The specific signals – ‘0x90f79bf6eb2c4f870365e785982e1f101e93b906’ – are particularly noteworthy as they represent a known, high-risk address and are being actively exploited.  The data also points to a focused attack, rather than a widespread, random distribution of transactions.\n\nGiven these findings, the security team should immediately prioritize investigating the root cause of these high-value transactions.  Specifically, we recommend a thorough review of the VICTIM_NET_OUTFLOW_SPIKE protocol, focusing on potential vulnerabilities and implementing enhanced monitoring and anomaly detection to proactively identify and mitigate potential threats.  Further investigation should also include analyzing the flow of funds associated with these transactions to determine the extent of the potential damage and identify any associated compromised accounts.",
+  "input_summary": {
+    "txs_analyzed": 5035,
+    "signals_fired": 55,
+    "incidents": 1,
+    "high_signals_used": 8
+  }
+}

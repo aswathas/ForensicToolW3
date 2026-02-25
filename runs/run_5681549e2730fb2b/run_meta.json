@@ -1,0 +1,99 @@
+{
+  "run_id": "5681549e2730fb2b",
+  "scenario": "reentrancy",
+  "started_at": "2026-02-18T09:36:17.994Z",
+  "config": {
+    "anvil": {
+      "port": 8545,
+      "accounts": 15,
+      "balance": 100000
+    },
+    "simulation": {
+      "numAttackers": 5,
+      "numUsers": 2,
+      "numUserTxsPerRound": 1,
+      "attackRepeatCount": 1,
+      "mineBlocksBetween": 2
+    },
+    "attacks": {
+      "attack1_depositPerUser": "10",
+      "attack1_attackValue": "3",
+      "attack1_maxDepth": 3,
+      "attack2_depositPerUser": "10",
+      "attack2_attackValue": "3",
+      "attack2_prefund": "10",
+      "attack3_attackValue": "3",
+      "attack3_depositPerUser": "5",
+      "attack4_depositPerUser": "5",
+      "attack4_attackValue": "3",
+      "attack5_attackValue": "2",
+      "attack5_flashPoolFund": "200",
+      "attack5_victimFund": "50",
+      "attack5_dexFund": "20"
+    },
+    "output": {
+      "baseDir": "./runs"
+    },
+    "gas": {
+      "attackGasLimit": 2000000,
+      "deployGasLimit": 5000000
+    }
+  },
+  "block_range": {
+    "from": 0,
+    "to": 55
+  },
+  "attacks": [
+    {
+      "attack": "classic_reentrancy",
+      "round": 1,
+      "tx": "0xcb7eb9ae350ed8cb9602e3c4f16b25e8a9557644e27865c59d47ca00b64b076c",
+      "attacker": "0x057ef64E23666F000b34aE31332854aCBd1c8544",
+      "victim": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+      "status": "ok"
+    },
+    {
+      "attack": "cross_func_reentrancy",
+      "round": 1,
+      "tx": "0x7274f830f37088d5c59152a5b6da3623523780d9ff2ad6667eb1c324d6c05d57",
+      "attacker": "0xbdEd0D2bf404bdcBa897a74E6657f1f12e5C6fb6",
+      "victim": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+      "status": "ok"
+    },
+    {
+      "attack": "readonly_reentrancy",
+      "round": 1,
+      "tx": "0x0cc8bf96e55070ee482ba2ee4e8a6098cafc7cc0ed72046d9fa9ae68682e610e",
+      "attacker": "0x0116686E2291dbd5e317F47faDBFb43B599786Ef",
+      "victim": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
+      "status": "ok"
+    },
+    {
+      "attack": "erc777_hook_reentrancy",
+      "round": 1,
+      "status": "failed",
+      "error": "transaction execution reverted (action=\"sendTransaction\", data=null, reason=null, invocation=null, revert=null, transaction={ \"data\": \"\", \"from\": \"0x976EA74026E726554dB657fA54763abd0C3a0aa9\", \"to\": \"0"
+    },
+    {
+      "attack": "flashloan_price_manip",
+      "round": 1,
+      "status": "failed",
+      "error": "transaction execution reverted (action=\"sendTransaction\", data=null, reason=null, invocation=null, revert=null, transaction={ \"data\": \"\", \"from\": \"0x14dC79964da2C08b23698B3D3cc7Ca32193d9955\", \"to\": \"0"
+    }
+  ],
+  "contracts": {
+    "vault1": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+    "vault2": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+    "readOnlyVault": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
+    "dependent": "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707",
+    "erc777Vault": "0x0165878A594ca255338adfa4d48449f69242Eb8F",
+    "flashPool": "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853",
+    "dex": "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6",
+    "flashVictim": "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318"
+  },
+  "output": {
+    "client_dir": "C:\\Users\\aswat\\ForensicToolW3\\runs\\run_5681549e2730fb2b\\client",
+    "forensic_bundle_dir": "C:\\Users\\aswat\\ForensicToolW3\\runs\\run_5681549e2730fb2b\\forensic_bundle",
+    "raw_dir": "C:\\Users\\aswat\\ForensicToolW3\\runs\\run_5681549e2730fb2b\\client\\01_raw"
+  }
+}

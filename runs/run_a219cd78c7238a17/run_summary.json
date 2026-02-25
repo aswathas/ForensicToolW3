@@ -1,0 +1,28 @@
+{
+  "generated_at": "2026-02-18T15:35:19.508Z",
+  "config": {
+    "numUsers": 5,
+    "txsPerUser": 5,
+    "numAttacks": 1,
+    "enabledAttacks": [
+      "classic_reentrancy",
+      "cross_func_reentrancy",
+      "readonly_reentrancy",
+      "erc777_hook",
+      "flashloan_price_manip"
+    ]
+  },
+  "sim": {
+    "completed": true
+  },
+  "forensics": {
+    "completed": true
+  },
+  "paths": {
+    "rawData": "C:\\Users\\aswat\\ForensicToolW3\\runs\\run_a219cd78c7238a17\\client\\01_raw",
+    "forensicBundle": "C:\\Users\\aswat\\ForensicToolW3\\runs\\run_a219cd78c7238a17\\forensic_bundle\\02_forensic_bundle",
+    "report": "C:\\Users\\aswat\\ForensicToolW3\\runs\\run_a219cd78c7238a17\\forensic_bundle\\02_forensic_bundle\\05_reports\\forensic_report.md",
+    "aiSummary": "C:\\Users\\aswat\\ForensicToolW3\\runs\\run_a219cd78c7238a17\\forensic_bundle\\02_forensic_bundle\\06_ai\\ai_executive_summary.md",
+    "mlFeatures": "C:\\Users\\aswat\\ForensicToolW3\\runs\\run_a219cd78c7238a17\\forensic_bundle\\02_forensic_bundle\\05_ml_features\\ml_features_000001.ndjson"
+  }
+}

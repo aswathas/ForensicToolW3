@@ -1,0 +1,226 @@
+{
+  "generated_at": "2026-02-18T10:31:15.992Z",
+  "file_count": 44,
+  "files": [
+    {
+      "path": "01_raw\\00_quality\\data_coverage_report_000001.ndjson",
+      "sha256": "eda2adc2175b15da1b19dd9e71161b5794089a9536eed52be9d582902b927280",
+      "size_bytes": 279
+    },
+    {
+      "path": "02_forensic_bundle\\00_governance\\chain_of_custody.json",
+      "sha256": "977030cd021a381d88ad6213e7edf3811a194fe168632d46a44f228ac92db8ed",
+      "size_bytes": 258
+    },
+    {
+      "path": "02_forensic_bundle\\00_governance\\tool_version.json",
+      "sha256": "e4314143c12a2254372953f4c19f0d78eeecfe51b3d686dd106d85ae40230d91",
+      "size_bytes": 103
+    },
+    {
+      "path": "02_forensic_bundle\\00_quality\\completeness_metrics.json",
+      "sha256": "73d5baa0cb11adcca8447b6fbca150e7d5aa73f42ab5e5debd70ecf26a70bca4",
+      "size_bytes": 223
+    },
+    {
+      "path": "02_forensic_bundle\\00_quality\\limitations_and_gaps.md",
+      "sha256": "ff3a4302724c26267227b196aceedbc83eb734a50acea7cb42cdfc8970ffd4a5",
+      "size_bytes": 456
+    },
+    {
+      "path": "02_forensic_bundle\\02_derived\\events_logs\\events_normalized_000001.ndjson",
+      "sha256": "b0c50234649d7bd143b57c1b9062ded812fde0260a57e0a59aa345e0316cd756",
+      "size_bytes": 52932
+    },
+    {
+      "path": "02_forensic_bundle\\02_derived\\execution_trace\\trace_calls_flat_000001.ndjson",
+      "sha256": "0910e53aed2af8c7e11f15be30bf3115b06bbd857cfda1c9edd376df415de555",
+      "size_bytes": 180769
+    },
+    {
+      "path": "02_forensic_bundle\\02_derived\\execution_trace\\trace_edges_000001.ndjson",
+      "sha256": "ad7fe4449bbda934edd940a4acc06104069c1c6248e14e85473b633877b8e7cc",
+      "size_bytes": 68619
+    },
+    {
+      "path": "02_forensic_bundle\\02_derived\\inventory_profiling\\address_profile_000001.ndjson",
+      "sha256": "d7ee05c91ee5c9b2956b97d85060ccff76431db399d02adad82ad309ffa08e7a",
+      "size_bytes": 10395
+    },
+    {
+      "path": "02_forensic_bundle\\02_derived\\inventory_profiling\\contract_inventory_000001.ndjson",
+      "sha256": "6b31453c17330ae5e36263e50a4395442f4f4430ea96dadd41344b0857608c65",
+      "size_bytes": 5845
+    },
+    {
+      "path": "02_forensic_bundle\\02_derived\\permissions_governance\\approvals_unified_000001.ndjson",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "size_bytes": 1
+    },
+    {
+      "path": "02_forensic_bundle\\02_derived\\state_analysis\\balance_diffs_000001.ndjson",
+      "sha256": "447cbe5e1f4ea213b10d15a1fa1df4dec48a817759c27daccb0d1c5acd7b9290",
+      "size_bytes": 127189
+    },
+    {
+      "path": "02_forensic_bundle\\02_derived\\state_analysis\\net_balance_changes_000001.ndjson",
+      "sha256": "bfeaa2cffa5721f8ad4099302d5c6ec00f491af5305739ebab928c9a16abfabb",
+      "size_bytes": 21751
+    },
+    {
+      "path": "02_forensic_bundle\\02_derived\\state_analysis\\reentrancy_patterns_000001.ndjson",
+      "sha256": "fed4d4c488af5f7bd7e06efe356fc119d0e0cfe161aa8ae304ea7f30de12bf08",
+      "size_bytes": 64737
+    },
+    {
+      "path": "02_forensic_bundle\\02_derived\\state_analysis\\storage_diffs_000001.ndjson",
+      "sha256": "e480f2c91c0a795e1e76086065b4ba2298af4616801a4f0200b571d1f7c2a6bd",
+      "size_bytes": 82704
+    },
+    {
+      "path": "02_forensic_bundle\\02_derived\\tx_structural\\method_selectors_000001.ndjson",
+      "sha256": "29d3ee97ee5ad4d0f676cf2ef421ea9dff61b5d8fbb153f1c78ef7af9a4aafc3",
+      "size_bytes": 714
+    },
+    {
+      "path": "02_forensic_bundle\\02_derived\\tx_structural\\transaction_enriched_000001.ndjson",
+      "sha256": "8f8d8c0f8b8f4135bd539609f0c101b65bf951a7784c8564cfad09ba8e861db1",
+      "size_bytes": 62678
+    },
+    {
+      "path": "02_forensic_bundle\\02_derived\\value_movement\\fund_flow_edges_000001.ndjson",
+      "sha256": "e0c8fd24be719603f7fd9e2a30dd3a2ba2b424a8a43612d73b3c71a59c4e1ae1",
+      "size_bytes": 43335
+    },
+    {
+      "path": "02_forensic_bundle\\02_derived\\value_movement\\native_internal_transfers_000001.ndjson",
+      "sha256": "022b5bc2551b8cbff2564754bf8426e3afe3fee38ca7c7a266f0b63ea52ac55e",
+      "size_bytes": 42121
+    },
+    {
+      "path": "02_forensic_bundle\\02_derived\\value_movement\\token_transfers_erc20_000001.ndjson",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "size_bytes": 1
+    },
+    {
+      "path": "02_forensic_bundle\\03_signals\\rollups\\signals_by_incident_000001.ndjson",
+      "sha256": "51890cc58b43f7036f6c1e5d66671e8c8d7f357034a2a96806018c0501a7d8d0",
+      "size_bytes": 3556
+    },
+    {
+      "path": "02_forensic_bundle\\03_signals\\rollups\\signals_by_tx_000001.ndjson",
+      "sha256": "a1585a347362bc992f92af40e39de59bb6921f097e27faa9d96a9399206a96f3",
+      "size_bytes": 3327
+    },
+    {
+      "path": "02_forensic_bundle\\03_signals\\signals_000001.ndjson",
+      "sha256": "87ffa32e17006da4f84aed07c87af3ef220b074121ef3044f7482ccca2d5d5a5",
+      "size_bytes": 44235
+    },
+    {
+      "path": "02_forensic_bundle\\03_signals\\_meta\\signals_catalog.json",
+      "sha256": "b2e0face4c8268e9bef23a9be6cbc2b97f8c39d409f82bf0ffdb29ff6d48480f",
+      "size_bytes": 5505
+    },
+    {
+      "path": "02_forensic_bundle\\03_signals\\_meta\\signals_coverage_report.json",
+      "sha256": "a468f2481955fcde3ade471634a2125d82de23b59d1471e0619d9d4545853d08",
+      "size_bytes": 3418
+    },
+    {
+      "path": "02_forensic_bundle\\05_ml_features\\ml_features_000001.ndjson",
+      "sha256": "0bb1d4a4a7cd0cb3f5311df8fd2f2f7f9907cfada33be85a1205c32079d9681e",
+      "size_bytes": 121444
+    },
+    {
+      "path": "02_forensic_bundle\\05_ml_features\\ml_feature_schema.json",
+      "sha256": "4a9d4e9add4bb54a08b344da69e85de6bafdf9f529ea31b00104a2f9e0d516a9",
+      "size_bytes": 927
+    },
+    {
+      "path": "02_forensic_bundle\\05_ml_features\\top_suspicious_txs.ndjson",
+      "sha256": "9f5fb79ac661425e752a29041e6faf0e7ce7d2df4ff62af52fd1f8e840c6de60",
+      "size_bytes": 16246
+    },
+    {
+      "path": "02_forensic_bundle\\05_reports\\action_checklist.md",
+      "sha256": "7b3e359e86ae84bb8084f90e20cdfe2f020440f9960d0d2aa09f24456b15fae4",
+      "size_bytes": 574
+    },
+    {
+      "path": "02_forensic_bundle\\05_reports\\forensic_report.json",
+      "sha256": "fd3449d2a79b1e308c3ef7e0483ed8f6e8f1f7e6651a67d0203be467af2878f6",
+      "size_bytes": 72003
+    },
+    {
+      "path": "02_forensic_bundle\\05_reports\\forensic_report.md",
+      "sha256": "5ea862d4d58befcde72393608411237bedf5cc75f11cb5f06ebfa8a7654a43ac",
+      "size_bytes": 4409
+    },
+    {
+      "path": "02_forensic_bundle\\05_reports\\limitations_and_gaps.md",
+      "sha256": "ff3a4302724c26267227b196aceedbc83eb734a50acea7cb42cdfc8970ffd4a5",
+      "size_bytes": 456
+    },
+    {
+      "path": "02_forensic_bundle\\05_reports\\money_trail_report.md",
+      "sha256": "689251dc5c0405b0383d0c2ca5fb8e999573c12801c25da5bdeaf46ad0eb90ff",
+      "size_bytes": 749
+    },
+    {
+      "path": "02_forensic_bundle\\05_reports\\suspect_entities.md",
+      "sha256": "00abafe4dcfc369fd4ffd303c30af5e5dee0daf864675ef984a5fd51624ac165",
+      "size_bytes": 5301
+    },
+    {
+      "path": "02_forensic_bundle\\06_ai\\ai_executive_summary.md",
+      "sha256": "699ea2be1e3e0791561ad424e84f38c4872f1e5173103af843c6903200252ecd",
+      "size_bytes": 921
+    },
+    {
+      "path": "02_forensic_bundle\\07_graphs\\execution_graph\\execution_edges_000001.ndjson",
+      "sha256": "3b3aaa4df301c48eb2fdaf06c1a4f90362be489f110c0fcf76263844d23dda9a",
+      "size_bytes": 32030
+    },
+    {
+      "path": "02_forensic_bundle\\07_graphs\\execution_graph\\execution_graph_summary.json",
+      "sha256": "9595962db3c2c7738cbe6b0738c2a3030b9f32463955e7cd2a9c7bdaa05b64e6",
+      "size_bytes": 43
+    },
+    {
+      "path": "02_forensic_bundle\\07_graphs\\execution_graph\\execution_nodes_000001.ndjson",
+      "sha256": "c2f1a0d1c031b134f472ca363e435a36d0a3e3ad2f0e4944d94e767ad048c180",
+      "size_bytes": 3354
+    },
+    {
+      "path": "02_forensic_bundle\\07_graphs\\fund_flow_graph\\flow_edges_000001.ndjson",
+      "sha256": "e0c8fd24be719603f7fd9e2a30dd3a2ba2b424a8a43612d73b3c71a59c4e1ae1",
+      "size_bytes": 43335
+    },
+    {
+      "path": "02_forensic_bundle\\07_graphs\\fund_flow_graph\\flow_graph_summary.json",
+      "sha256": "98590e91b94b25efb1972710979d443607811e948390ca870555f68129c057c9",
+      "size_bytes": 42
+    },
+    {
+      "path": "02_forensic_bundle\\07_graphs\\fund_flow_graph\\flow_nodes_000001.ndjson",
+      "sha256": "40d40f316c46b07e70a4624023a1652db7a0ac86ffafcabc6c99999a66c82e7e",
+      "size_bytes": 2461
+    },
+    {
+      "path": "02_forensic_bundle\\07_graphs\\incident_subgraph\\incident_fund_flow_subgraph_000001.ndjson",
+      "sha256": "6fa030c1a893620fa896704bdecd3feae55b169c5831d4aee6b8b526f3acecbb",
+      "size_bytes": 6827
+    },
+    {
+      "path": "02_forensic_bundle\\07_graphs\\incident_subgraph\\incident_subgraph_summary.json",
+      "sha256": "d5669d7475be965efe145f2076cfdfe2148b0774f7b2b66f7e4fb0e8db52ba36",
+      "size_bytes": 25
+    },
+    {
+      "path": "run_meta.json",
+      "sha256": "fa88706b2b67ec36f76f087404ff33824a187119eddf04f8e9f23c93f86231f9",
+      "size_bytes": 614
+    }
+  ]
+}

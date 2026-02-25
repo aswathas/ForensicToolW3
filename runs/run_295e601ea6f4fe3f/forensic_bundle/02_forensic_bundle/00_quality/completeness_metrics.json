@@ -1,0 +1,12 @@
+{
+  "txs": 90,
+  "logs": 70,
+  "traces": 90,
+  "state_diffs": 90,
+  "trace_coverage_pct": "100.0",
+  "state_diff_coverage_pct": "100.0",
+  "signals_fired": 52,
+  "rules_fired": 16,
+  "rules_total": 36,
+  "incidents": 2
+}

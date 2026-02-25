@@ -1,0 +1,13 @@
+{
+  "generated_at": "2026-02-18T13:06:40.897Z",
+  "mode": "automated",
+  "pipeline_steps": [
+    "window_resolver",
+    "raw_collector",
+    "derived_pipeline",
+    "signals_engine",
+    "incident_clusterer",
+    "graph_builder",
+    "report_generator"
+  ]
+}

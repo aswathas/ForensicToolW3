@@ -1,0 +1,22 @@
+{
+  "run_id": "a78ed7e99b73",
+  "mode": "raw_import",
+  "started_at": "2026-02-18T13:06:40.777Z",
+  "args": {
+    "mode": "raw_import",
+    "rawRoot": "C:\\Users\\aswat\\ForensicToolW3\\runs\\run_961a24686f5874b1\\client\\01_raw",
+    "rpcUrl": null,
+    "window": "markers_onchain",
+    "fromBlock": null,
+    "toBlock": null,
+    "lastN": 100,
+    "runId": null,
+    "outputDir": "C:\\Users\\aswat\\ForensicToolW3\\runs\\run_961a24686f5874b1\\forensic_bundle",
+    "traces": "auto"
+  },
+  "window": {
+    "method": "since_mark",
+    "runId": "961a24686f5874b1"
+  },
+  "completed_at": "2026-02-18T13:06:40.901Z"
+}
