@@ -1,5 +1,0 @@
-digraph "flow_nodes_000001" {
-    rankdir=LR;
-    node [shape=box, style=filled, fillcolor="#f0f0f0", fontname="Arial"];
-    edge [fontname="Arial", fontsize=10];
-}

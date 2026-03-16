@@ -1,0 +1,24 @@
+node_modules/
+.env
+/.vscode/
+.DS_Store
+
+# Temporary / Output files
+logs/
+*.log
+runs/
+evidence_run_*/
+*.zip
+*.txt
+
+# Ignore specific command output tests
+sim_debug.log
+sim_precision.log
+sim_run.log
+sim_run2.log
+forensics_precision.log
+forensics_run.log
+automation_test.log
+automation_test_2.log
+pipeline_log.txt
+status.txt
