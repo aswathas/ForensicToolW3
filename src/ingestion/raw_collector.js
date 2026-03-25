@@ -46,11 +46,21 @@ function collectFromFiles(rawRoot, outputDir) {
     const balanceDiffs = readNdjson(findFile('state', 'balance_diffs') || '');
     const storageDiffs = readNdjson(findFile('state', 'storage_diffs') || '');
 
+    // Runtime bytecodes + extracted selectors (optional — only present if simulation ran with new export)
+    const bytecodes = readNdjson(findFile('contracts', 'runtime_bytecode') || '');
+
     if (stateDiffs.length === 0) {
         console.warn('[raw] ⚠ No state_diffs found — heuristics and ML features will be degraded.');
         console.warn('[raw]   Re-run simulation with updated export_raw.mjs to get state diffs.');
     } else {
         console.log(`[raw] State diffs: ${stateDiffs.length} txs | balance_diffs: ${balanceDiffs.length} | storage_diffs: ${storageDiffs.length}`);
+    }
+
+    if (bytecodes.length > 0) {
+        const totalSelectors = bytecodes.reduce((s, r) => s + (r.selector_count || 0), 0);
+        console.log(`[raw] Bytecodes: ${bytecodes.length} contracts | selectors_extracted: ${totalSelectors}`);
+    } else {
+        console.warn('[raw] ⚠ No runtime_bytecode found — selector_registry will be empty. Re-run simulation to collect bytecodes.');
     }
 
     // Copy raw files to output bundle
@@ -72,6 +82,7 @@ function collectFromFiles(rawRoot, outputDir) {
         state_diffs: stateDiffs.length,
         balance_diffs: balanceDiffs.length,
         storage_diffs: storageDiffs.length,
+        bytecodes: bytecodes.length,
         generated_at: new Date().toISOString(),
     };
     writeFileSync(
@@ -90,10 +101,12 @@ function collectFromFiles(rawRoot, outputDir) {
         stateDiffs,
         balanceDiffs,
         storageDiffs,
+        bytecodes,
         txCount: transactions.length,
         logCount: eventLogs.length,
         traceCount: callTraces.length,
         stateDiffCount: stateDiffs.length,
+        bytecodeCount: bytecodes.length,
         rawRoot,
         outputDir,
     };

@@ -372,8 +372,95 @@ export async function runDerivedPipeline(rawData, outputDir) {
     datasets.reentrantPatterns = reentrantPatterns;
     writeFileSync(join(derivedDir, 'state_analysis', 'reentrancy_patterns_000001.ndjson'), ndjson(reentrantPatterns));
 
+    // ── 16. Selector registry ─────────────────────────────────────────
+    // Unified map: 4-byte selector → resolved name + source contract.
+    //
+    // Sources (in priority order):
+    //   1. Selectors from PUSH4 bytecode disassembly (no ABI needed — works on attacker contracts)
+    //   2. Known standard selectors (ERC20, ERC721, common DeFi patterns) — hardcoded
+    //   3. Selectors seen in traces that we cannot name yet — saved as 'unresolved'
+    //
+    // This is the forensic "Rosetta Stone" for traces: when a signal fires and says
+    // "selector 0x3ccfd60b was called 3 times", the registry can tell you it's withdraw().
+    const KNOWN_SELECTORS = {
+        // ERC20 standard
+        '0xa9059cbb': 'transfer(address,uint256)',
+        '0x23b872dd': 'transferFrom(address,address,uint256)',
+        '0x095ea7b3': 'approve(address,uint256)',
+        '0x70a08231': 'balanceOf(address)',
+        '0xdd62ed3e': 'allowance(address,address)',
+        '0x18160ddd': 'totalSupply()',
+        // ERC721
+        '0x42842e0e': 'safeTransferFrom(address,address,uint256)',
+        '0x6352211e': 'ownerOf(uint256)',
+        // Common DeFi
+        '0xd0e30db0': 'deposit()',
+        '0x3ccfd60b': 'withdraw()',
+        '0x2e1a7d4d': 'withdraw(uint256)',
+        '0xf305d719': 'addLiquidity()',
+        '0x5c19a95c': 'delegate(address)',
+        '0xa0712d68': 'mint(uint256)',
+        '0x40c10f19': 'mint(address,uint256)',
+        '0x42966c68': 'burn(uint256)',
+        // Flash loan callbacks
+        '0x10d1e85c': 'executeOperation(address,uint256,uint256,bytes)',
+        // Attacker common patterns
+        '0xd018db38': 'attack()',
+        '0x9ebea88c': 'setup()',
+    };
+
+    const selectorRegistry = {};
+
+    // Priority 1: from bytecode PUSH4 disassembly (no ABI needed)
+    for (const bytecodeRecord of (rawData.bytecodes || [])) {
+        for (const selector of (bytecodeRecord.selectors_extracted || [])) {
+            if (!selectorRegistry[selector]) {
+                selectorRegistry[selector] = {
+                    selector,
+                    resolved_name: KNOWN_SELECTORS[selector] || null,
+                    source_contract: bytecodeRecord.address,
+                    source: 'bytecode_disassembly',
+                };
+            }
+        }
+    }
+
+    // Priority 2: known standards — fill in any we didn't find in bytecode
+    for (const [selector, name] of Object.entries(KNOWN_SELECTORS)) {
+        if (selectorRegistry[selector]) {
+            if (!selectorRegistry[selector].resolved_name) {
+                selectorRegistry[selector].resolved_name = name;
+            }
+        } else {
+            selectorRegistry[selector] = {
+                selector,
+                resolved_name: name,
+                source_contract: null,
+                source: 'known_standard',
+            };
+        }
+    }
+
+    // Priority 3: selectors seen IN TRACES that we haven't catalogued yet
+    for (const edge of (traceEdges || [])) {
+        if (edge.selector && !selectorRegistry[edge.selector]) {
+            selectorRegistry[edge.selector] = {
+                selector: edge.selector,
+                resolved_name: null,
+                source_contract: edge.to,
+                source: 'trace_only_unresolved',
+            };
+        }
+    }
+
+    const selectorRegistryList = Object.values(selectorRegistry);
+    datasets.selectorRegistry = selectorRegistryList;
+    writeFileSync(join(derivedDir, 'tx_structural', 'selector_registry_000001.ndjson'), ndjson(selectorRegistryList));
+
+    const resolvedCount = selectorRegistryList.filter(r => r.resolved_name).length;
     console.log(`[derived] Produced ${Object.keys(datasets).length} datasets`);
     console.log(`[derived]   balance_diffs: ${balanceDiffs.length} | storage_diffs: ${storageDiffs.length} | reentrancy_patterns: ${reentrantPatterns.length}`);
+    console.log(`[derived]   selector_registry: ${selectorRegistryList.length} selectors (${resolvedCount} resolved, ${selectorRegistryList.length - resolvedCount} unresolved)`);
     return datasets;
 }
 

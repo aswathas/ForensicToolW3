@@ -192,7 +192,10 @@ async function main() {
 
         // ── Step 5: Export raw bundle ──────────────────────────────────
         console.log('\n[runner] Step 5/6: Exporting raw data bundle...');
-        await exportRawBundle(provider, startBlock, endBlock, clientDir);
+        await exportRawBundle(provider, startBlock, endBlock, clientDir, {
+            artifactsDir,
+            victimContracts: scenarioResult.contracts,  // { vault1: '0x...', vault2: '0x...', ... }
+        });
 
         // ── Step 6: Write run metadata ─────────────────────────────────
         const runMeta = {
