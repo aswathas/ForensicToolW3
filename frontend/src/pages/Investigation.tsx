@@ -5,6 +5,7 @@ import { AttackSummary } from '../components/Investigation/AttackSummary'
 import { TransactionTimeline } from '../components/Investigation/TransactionTimeline'
 import { FundFlowGraph } from '../components/Investigation/FundFlowGraph'
 import { EvidencePanel } from '../components/Investigation/EvidencePanel'
+import { AIChat } from '../components/Chat/AIChat'
 import { useForensicData } from '../hooks/useForensicData'
 import type { Transaction } from '../types/forensics'
 
@@ -51,6 +52,9 @@ export const Investigation: React.FC = () => {
           />
           <FundFlowGraph flows={data.fundFlows} />
           <EvidencePanel transaction={selectedTx} signals={data.signals} relatedSignals={relatedSignals} />
+        </div>
+        <div className="mt-6 h-96">
+          <AIChat runId={data.runId} selectedTx={selectedTx?.hash} selectedEntity="" />
         </div>
       </div>
     </Layout>

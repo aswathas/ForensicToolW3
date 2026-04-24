@@ -3,6 +3,12 @@ node_modules/
 /.vscode/
 .DS_Store
 
+# Frontend / backend build outputs
+frontend/node_modules/
+backend/node_modules/
+frontend/dist/
+backend/dist/
+
 # Temporary / Output files
 logs/
 *.log
