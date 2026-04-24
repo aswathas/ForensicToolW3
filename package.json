@@ -18,7 +18,9 @@
     "forensics": "node src/index.js",
     "forensics:import": "node src/index.js --mode raw_import",
     "forensics:live": "node src/index.js --mode rpc_live --rpc-url http://127.0.0.1:8545 --window markers_onchain",
-    "ai:analyze": "node src/ai/ollama_analyst.js"
+    "ai:analyze": "node src/ai/ollama_analyst.js",
+    "demo": "bash scripts/run-demo.sh",
+    "demo:debug": "bash scripts/run-demo.sh --verbose"
   },
   "keywords": [
     "forensics",
