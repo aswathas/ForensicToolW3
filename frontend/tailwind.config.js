@@ -8,75 +8,114 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        critical: {
-          50: '#fef2f2',
-          100: '#fee2e2',
-          500: '#ef4444',
-          600: '#dc2626',
+        // Ferrari Red - Primary accent (high severity)
+        ferrari: {
+          50: '#fff5f5',
+          100: '#ffe6e6',
+          200: '#ffcccc',
+          300: '#ff9999',
+          400: '#ff6666',
+          500: '#e8001c',
+          600: '#dc143c',
           700: '#b91c1c',
-          900: '#7f1d1d',
+          800: '#8b0000',
+          900: '#660000',
+        },
+        // Gold/Brass - Premium accent (medium/warning)
+        gold: {
+          50: '#fefdf8',
+          100: '#fefcf0',
+          200: '#fef9e7',
+          300: '#fdf4cd',
+          400: '#fce8a6',
+          500: '#d4af37',
+          600: '#c9a020',
+          700: '#a68b1a',
+          800: '#7a6414',
+          900: '#4a3c0f',
+        },
+        // Critical - Ferrari Red tones
+        critical: {
+          50: '#fff5f5',
+          100: '#ffe6e6',
+          500: '#e8001c',
+          600: '#dc143c',
+          700: '#b91c1c',
+          900: '#660000',
         },
         high: {
-          50: '#fff7ed',
-          100: '#ffedd5',
-          500: '#f97316',
-          600: '#ea580c',
-          700: '#c2410c',
+          50: '#fef9f0',
+          100: '#fdf4cd',
+          500: '#d4af37',
+          600: '#c9a020',
+          700: '#a68b1a',
         },
         medium: {
-          50: '#fefce8',
-          100: '#fef9c3',
-          500: '#eab308',
-          600: '#ca8a04',
-          700: '#a16207',
+          50: '#fffbf0',
+          100: '#fff8e6',
+          500: '#ffa500',
+          600: '#ff9500',
+          700: '#cc7700',
         },
         low: {
           50: '#f0fdf4',
           100: '#dcfce7',
-          500: '#22c55e',
-          600: '#16a34a',
-          700: '#15803d',
+          500: '#10b981',
+          600: '#059669',
+          700: '#047857',
         },
         info: {
-          50: '#eff6ff',
-          100: '#dbeafe',
-          500: '#3b82f6',
-          600: '#2563eb',
-          700: '#1d4ed8',
+          50: '#f0f9ff',
+          100: '#e0f2fe',
+          500: '#06b6d4',
+          600: '#0891b2',
+          700: '#0e7490',
         },
         surface: {
-          50: '#f8fafc',
-          100: '#f1f5f9',
-          200: '#e2e8f0',
-          300: '#cbd5e1',
-          400: '#94a3b8',
-          500: '#64748b',
-          600: '#475569',
-          700: '#334155',
-          800: '#1e293b',
-          900: '#0f172a',
-          950: '#020617',
+          50: '#fafafa',
+          100: '#f5f5f5',
+          200: '#e5e5e5',
+          300: '#d4d4d4',
+          400: '#a3a3a3',
+          500: '#737373',
+          600: '#525252',
+          700: '#404040',
+          800: '#262626',
+          900: '#171717',
+          950: '#0a0a0a',
         },
         bg: {
-          primary: '#0f172a',
-          secondary: '#1e293b',
-          tertiary: '#334155',
+          primary: '#0a0a0a',     // Deep black
+          secondary: '#1a1a1a',   // Dark charcoal
+          tertiary: '#2d2d2d',    // Charcoal
+          accent: '#dc143c',      // Ferrari red
         },
         text: {
-          primary: '#f1f5f9',
-          secondary: '#cbd5e1',
-          muted: '#94a3b8',
+          primary: '#f5f5f5',     // Off-white
+          secondary: '#d1d5db',   // Light gray
+          muted: '#9ca3af',       // Medium gray
+          accent: '#d4af37',      // Gold
         },
         accent: {
-          primary: '#3b82f6',
-          success: '#22c55e',
-          warning: '#eab308',
-          danger: '#ef4444',
+          primary: '#dc143c',     // Ferrari red
+          success: '#10b981',     // Emerald
+          warning: '#d4af37',     // Gold
+          danger: '#e8001c',      // Deep ferrari red
         },
       },
       fontFamily: {
-        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        sans: ['Poppins', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+      },
+      backgroundImage: {
+        'gradient-ferrari': 'linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2d2d2d 100%)',
+        'gradient-red': 'linear-gradient(135deg, #dc143c 0%, #e8001c 100%)',
+        'gradient-gold': 'linear-gradient(135deg, #d4af37 0%, #c9a020 100%)',
+      },
+      boxShadow: {
+        'ferrari': '0 0 20px rgba(220, 20, 60, 0.3)',
+        'ferrari-lg': '0 0 40px rgba(220, 20, 60, 0.4)',
+        'gold': '0 0 15px rgba(212, 175, 55, 0.2)',
       },
     },
   },

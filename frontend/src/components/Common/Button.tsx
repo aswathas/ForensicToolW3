@@ -16,9 +16,9 @@ export const Button: React.FC<ButtonProps> = ({
   disabled = false,
 }) => {
   const variants = {
-    primary: 'bg-accent-primary text-white hover:bg-blue-600',
-    secondary: 'bg-bg-tertiary text-text-primary hover:bg-slate-700',
-    danger: 'bg-accent-danger text-white hover:bg-red-600',
+    primary: 'bg-gradient-to-r from-ferrari-600 to-ferrari-700 text-white hover:from-ferrari-500 hover:to-ferrari-600 shadow-ferrari hover:shadow-ferrari-lg font-semibold',
+    secondary: 'bg-bg-tertiary border-2 border-gold-500/30 text-gold-400 hover:bg-bg-tertiary/50 hover:border-gold-400 font-semibold',
+    danger: 'bg-gradient-to-r from-ferrari-700 to-ferrari-800 text-white hover:from-ferrari-600 hover:to-ferrari-700 shadow-ferrari font-semibold',
   }
 
   const sizes = {

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,7 +9,8 @@ html, body, #root {
 }
 
 body {
-  @apply bg-bg-primary text-text-primary;
+  @apply bg-bg-primary text-text-primary font-sans;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2d2d2d 100%);
 }
 
 ::-webkit-scrollbar {
@@ -20,14 +23,31 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-bg-tertiary rounded hover:bg-text-muted;
+  @apply bg-ferrari-600 rounded hover:bg-ferrari-500 shadow-ferrari;
 }
 
 input:focus,
 button:focus {
-  @apply outline-none ring-2 ring-accent-primary;
+  @apply outline-none ring-2 ring-ferrari-600;
 }
 
 code {
-  @apply bg-bg-tertiary px-2 py-1 rounded text-xs;
+  @apply bg-bg-tertiary px-2 py-1 rounded text-xs text-gold-400;
+}
+
+/* Ferrari theme accents */
+.ferrari-accent {
+  @apply text-ferrari-500;
+}
+
+.ferrari-button {
+  @apply bg-ferrari-600 hover:bg-ferrari-700 text-white font-semibold transition-all duration-300 shadow-ferrari hover:shadow-ferrari-lg;
+}
+
+.ferrari-card {
+  @apply bg-bg-secondary border border-ferrari-600/20 hover:border-ferrari-600/50 shadow-ferrari/20 transition-all;
+}
+
+.gold-accent {
+  @apply text-gold-400;
 }
