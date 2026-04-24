@@ -57,6 +57,22 @@ module.exports = {
           900: '#0f172a',
           950: '#020617',
         },
+        bg: {
+          primary: '#0f172a',
+          secondary: '#1e293b',
+          tertiary: '#334155',
+        },
+        text: {
+          primary: '#f1f5f9',
+          secondary: '#cbd5e1',
+          muted: '#94a3b8',
+        },
+        accent: {
+          primary: '#3b82f6',
+          success: '#22c55e',
+          warning: '#eab308',
+          danger: '#ef4444',
+        },
       },
       fontFamily: {
         sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],

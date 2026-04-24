@@ -10,7 +10,7 @@ interface TransactionTimelineProps {
 
 export const TransactionTimeline: React.FC<TransactionTimelineProps> = ({
   transactions,
-  signals,
+  signals: _signals,
   onSelectTransaction,
   selectedTx,
 }) => {

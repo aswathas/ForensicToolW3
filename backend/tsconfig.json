@@ -13,6 +13,7 @@
     "declaration": true,
     "sourceMap": true,
     "moduleResolution": "node",
+    "ignoreDeprecations": "6.0",
     "allowSyntheticDefaultImports": true
   },
   "include": ["src/**/*"],

@@ -7,7 +7,7 @@ interface EvidencePanelProps {
   relatedSignals: Signal[]
 }
 
-export const EvidencePanel: React.FC<EvidencePanelProps> = ({ transaction, signals, relatedSignals }) => {
+export const EvidencePanel: React.FC<EvidencePanelProps> = ({ transaction, signals: _signals, relatedSignals }) => {
   if (!transaction) {
     return (
       <div className="h-full bg-bg-secondary rounded-lg border border-bg-tertiary p-6 flex items-center justify-center">

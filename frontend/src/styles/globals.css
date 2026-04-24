@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  @apply bg-bg-primary text-text-primary;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-bg-secondary;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-bg-tertiary rounded hover:bg-text-muted;
+}
+
+input:focus,
+button:focus {
+  @apply outline-none ring-2 ring-accent-primary;
+}
+
+code {
+  @apply bg-bg-tertiary px-2 py-1 rounded text-xs;
+}
