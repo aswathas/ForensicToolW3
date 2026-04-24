@@ -245,6 +245,16 @@ if (existsSync(graphsDir) && existsSync(dotScript)) {
     }
 }
 
+// ── STEP 6: DEEP ANALYSIS HTML REPORT ──────────────────────────
+console.log('\n[go] ══ Step 6: Generating Deep Analysis Report ═══════════════');
+const deepAnalysisSkipAi = !cfg.ai.enabled || SKIP_AI ? '--skip-ai' : '';
+await run('node', [
+    'src/ai/deep_analysis_generator.js',
+    '--run-dir', runDir,
+    '--model', cfg.ai.model || 'gemma3:1b',
+    ...(deepAnalysisSkipAi ? [deepAnalysisSkipAi] : []),
+], { allowFail: true });
+
 // ════════════════════════════════════════════════════════════════════
 // FINAL SUMMARY
 // ════════════════════════════════════════════════════════════════════
@@ -267,6 +277,7 @@ console.log(`  📊 Forensic report  : ${reportPath}`);
 console.log(`  🤖 AI summary       : ${aiPath}`);
 console.log(`  🧠 ML features      : ${mlPath}`);
 console.log(`  🚨 Signals          : ${signalsPath}`);
+console.log(`  🌐 Deep Analysis    : ${join(runDir, 'deep_analysis.html')}`);
 console.log(LINE);
 console.log(`\n  HOW TO VIEW RESULTS:`);
 console.log(`  1. Open the forensic report:`);
