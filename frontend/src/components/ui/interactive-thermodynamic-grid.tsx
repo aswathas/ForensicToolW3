@@ -20,7 +20,7 @@ export function ThermodynamicGrid({
     const container = containerRef.current
     if (!canvas || !container) return
 
-    const ctx = canvas.getContext('2d', { alpha: false })
+    const ctx = canvas.getContext('2d', { alpha: true })
     if (!ctx) return
 
     let grid: Float32Array
@@ -33,15 +33,17 @@ export function ThermodynamicGrid({
     const mouse = { x: -1000, y: -1000, prevX: -1000, prevY: -1000, active: false }
 
     const getThermalColor = (t: number): string => {
-      const r = Math.min(255, Math.max(0, t * 2.5 * 255))
-      const g = Math.min(255, Math.max(0, (t * 2.5 - 1) * 255))
-      const b = Math.min(255, Math.max(0, (t * 2.5 - 2) * 255 + t * 50))
-      return `rgb(${r + 10}, ${g + 10}, ${b + 15})`
+      // cool → ferrari red → orange core → white-hot tip
+      const alpha = Math.min(1, t * 1.5)
+      const r = 220
+      const g = Math.min(255, Math.max(0, t * 90))
+      const b = Math.min(255, Math.max(0, (t - 0.75) * 220))
+      return `rgba(${r}, ${Math.round(g)}, ${Math.round(b)}, ${alpha.toFixed(2)})`
     }
 
     const resize = () => {
-      width = container.offsetWidth
-      height = container.offsetHeight
+      width = window.innerWidth
+      height = window.innerHeight
       canvas.width = width
       canvas.height = height
       cols = Math.ceil(width / resolution)
@@ -49,10 +51,10 @@ export function ThermodynamicGrid({
       grid = new Float32Array(cols * rows).fill(0)
     }
 
+    // Track mouse globally — fixed overlay, clientX/Y == canvas coords
     const handleMouseMove = (e: MouseEvent) => {
-      const rect = container.getBoundingClientRect()
-      mouse.x = e.clientX - rect.left
-      mouse.y = e.clientY - rect.top
+      mouse.x = e.clientX
+      mouse.y = e.clientY
       mouse.active = true
     }
 
@@ -79,7 +81,7 @@ export function ThermodynamicGrid({
                 const idx = c + r * cols
                 const d = Math.sqrt(i * i + j * j)
                 if (d <= radius) {
-                  grid[idx] = Math.min(1.0, grid[idx] + 0.3 * (1 - d / radius))
+                  grid[idx] = Math.min(1.0, grid[idx] + 0.35 * (1 - d / radius))
                 }
               }
             }
@@ -89,8 +91,7 @@ export function ThermodynamicGrid({
       mouse.prevX = mouse.x
       mouse.prevY = mouse.y
 
-      ctx.fillStyle = '#050505'
-      ctx.fillRect(0, 0, width, height)
+      ctx.clearRect(0, 0, width, height)
 
       for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
@@ -98,20 +99,15 @@ export function ThermodynamicGrid({
           const temp = grid[idx]
           grid[idx] *= coolingFactor
 
-          if (temp > 0.05) {
+          if (temp > 0.04) {
             const x = c * resolution
             const y = r * resolution
             ctx.fillStyle = getThermalColor(temp)
-            const size = resolution * (0.8 + temp * 0.5)
+            const size = resolution * (0.7 + temp * 0.6)
             const offset = (resolution - size) / 2
             ctx.beginPath()
             ctx.rect(x + offset, y + offset, size, size)
             ctx.fill()
-          } else if (c % 2 === 0 && r % 2 === 0) {
-            const x = c * resolution
-            const y = r * resolution
-            ctx.fillStyle = '#18181b'
-            ctx.fillRect(x + resolution / 2 - 1, y + resolution / 2 - 1, 2, 2)
           }
         }
       }
@@ -120,23 +116,23 @@ export function ThermodynamicGrid({
     }
 
     window.addEventListener('resize', resize)
-    container.addEventListener('mousemove', handleMouseMove)
-    container.addEventListener('mouseleave', handleMouseLeave)
+    window.addEventListener('mousemove', handleMouseMove)
+    document.addEventListener('mouseleave', handleMouseLeave)
     resize()
     rafId = requestAnimationFrame(update)
 
     return () => {
       cancelAnimationFrame(rafId)
       window.removeEventListener('resize', resize)
-      container.removeEventListener('mousemove', handleMouseMove)
-      container.removeEventListener('mouseleave', handleMouseLeave)
+      window.removeEventListener('mousemove', handleMouseMove)
+      document.removeEventListener('mouseleave', handleMouseLeave)
     }
   }, [resolution, coolingFactor])
 
   return (
     <div
       ref={containerRef}
-      className={`absolute inset-0 z-0 overflow-hidden bg-[#050505] ${className}`}
+      className={`overflow-hidden pointer-events-none ${className}`}
       style={style}
       {...props}
     >

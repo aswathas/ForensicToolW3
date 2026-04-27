@@ -11,6 +11,7 @@ import { ThermodynamicGrid } from '../components/ui/interactive-thermodynamic-gr
 import { DemoVideo } from '../components/animations/DemoVideo'
 import { FeaturesAd } from '../components/animations/FeaturesAd'
 import { Navbar } from '../components/Layout/Navbar'
+import { ShaderCanvas } from '../components/ui/animated-shader-hero'
 
 const STATS = [
   { value: '28',   label: 'Detection Rules' },
@@ -635,13 +636,21 @@ export const Landing: React.FC = () => {
   return (
     <div className="bg-bg-void text-text-primary">
 
+      {/* ── Red cursor heat trail — fixed full-page overlay ── */}
+      <ThermodynamicGrid
+        resolution={14}
+        coolingFactor={0.965}
+        className="fixed inset-0 z-[9999]"
+        style={{ mixBlendMode: 'screen' }}
+      />
+
       <Navbar />
 
       {/* ── HERO SECTION ── */}
       <section className="relative h-screen w-full overflow-hidden">
 
-        {/* Thermodynamic grid interactive background */}
-        <ThermodynamicGrid resolution={14} coolingFactor={0.965} className="absolute inset-0 z-0" />
+        {/* Nebula shader background */}
+        <ShaderCanvas className="absolute inset-0 z-0 w-full h-full" />
 
         <NoiseOverlay />
 
