@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import {
-  Shield, AlertTriangle, Activity, Clock,
-  Database, Zap, ChevronRight, TrendingUp,
+  Shield, Activity, Clock,
+  Zap, ChevronRight, TrendingUp,
 } from 'lucide-react'
 import { Layout } from '../components/Layout/Layout'
 import { fadeInUp, staggerContainer } from '../components/animations/variants'

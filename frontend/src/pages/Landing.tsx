@@ -3,24 +3,14 @@ import { Link } from 'react-router-dom'
 import { motion, useInView } from 'framer-motion'
 import { Player } from '@remotion/player'
 import {
-  ArrowRight, Shield, Zap, GitBranch, Activity, BarChart3,
+  ArrowRight, Zap, GitBranch, Activity, BarChart3,
   Search, Lock, TrendingUp, Network,
 } from 'lucide-react'
 import { WordsPullUp, WordsPullUpMultiStyle } from '../components/ui/WordsPullUp'
-import { CyberGlobe } from '../components/animations/CyberGlobe'
+import { ThermodynamicGrid } from '../components/ui/interactive-thermodynamic-grid'
 import { DemoVideo } from '../components/animations/DemoVideo'
 import { FeaturesAd } from '../components/animations/FeaturesAd'
-
-// ─────────────────────────────────────────────────────────────
-// Static data
-// ─────────────────────────────────────────────────────────────
-const NAV_LINKS = [
-  { to: '/dashboard', label: 'Dashboard' },
-  { to: '/graphs',    label: 'Graphs' },
-  { to: '/signals',   label: 'Signals' },
-  { to: '/report',    label: 'Reports' },
-  { to: '/upcoming',  label: 'Upcoming' },
-]
+import { Navbar } from '../components/Layout/Navbar'
 
 const STATS = [
   { value: '28',   label: 'Detection Rules' },
@@ -44,12 +34,6 @@ const TICKER_ITEMS: Array<{ type: string; address: string; confidence: string; s
 // Duplicate for seamless loop
 const TICKER_ALL = [...TICKER_ITEMS, ...TICKER_ITEMS]
 
-const HERO_SIGNALS: Array<{ type: string; tx: string; conf: number; sev: Severity }> = [
-  { type: 'REENTRANCY',   tx: '0xd4f9...c1a2', conf: 0.97, sev: 'CRITICAL' },
-  { type: 'FLASHLOAN',    tx: '0x8b2c...e5d7', conf: 0.89, sev: 'HIGH' },
-  { type: 'ORACLE MANIP', tx: '0x3f1b...9c04', conf: 0.85, sev: 'HIGH' },
-]
-
 const ATTACK_CATS = [
   { label: 'REENTRANCY',  pct: 87, color: '#dc143c' },
   { label: 'APPROVALS',   pct: 71, color: '#d4af37' },
@@ -65,10 +49,6 @@ const ATTACK_CATS = [
 function severityColor(sev: Severity): string {
   return sev === 'CRITICAL' ? '#dc143c' : '#d4af37'
 }
-function severityBg(sev: Severity): string {
-  return sev === 'CRITICAL' ? 'rgba(220,20,60,0.12)' : 'rgba(212,175,55,0.12)'
-}
-
 const glassCard: React.CSSProperties = {
   background: 'rgba(255,255,255,0.03)',
   backdropFilter: 'blur(8px)',
@@ -130,82 +110,6 @@ const MiniFundFlowSVG: React.FC = () => (
     <polygon points="93,42 88,40 89,44" fill="#d4af37" opacity="0.6" />
     <polygon points="93,48 88,46 89,50" fill="#d4af37" opacity="0.6" />
   </svg>
-)
-
-// ─────────────────────────────────────────────────────────────
-// Hero floating dashboard preview card
-// ─────────────────────────────────────────────────────────────
-const HeroDashboardCard: React.FC = () => (
-  <motion.div
-    initial={{ x: 30, opacity: 0 }}
-    animate={{ x: 0, opacity: 1 }}
-    transition={{ duration: 0.9, delay: 1.0, ease: [0.16, 1, 0.3, 1] }}
-    className="hidden lg:block absolute bottom-16 right-10 z-40 w-[320px]"
-    style={{
-      background: 'rgba(2,6,23,0.75)',
-      backdropFilter: 'blur(12px)',
-      WebkitBackdropFilter: 'blur(12px)',
-      border: '1px solid rgba(255,255,255,0.08)',
-      borderRadius: '4px',
-    }}
-  >
-    {/* Card header */}
-    <div
-      className="flex items-center justify-between px-4 py-2.5"
-      style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}
-    >
-      <div className="flex items-center gap-2">
-        <span
-          className="w-2 h-2 rounded-full bg-ferrari-600 animate-pulse"
-          style={{ boxShadow: '0 0 6px rgba(220,20,60,0.8)' }}
-        />
-        <span className="text-[11px] font-mono font-bold text-text-primary tracking-[1px] uppercase">
-          52 Signals Detected
-        </span>
-      </div>
-      <span className="text-[9px] font-mono text-text-muted tracking-[1px]">LIVE</span>
-    </div>
-
-    {/* Signal rows */}
-    <div className="divide-y divide-white/[0.04]">
-      {HERO_SIGNALS.map((s, i) => (
-        <div key={i} className="flex items-center justify-between px-4 py-2.5 gap-3">
-          <div className="flex items-center gap-2 min-w-0">
-            <span
-              className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-              style={{ background: severityColor(s.sev), boxShadow: `0 0 4px ${severityColor(s.sev)}` }}
-            />
-            <span
-              className="text-[10px] font-mono font-bold tracking-[0.5px]"
-              style={{ color: severityColor(s.sev) }}
-            >
-              {s.type}
-            </span>
-          </div>
-          <span className="text-[9px] font-mono text-text-muted truncate flex-1 text-center">{s.tx}</span>
-          <span
-            className="text-[10px] font-mono font-semibold flex-shrink-0 px-1.5 py-0.5 rounded-sm"
-            style={{
-              color: severityColor(s.sev),
-              background: severityBg(s.sev),
-              border: `1px solid ${severityColor(s.sev)}30`,
-            }}
-          >
-            {s.conf.toFixed(2)}
-          </span>
-        </div>
-      ))}
-    </div>
-
-    {/* Footer */}
-    <div
-      className="px-4 py-2 flex items-center justify-between"
-      style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
-    >
-      <span className="text-[9px] font-mono text-text-dim">EVM.Forensics v2.0</span>
-      <span className="text-[9px] font-mono text-green-500">● MONITORING</span>
-    </div>
-  </motion.div>
 )
 
 // ─────────────────────────────────────────────────────────────
@@ -731,29 +635,13 @@ export const Landing: React.FC = () => {
   return (
     <div className="bg-bg-void text-text-primary">
 
+      <Navbar />
+
       {/* ── HERO SECTION ── */}
       <section className="relative h-screen w-full overflow-hidden">
 
-        {/* Remotion ambient background */}
-        <div className="absolute inset-0 z-0">
-          <Player
-            component={CyberGlobe}
-            durationInFrames={600}
-            fps={30}
-            compositionWidth={1920}
-            compositionHeight={1080}
-            style={{ width: '100%', height: '100%' }}
-            loop
-            autoPlay
-            controls={false}
-            showPosterWhenUnplayed={false}
-            initiallyShowControls={false}
-            clickToPlay={false}
-            doubleClickToFullscreen={false}
-            spaceKeyToPlayOrPause={false}
-            moveToBeginningWhenEnded={false}
-          />
-        </div>
+        {/* Thermodynamic grid interactive background */}
+        <ThermodynamicGrid resolution={14} coolingFactor={0.965} className="absolute inset-0 z-0" />
 
         <NoiseOverlay />
 
@@ -766,41 +654,6 @@ export const Landing: React.FC = () => {
           className="absolute inset-0 z-20 pointer-events-none"
           style={{ background: 'linear-gradient(to right, rgba(2,6,23,0.3) 0%, transparent 40%)' }}
         />
-
-        {/* ── Ferrari navbar ── */}
-        <nav className="absolute top-0 left-0 right-0 z-50">
-          <div
-            className="flex items-center justify-between px-8 py-3 bg-black/90 backdrop-blur-md border-b border-border-dim"
-            style={{ borderRadius: '0 0 2px 2px' }}
-          >
-            <Link to="/home" className="flex items-center gap-2 group">
-              <Shield size={16} className="text-ferrari-500" style={{ filter: 'drop-shadow(0 0 4px rgba(220,20,60,0.8))' }} />
-              <span className="font-mono font-bold text-sm text-text-primary tracking-[1px]">
-                EVM<span className="text-ferrari-500">.</span>Forensics
-              </span>
-            </Link>
-
-            <div className="flex items-center gap-6">
-              {NAV_LINKS.map(({ to, label }) => (
-                <Link
-                  key={to}
-                  to={to}
-                  className="text-[11px] font-mono uppercase tracking-[1px] text-text-muted hover:text-text-primary transition-colors duration-200"
-                >
-                  {label}
-                </Link>
-              ))}
-              <div className="w-px h-4 bg-border-dim" />
-              <div className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                <span className="text-[10px] font-mono text-green-500 tracking-[1px]">LIVE</span>
-              </div>
-            </div>
-          </div>
-        </nav>
-
-        {/* ── Floating dashboard preview ── */}
-        <HeroDashboardCard />
 
         {/* ── Hero content anchored to bottom ── */}
         <div className="absolute bottom-0 left-0 right-0 z-30 px-8 md:px-16 pb-4">

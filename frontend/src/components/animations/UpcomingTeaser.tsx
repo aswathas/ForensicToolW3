@@ -439,7 +439,7 @@ export const UpcomingTeaser: React.FC = () => {
         })}
       </div>
 
-      {/* ── SCENE D: Countdown 2025 (600–750f) ── */}
+      {/* ── SCENE D: Countdown 2026 (600–750f) ── */}
       {frame >= 600 && frame < 760 && (
         <div style={{
           position: 'absolute', inset: 0,
@@ -461,7 +461,7 @@ export const UpcomingTeaser: React.FC = () => {
               position: 'absolute', inset: 0,
               WebkitTextStroke: `2px rgba(220,20,60,0.25)`,
               color: 'transparent',
-            }}>2025</span>
+            }}>2026</span>
             {/* Main gradient text */}
             <span style={{
               background: `linear-gradient(135deg, ${RED} 0%, rgba(220,20,60,0.6) 50%, rgba(220,20,60,0.2) 100%)`,
@@ -470,7 +470,7 @@ export const UpcomingTeaser: React.FC = () => {
               backgroundClip: 'text',
               textShadow: 'none',
               filter: `drop-shadow(0 0 60px rgba(220,20,60,0.5))`,
-            }}>2025</span>
+            }}>2026</span>
           </div>
           <div style={{
             fontFamily: 'JetBrains Mono, monospace',
@@ -549,7 +549,7 @@ export const UpcomingTeaser: React.FC = () => {
         EVM.FORENSICS // UPCOMING
       </div>
       <div style={{ position: 'absolute', bottom: 48, right: 64, fontFamily: 'JetBrains Mono, monospace', fontSize: 9, color: DIM, letterSpacing: 2, zIndex: 50 }}>
-        30s TEASER · 2025 ROADMAP
+        30s TEASER · 2026 ROADMAP
       </div>
     </AbsoluteFill>
   )

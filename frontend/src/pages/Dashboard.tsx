@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Player } from '@remotion/player'
 import {
   AlertTriangle, CheckCircle2, Clock, ArrowRight,
   RefreshCw, Terminal, Activity, Database, Zap,
-  ChevronUp, Shield, TrendingUp, Eye,
+  ChevronUp, Shield, Eye,
 } from 'lucide-react'
-import { Layout } from '../components/Layout/Layout'
+import { Navbar } from '../components/Layout/Navbar'
 import { fadeInUp, staggerContainer } from '../components/animations/variants'
 import { CopilotPanel } from '../components/Copilot/CopilotPanel'
-import { AttackViz } from '../components/animations/AttackViz'
+import { SmokeBackground } from '../components/ui/spooky-smoke-animation'
 import api from '../utils/api'
 import type { ForensicBundle } from '../types/forensics'
 
@@ -242,6 +241,12 @@ interface RunCardProps {
   onNavigate: () => void
 }
 
+const THREAT_LABEL: Record<string, string> = {
+  CRITICAL: 'Active Attacks — Immediate Review Required',
+  HIGH:     'Suspicious Activity Detected',
+  LOW:      'No Attacks — Clean Run',
+}
+
 const RunCard: React.FC<RunCardProps> = ({ runId, meta, idx, expanded, onToggleExpand, onNavigate }) => {
   const { attacksSucceeded: succeeded, attacksTotal: total, threatLevel } = meta
   const borderColor = THREAT_BORDER[threatLevel] ?? '#22c55e'
@@ -253,151 +258,152 @@ const RunCard: React.FC<RunCardProps> = ({ runId, meta, idx, expanded, onToggleE
       layout
       className="relative overflow-hidden rounded-lg"
       style={{
-        background: 'rgba(0,0,0,0.45)',
-        backdropFilter: 'blur(12px)',
-        WebkitBackdropFilter: 'blur(12px)',
-        border: '1px solid rgba(255,255,255,0.08)',
-        borderLeft: `3px solid ${borderColor}`,
+        background: 'rgba(1,3,10,0.82)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+        border: '1px solid rgba(255,255,255,0.07)',
+        borderLeft: `4px solid ${borderColor}`,
       }}
-      whileHover={{
-        y: expanded ? 0 : -2,
-        boxShadow: `0 8px 32px rgba(0,0,0,0.4), 0 0 16px ${borderColor}22`,
-      }}
+      whileHover={{ boxShadow: `0 8px 40px rgba(0,0,0,0.5), 0 0 24px ${borderColor}18` }}
       transition={{ duration: 0.18 }}
     >
-      {/* Subtle top gradient accent */}
-      <div
-        className="absolute top-0 left-0 right-0 h-px pointer-events-none"
-        style={{ background: `linear-gradient(to right, ${borderColor}60, transparent)` }}
-      />
+      <div className="absolute top-0 left-0 right-0 h-px pointer-events-none"
+        style={{ background: `linear-gradient(to right, ${borderColor}50, transparent)` }} />
 
-      {/* Main row — clickable to navigate */}
-      <div
-        className="p-5 cursor-pointer group"
-        onClick={onNavigate}
-      >
-        <div className="flex items-start justify-between gap-4">
+      {/* Main clickable area */}
+      <div className="p-6 cursor-pointer" onClick={onNavigate}>
+        <div className="flex items-start justify-between gap-6">
+
+          {/* Left: threat status + run info */}
           <div className="flex-1 min-w-0">
 
-            {/* Run ID + badges */}
-            <div className="flex items-center gap-3 mb-2 flex-wrap">
-              <div className="flex items-center gap-2">
+            {/* Threat status — PRIMARY info for client */}
+            <div className="flex items-center gap-3 mb-3">
+              <div
+                className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
+                style={{ background: `${borderColor}15`, border: `1px solid ${borderColor}35` }}
+              >
                 {succeeded > 0
-                  ? <AlertTriangle size={14} className="text-ferrari-500 shrink-0" />
-                  : <CheckCircle2 size={14} className="text-green-500 shrink-0" />
+                  ? <AlertTriangle size={18} style={{ color: borderColor }} />
+                  : <CheckCircle2 size={18} style={{ color: borderColor }} />
                 }
-                <span
-                  className="font-mono text-sm font-semibold text-text-primary truncate"
-                  style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                >
-                  run_{runId}
-                </span>
               </div>
-              <span className={`
-                text-[10px] font-mono font-bold px-1.5 py-0.5 rounded border
-                ${threatLevel === 'CRITICAL' ? 'badge-critical' : ''}
-                ${threatLevel === 'HIGH'     ? 'badge-high' : ''}
-                ${threatLevel === 'LOW'      ? 'badge-low' : ''}
-              `}>
-                {threatLevel}
-              </span>
-              <span className="text-[10px] font-mono text-text-muted">#{idx + 1}</span>
-
-              {meta.scenario && meta.scenario !== 'unknown' && (
-                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded border border-border-dim text-text-dim capitalize">
-                  {meta.scenario}
-                </span>
-              )}
+              <div>
+                <div
+                  className="font-bold leading-tight"
+                  style={{ fontSize: 17, color: succeeded > 0 ? borderColor : '#e2e8f0', fontFamily: 'system-ui, sans-serif' }}
+                >
+                  {THREAT_LABEL[threatLevel]}
+                </div>
+                <div className="flex items-center gap-2 mt-0.5">
+                  <span
+                    className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-sm border
+                      ${threatLevel === 'CRITICAL' ? 'badge-critical' : ''}
+                      ${threatLevel === 'HIGH'     ? 'badge-high'     : ''}
+                      ${threatLevel === 'LOW'      ? 'badge-low'      : ''}`}
+                  >
+                    {threatLevel}
+                  </span>
+                  {meta.scenario && meta.scenario !== 'unknown' && (
+                    <span className="text-[10px] font-mono px-1.5 py-0.5 rounded border border-border-dim text-text-dim capitalize">
+                      {meta.scenario}
+                    </span>
+                  )}
+                  <span className="text-[10px] font-mono text-text-muted">#{idx + 1}</span>
+                </div>
+              </div>
             </div>
 
-            {/* Meta row */}
-            <div className="flex flex-wrap items-center gap-4 text-xs font-mono text-text-muted">
+            {/* Plain-English summary row */}
+            <div
+              className="rounded-md px-4 py-2.5 mb-4"
+              style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)' }}
+            >
+              <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.6)', fontFamily: 'system-ui, sans-serif' }}>
+                {succeeded > 0
+                  ? `${succeeded} of ${total} attack simulation${total > 1 ? 's' : ''} succeeded.`
+                  : `All ${total} simulated attack${total > 1 ? 's' : ''} were blocked.`
+                }
+                {meta.signalCount ? ` ${meta.signalCount} detection signal${meta.signalCount !== 1 ? 's' : ''} fired.` : ''}
+                {meta.blockRange && meta.blockRange !== '—' ? ` Analyzed blocks ${meta.blockRange}.` : ''}
+              </p>
+            </div>
+
+            {/* Technical detail strip */}
+            <div className="flex flex-wrap items-center gap-4 text-[11px] font-mono text-text-muted">
               {meta.timestamp && (
-                <span className="flex items-center gap-1">
+                <span className="flex items-center gap-1.5">
                   <Clock size={10} />
                   {meta.timestamp}
                 </span>
               )}
-              <span className="flex items-center gap-1">
-                <Zap size={10} className={succeeded > 0 ? 'text-ferrari-500' : 'text-text-muted'} />
-                <span className={succeeded > 0 ? 'text-ferrari-400' : ''}>
+              <span className="flex items-center gap-1.5">
+                <Zap size={10} style={{ color: succeeded > 0 ? borderColor : undefined }} />
+                <span style={{ color: succeeded > 0 ? borderColor : undefined }}>
                   {succeeded}/{total} attacks
                 </span>
               </span>
-              {meta.blockRange && meta.blockRange !== '—' && (
-                <span className="flex items-center gap-1">
-                  <TrendingUp size={10} />
-                  blocks {meta.blockRange}
-                </span>
-              )}
               {meta.signalCount !== undefined && (
-                <span className="flex items-center gap-1 text-gold-400">
+                <span className="flex items-center gap-1.5 text-gold-400">
                   <Activity size={10} />
                   {meta.signalCount} signals
                 </span>
               )}
+              <span className="flex items-center gap-1.5 text-text-dim font-mono text-[10px]">
+                run_{runId.slice(0, 16)}…
+              </span>
             </div>
           </div>
 
-          {/* Actions */}
-          <div className="flex items-center gap-2 shrink-0">
+          {/* Right: actions */}
+          <div className="flex flex-col items-end gap-2 shrink-0">
             <motion.button
-              className="w-8 h-8 rounded border border-border-dim flex items-center justify-center
-                         text-text-muted hover:text-text-primary hover:border-border-neon
-                         bg-bg-secondary transition-colors"
-              onClick={(e) => {
-                e.stopPropagation()
-                onToggleExpand()
-              }}
-              whileTap={{ scale: 0.92 }}
-              title={expanded ? 'Collapse details' : 'View details'}
-              aria-label={expanded ? 'Collapse' : 'Expand'}
-            >
-              {expanded
-                ? <ChevronUp size={13} />
-                : <Eye size={13} />
-              }
-            </motion.button>
-
-            <motion.button
-              className="btn-neon text-xs py-2 px-4"
-              onClick={(e) => {
-                e.stopPropagation()
-                onNavigate()
-              }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              className="btn-neon text-sm py-2.5 px-5"
+              onClick={(e) => { e.stopPropagation(); onNavigate() }}
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.96 }}
             >
               Investigate
-              <ArrowRight size={13} />
+              <ArrowRight size={14} />
+            </motion.button>
+            <motion.button
+              className="w-8 h-8 rounded border border-border-dim flex items-center justify-center text-text-muted hover:text-text-primary hover:border-border-neon transition-colors"
+              onClick={(e) => { e.stopPropagation(); onToggleExpand() }}
+              whileTap={{ scale: 0.92 }}
+              title={expanded ? 'Collapse details' : 'View technical details'}
+            >
+              {expanded ? <ChevronUp size={13} /> : <Eye size={13} />}
             </motion.button>
           </div>
         </div>
 
-        {/* Attack progress bar */}
+        {/* Attack success progress bar */}
         {total > 0 && (
           <div className="mt-4 pt-4 border-t border-border-dim">
-            <div className="flex justify-between text-[10px] font-mono text-text-muted mb-1.5">
+            <div className="flex justify-between text-[10px] font-mono mb-1.5" style={{ color: 'rgba(255,255,255,0.3)' }}>
               <span>Attack success rate</span>
-              <span className="text-ferrari-400">{Math.round((succeeded / total) * 100)}%</span>
+              <span style={{ color: borderColor }}>{Math.round((succeeded / total) * 100)}%</span>
             </div>
-            <div className="h-1 rounded-full bg-bg-tertiary overflow-hidden">
+            <div className="h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.05)' }}>
               <motion.div
-                className="h-full rounded-full bg-gradient-to-r from-ferrari-700 to-ferrari-500"
+                className="h-full rounded-full"
+                style={{ background: `linear-gradient(to right, ${borderColor}cc, ${borderColor})`, boxShadow: `0 0 10px ${borderColor}60` }}
                 initial={{ width: 0 }}
                 animate={{ width: `${(succeeded / total) * 100}%` }}
-                transition={{ duration: 0.8, delay: 0.2 + idx * 0.05, ease: 'easeOut' }}
-                style={{ boxShadow: '0 0 8px rgba(220,20,60,0.5)' }}
+                transition={{ duration: 0.9, delay: 0.15 + idx * 0.06, ease: 'easeOut' }}
               />
             </div>
           </div>
         )}
       </div>
 
-      {/* Expandable details section */}
+      {/* Expandable technical details */}
       <AnimatePresence>
         {expanded && (
-          <div className="px-5 pb-5">
+          <div className="px-6 pb-6">
+            <div className="pt-1 mb-3">
+              <span className="text-[10px] font-mono text-text-dim tracking-widest uppercase">— Technical Details —</span>
+            </div>
             <ExpandedDetails runId={runId} />
           </div>
         )}
@@ -495,107 +501,60 @@ export const Dashboard: React.FC = () => {
   ]
 
   return (
-    <Layout>
-      <div className="min-h-screen bg-bg-void">
+    <div style={{ position: 'relative', minHeight: '100vh', background: '#010208', color: '#f1f5f9' }}>
+
+      {/* ── Three.js horizon background — fixed full-viewport ── */}
+      <div style={{ position: 'fixed', inset: 0, zIndex: 0, pointerEvents: 'none' }}>
+        <SmokeBackground smokeColor="#a01020" className="w-full h-full" />
+      </div>
+
+      {/* ── Navbar ── */}
+      <div style={{ position: 'relative', zIndex: 50 }}>
+        <Navbar />
+      </div>
+
+      {/* ── Content ── */}
+      <div style={{ position: 'relative', zIndex: 1 }}>
+      <div className="min-h-screen">
 
         {/* ── HERO BANNER ────────────────────────────────────────────────── */}
         <div className="relative overflow-hidden">
-          {/* AttackViz ambient background */}
-          <div
-            className="absolute inset-0 z-0 pointer-events-none"
-            style={{ opacity: 0.13, filter: 'blur(1px)' }}
-          >
-            <Player
-              component={AttackViz}
-              durationInFrames={600}
-              fps={30}
-              compositionWidth={1920}
-              compositionHeight={1080}
-              style={{ width: '100%', height: '100%' }}
-              loop
-              autoPlay
-              controls={false}
-              showPosterWhenUnplayed={false}
-              initiallyShowControls={false}
-              clickToPlay={false}
-              doubleClickToFullscreen={false}
-              spaceKeyToPlayOrPause={false}
-              moveToBeginningWhenEnded={false}
-            />
-          </div>
+          <div className="absolute inset-0 z-10 pointer-events-none"
+            style={{ background: 'linear-gradient(to bottom, rgba(1,2,8,0.25) 0%, rgba(1,2,8,0.6) 70%, #010208 100%)' }} />
 
-          {/* Gradient fade to page bg */}
-          <div
-            className="absolute inset-0 z-10 pointer-events-none"
-            style={{
-              background: 'linear-gradient(to bottom, rgba(2,6,23,0.55) 0%, rgba(2,6,23,0.75) 60%, #020617 100%)',
-            }}
-          />
+          <div className="relative z-20 px-8 pt-12 pb-10">
+            <motion.div variants={staggerContainer} initial="initial" animate="animate">
+              <motion.div variants={fadeInUp} className="flex items-end justify-between gap-4 mb-1 flex-wrap">
 
-          {/* Hero content */}
-          <div className="relative z-20 px-8 pt-10 pb-8">
-            <motion.div
-              variants={staggerContainer}
-              initial="initial"
-              animate="animate"
-            >
-              {/* Title row */}
-              <motion.div
-                variants={fadeInUp}
-                className="flex items-start justify-between mb-2"
-              >
+                {/* Title */}
                 <div>
-                  <h1
-                    className="text-5xl text-text-primary leading-none tracking-wide mb-0"
-                    style={{ fontFamily: "'Bebas Neue', monospace" }}
-                  >
-                    FORENSIC{' '}
-                    <span
-                      style={{
-                        color: '#dc143c',
-                        filter: 'drop-shadow(0 0 18px rgba(220,20,60,0.65))',
-                      }}
-                    >
-                      OPERATIONS
+                  <p className="text-[11px] font-mono text-text-muted tracking-[0.3em] uppercase mb-3">
+                    // blockchain attack investigation workspace
+                  </p>
+                  <h1 style={{ fontFamily: "'Bebas Neue', monospace", fontSize: 'clamp(42px, 6vw, 80px)', lineHeight: 0.95, letterSpacing: '0.04em', margin: 0 }}>
+                    Forensic{' '}
+                    <span style={{ color: '#dc143c', filter: 'drop-shadow(0 0 20px rgba(220,20,60,0.55))' }}>
+                      Operations
                     </span>{' '}
-                    CENTER
+                    Center
                   </h1>
-                  {/* Red underline accent */}
-                  <div className="flex items-center gap-2 mt-1.5">
-                    <div
-                      className="h-0.5 w-32"
-                      style={{
-                        background: 'linear-gradient(to right, #dc143c, transparent)',
-                        boxShadow: '0 0 8px rgba(220,20,60,0.5)',
-                      }}
-                    />
-                    <p className="text-text-muted text-xs font-mono">
-                      // blockchain attack investigation workspace
-                    </p>
-                  </div>
+                  <p className="mt-3 text-base" style={{ color: 'rgba(255,255,255,0.45)', fontFamily: 'system-ui, sans-serif', maxWidth: 480 }}>
+                    Select a forensic run below to investigate detected attacks, review signals, and trace suspicious fund flows.
+                  </p>
                 </div>
 
-                <div className="flex items-center gap-3 mt-1">
-                  {/* Block range badge */}
+                {/* Right actions */}
+                <div className="flex items-center gap-3 mb-1">
                   {latestMeta && latestMeta.blockRange !== '—' && (
-                    <div
-                      className="px-3 py-1.5 rounded font-mono text-xs"
-                      style={{
-                        background: 'rgba(56,189,248,0.08)',
-                        border: '1px solid rgba(56,189,248,0.25)',
-                        color: '#38bdf8',
-                      }}
-                    >
-                      <span className="text-text-dim">latest: </span>
-                      blocks {latestMeta.blockRange}
+                    <div className="px-3 py-2 rounded font-mono text-xs"
+                      style={{ background: 'rgba(56,189,248,0.08)', border: '1px solid rgba(56,189,248,0.22)', color: '#38bdf8' }}>
+                      <span className="text-text-dim">latest: </span>blocks {latestMeta.blockRange}
                     </div>
                   )}
-
                   <motion.button
                     onClick={() => loadRuns(true)}
                     className="btn-ghost text-xs py-2"
-                    whileHover={{ scale: 1.04 }}
-                    whileTap={{ scale: 0.96 }}
+                    whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}
                     disabled={refreshing}
                   >
                     <RefreshCw size={13} className={refreshing ? 'animate-spin' : ''} />
@@ -622,44 +581,90 @@ export const Dashboard: React.FC = () => {
                 <motion.div
                   key={label}
                   variants={fadeInUp}
-                  className="relative rounded-lg p-5 flex items-center gap-4 cursor-default group"
+                  className="relative rounded-lg overflow-hidden cursor-default group"
                   style={{
-                    background: 'rgba(0,0,0,0.4)',
-                    backdropFilter: 'blur(10px)',
-                    WebkitBackdropFilter: 'blur(10px)',
-                    border: '1px solid rgba(255,255,255,0.08)',
+                    background: 'rgba(0,0,0,0.5)',
+                    backdropFilter: 'blur(12px)',
+                    WebkitBackdropFilter: 'blur(12px)',
+                    border: '1px solid rgba(255,255,255,0.07)',
+                    padding: '28px 24px',
                   }}
-                  whileHover={{
-                    boxShadow: `0 0 28px ${glow}, 0 4px 20px rgba(0,0,0,0.5)`,
-                    borderColor: 'rgba(255,255,255,0.15)',
-                  }}
+                  whileHover={{ boxShadow: `0 0 32px ${glow}, 0 4px 24px rgba(0,0,0,0.6)`, borderColor: 'rgba(255,255,255,0.13)' }}
                   transition={{ duration: 0.2 }}
                 >
-                  <div
-                    className="w-12 h-12 rounded-lg flex items-center justify-center shrink-0"
-                    style={{ background: `${glow.replace('0.25', '0.12')}`, border: `1px solid ${glow}` }}
-                  >
-                    <Icon size={20} className={color} />
-                  </div>
-                  <div>
-                    <div
-                      className={`text-4xl leading-none mb-0.5 ${color}`}
-                      style={{ fontFamily: "'Bebas Neue', monospace" }}
-                    >
-                      {value}
-                    </div>
-                    <div className="text-xs text-text-muted font-mono tracking-widest uppercase">
-                      {label}
-                    </div>
+                  {/* Icon top-right */}
+                  <div className="absolute top-5 right-5 opacity-40 group-hover:opacity-70 transition-opacity">
+                    <Icon size={22} className={color} />
                   </div>
 
-                  {/* Hover glow bar */}
+                  {/* Big number */}
                   <div
-                    className="absolute bottom-0 left-0 right-0 h-0.5 rounded-b-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-                    style={{ background: `linear-gradient(to right, ${glow.replace('0.25', '0.8')}, transparent)` }}
-                  />
+                    className={`mb-1 leading-none ${color}`}
+                    style={{ fontFamily: "'Bebas Neue', monospace", fontSize: 56 }}
+                  >
+                    {value}
+                  </div>
+
+                  {/* Plain label */}
+                  <div style={{ fontSize: 15, fontWeight: 600, color: 'rgba(255,255,255,0.75)', fontFamily: 'system-ui, sans-serif', marginBottom: 4 }}>
+                    {label}
+                  </div>
+                  <div className="text-[10px] font-mono text-text-dim tracking-widest uppercase">
+                    {label === 'Total Runs' ? 'forensic analyses' : label === 'Attacks Detected' ? 'successful simulations' : 'heuristic rules fired'}
+                  </div>
+
+                  {/* Bottom accent */}
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                    style={{ background: `linear-gradient(to right, ${glow.replace('0.25', '0.9')}, transparent)` }} />
                 </motion.div>
               ))}
+            </motion.div>
+          )}
+
+          {/* ── Live Monitoring Widget ── */}
+          {!loading && runs.length > 0 && (
+            <motion.div
+              variants={fadeInUp}
+              initial="initial"
+              animate="animate"
+              className="mb-8 rounded-lg overflow-hidden"
+              style={{ background: 'rgba(2,3,8,0.75)', border: '1px solid rgba(255,255,255,0.07)', backdropFilter: 'blur(12px)' }}
+            >
+              <div className="flex items-center justify-between px-5 py-3" style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-ferrari-600 animate-pulse" style={{ boxShadow: '0 0 6px rgba(220,20,60,0.8)' }} />
+                  <span className="text-[11px] font-mono font-bold text-text-primary tracking-[1px] uppercase">52 Signals Detected</span>
+                </div>
+                <div className="flex items-center gap-4">
+                  <span className="text-[9px] font-mono text-green-500">● MONITORING</span>
+                  <span className="text-[9px] font-mono text-text-muted tracking-[1px]">LIVE</span>
+                </div>
+              </div>
+              <div className="divide-y divide-white/[0.04]">
+                {[
+                  { type: 'REENTRANCY', tx: '0xd4f9...c1a2', conf: 0.97, sev: 'CRITICAL' as const },
+                  { type: 'FLASHLOAN', tx: '0x8b2c...e5d7', conf: 0.89, sev: 'HIGH' as const },
+                  { type: 'ORACLE MANIP', tx: '0x3f1b...9c04', conf: 0.85, sev: 'HIGH' as const },
+                ].map((s, i) => {
+                  const color = s.sev === 'CRITICAL' ? '#dc143c' : '#d4af37'
+                  return (
+                    <div key={i} className="flex items-center justify-between px-5 py-2.5 gap-3">
+                      <div className="flex items-center gap-2 min-w-0">
+                        <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: color, boxShadow: `0 0 4px ${color}` }} />
+                        <span className="text-[10px] font-mono font-bold tracking-[0.5px]" style={{ color }}>{s.type}</span>
+                      </div>
+                      <span className="text-[9px] font-mono text-text-muted truncate flex-1 text-center">{s.tx}</span>
+                      <span className="text-[10px] font-mono font-semibold flex-shrink-0 px-1.5 py-0.5 rounded-sm" style={{ color, background: `${color}18`, border: `1px solid ${color}30` }}>
+                        {s.conf.toFixed(2)}
+                      </span>
+                    </div>
+                  )
+                })}
+              </div>
+              <div className="px-5 py-2 flex items-center justify-between" style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+                <span className="text-[9px] font-mono text-text-dim">EVM.Forensics v2.0</span>
+                <span className="text-[9px] font-mono text-text-muted">Demo signals — connect pipeline for live data</span>
+              </div>
             </motion.div>
           )}
 
@@ -681,25 +686,7 @@ export const Dashboard: React.FC = () => {
                   height: 120,
                 }}
               >
-                <div className="absolute inset-0 opacity-20">
-                  <Player
-                    component={AttackViz}
-                    durationInFrames={600}
-                    fps={30}
-                    compositionWidth={1920}
-                    compositionHeight={1080}
-                    style={{ width: '100%', height: '100%' }}
-                    loop
-                    autoPlay
-                    controls={false}
-                    showPosterWhenUnplayed={false}
-                    initiallyShowControls={false}
-                    clickToPlay={false}
-                    doubleClickToFullscreen={false}
-                    spaceKeyToPlayOrPause={false}
-                    moveToBeginningWhenEnded={false}
-                  />
-                </div>
+                <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(204,26,46,0.04) 0%, transparent 60%)' }} />
                 <div className="absolute inset-0 flex items-center justify-center gap-3">
                   <RefreshCw size={16} className="text-ferrari-400 animate-spin" />
                   <span className="font-mono text-sm text-text-muted">Loading forensic runs…</span>
@@ -792,9 +779,10 @@ export const Dashboard: React.FC = () => {
           )}
         </div>
       </div>
+      </div>
 
       {/* ── Copilot panel ── */}
       <CopilotPanel runMeta={dashboardCopilotMeta} />
-    </Layout>
+    </div>
   )
 }

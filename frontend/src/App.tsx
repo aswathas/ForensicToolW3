@@ -8,6 +8,8 @@ import { EntityProfile } from './pages/EntityProfile'
 import { ReportBuilder } from './pages/ReportBuilder'
 import { GraphsPage } from './pages/GraphsPage'
 import { Upcoming } from './pages/Upcoming'
+import { About } from './pages/About'
+import { ProductPitch } from './pages/ProductPitch'
 
 // First visit → /intro; subsequent visits → /home (skips intro)
 function RootRedirect() {
@@ -29,6 +31,8 @@ function App() {
         <Route path="/report"                  element={<ReportBuilder />} />
         <Route path="/graphs"                  element={<GraphsPage />} />
         <Route path="/upcoming"               element={<Upcoming />} />
+        <Route path="/about"                   element={<About />} />
+        <Route path="/pitch"                   element={<ProductPitch />} />
         <Route path="*"                        element={<Navigate to="/" />} />
       </Routes>
     </Router>

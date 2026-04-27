@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   FileText, Download, ChevronDown, AlertTriangle,
@@ -8,6 +8,7 @@ import {
 import { Layout } from '../components/Layout/Layout'
 import { fadeInUp, staggerContainer } from '../components/animations/variants'
 import api from '../utils/api'
+import html2pdf from 'html2pdf.js'
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -61,6 +62,124 @@ function SeverityBar({ label, count, total, color }: { label: string; count: num
   )
 }
 
+// ── Print Template (captured by html2pdf) ─────────────────────────────────
+
+const PrintTemplate: React.FC<{ summary: RunSummary }> = ({ summary }) => {
+  const threatColor = THREAT_COLOR[summary.threatLevel] ?? '#22c55e'
+  return (
+    <div style={{ fontFamily: 'monospace', color: '#f1f5f9', lineHeight: 1.6, fontSize: 13 }}>
+      <div style={{ borderBottom: `3px solid ${threatColor}`, paddingBottom: 16, marginBottom: 24 }}>
+        <h1 style={{ fontSize: 26, fontWeight: 900, letterSpacing: 4, margin: '0 0 6px', color: '#fff' }}>
+          EVM FORENSICS REPORT
+        </h1>
+        <div style={{ fontSize: 11, color: '#94a3b8' }}>
+          Run ID: {summary.runId} &nbsp;|&nbsp; Generated: {new Date().toLocaleString()} &nbsp;|&nbsp; Scenario: {summary.scenario}
+        </div>
+      </div>
+      <div style={{ background: `${threatColor}18`, border: `1px solid ${threatColor}50`, borderLeft: `4px solid ${threatColor}`, padding: '14px 18px', marginBottom: 24, borderRadius: 4 }}>
+        <div style={{ fontSize: 20, fontWeight: 900, color: threatColor, letterSpacing: 2, marginBottom: 4 }}>
+          ⚠ {summary.threatLevel} THREAT LEVEL
+        </div>
+        <div style={{ fontSize: 11, color: '#94a3b8' }}>
+          Blocks {summary.blockRange.from.toLocaleString()} → {summary.blockRange.to.toLocaleString()} &nbsp;|&nbsp; {summary.timestamp}
+        </div>
+      </div>
+      <div style={{ marginBottom: 24 }}>
+        <h2 style={{ fontSize: 13, fontWeight: 700, letterSpacing: 2, color: '#94a3b8', marginBottom: 10, textTransform: 'uppercase' }}>Executive Summary</h2>
+        <p style={{ fontSize: 13, color: '#e2e8f0', lineHeight: 1.8, margin: 0 }}>
+          This forensic analysis examined {summary.attacksTotal} attack{summary.attacksTotal !== 1 ? 's' : ''} in the {summary.scenario} scenario.{' '}
+          {summary.attacksSucceeded} attack{summary.attacksSucceeded !== 1 ? 's' : ''} succeeded, triggering {summary.signalCount} detection signal{summary.signalCount !== 1 ? 's' : ''} across {summary.entityCount} monitored entities.{' '}
+          {summary.suspiciousTxCount} transactions were flagged as anomalous. Threat level: {summary.threatLevel}.
+        </p>
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 10, marginBottom: 24 }}>
+        {([
+          { label: 'Attacks Succeeded', value: summary.attacksSucceeded, color: threatColor },
+          { label: 'Signals Detected', value: summary.signalCount, color: '#d4af37' },
+          { label: 'Entities Flagged', value: summary.entityCount, color: '#a855f7' },
+          { label: 'Suspicious TXs', value: summary.suspiciousTxCount, color: '#38bdf8' },
+        ] as const).map(({ label, value, color }) => (
+          <div key={label} style={{ border: `1px solid ${color}35`, background: `${color}0e`, padding: '12px', borderRadius: 4, textAlign: 'center' }}>
+            <div style={{ fontSize: 28, fontWeight: 900, color, lineHeight: 1 }}>{value}</div>
+            <div style={{ fontSize: 9, color: '#64748b', textTransform: 'uppercase', letterSpacing: 1, marginTop: 4 }}>{label}</div>
+          </div>
+        ))}
+      </div>
+      {summary.topSignals.length > 0 && (
+        <div style={{ marginBottom: 24 }}>
+          <h2 style={{ fontSize: 13, fontWeight: 700, letterSpacing: 2, color: '#94a3b8', marginBottom: 10, textTransform: 'uppercase' }}>Detection Signals</h2>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 11 }}>
+            <thead>
+              <tr style={{ borderBottom: '1px solid #1e293b' }}>
+                {['Severity', 'Signal Name', 'Category'].map(h => (
+                  <th key={h} style={{ textAlign: 'left', padding: '6px 8px', color: '#475569', fontWeight: 600, textTransform: 'uppercase', fontSize: 9, letterSpacing: 1 }}>{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {summary.topSignals.map((s, i) => {
+                const c = s.severity === 'critical' ? '#dc143c' : s.severity === 'high' ? '#d4af37' : s.severity === 'medium' ? '#f97316' : '#22c55e'
+                return (
+                  <tr key={i} style={{ borderBottom: '1px solid #0f172a' }}>
+                    <td style={{ padding: '6px 8px' }}><span style={{ color: c, fontWeight: 700, textTransform: 'uppercase', fontSize: 9 }}>{s.severity}</span></td>
+                    <td style={{ padding: '6px 8px', color: '#e2e8f0' }}>{s.name.replace(/_/g, ' ')}</td>
+                    <td style={{ padding: '6px 8px', color: '#64748b' }}>{s.category}</td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
+      {summary.highRiskEntities.length > 0 && (
+        <div style={{ marginBottom: 24 }}>
+          <h2 style={{ fontSize: 13, fontWeight: 700, letterSpacing: 2, color: '#94a3b8', marginBottom: 10, textTransform: 'uppercase' }}>High-Risk Entities</h2>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 11 }}>
+            <thead>
+              <tr style={{ borderBottom: '1px solid #1e293b' }}>
+                {['Address', 'Role', 'Risk Score'].map(h => (
+                  <th key={h} style={{ textAlign: 'left', padding: '6px 8px', color: '#475569', fontWeight: 600, textTransform: 'uppercase', fontSize: 9, letterSpacing: 1 }}>{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {summary.highRiskEntities.map((e, i) => {
+                const c = e.riskScore >= 0.8 ? '#dc143c' : '#d4af37'
+                return (
+                  <tr key={i} style={{ borderBottom: '1px solid #0f172a' }}>
+                    <td style={{ padding: '6px 8px', color: '#e2e8f0', fontFamily: 'monospace' }}>{e.address.slice(0, 10)}…{e.address.slice(-6)}</td>
+                    <td style={{ padding: '6px 8px', color: '#94a3b8', textTransform: 'uppercase', fontSize: 10 }}>{e.role ?? '—'}</td>
+                    <td style={{ padding: '6px 8px', color: c, fontWeight: 700 }}>{(e.riskScore * 100).toFixed(0)}%</td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
+      <div style={{ marginBottom: 24 }}>
+        <h2 style={{ fontSize: 13, fontWeight: 700, letterSpacing: 2, color: '#94a3b8', marginBottom: 10, textTransform: 'uppercase' }}>Evidence Coverage</h2>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8 }}>
+          {[
+            { label: 'Execution Traces', ok: summary.coverage.tracesAvailable },
+            { label: 'State Diffs', ok: summary.coverage.stateDiffsAvailable },
+            { label: `${summary.coverage.decodedABIs} ABIs Decoded`, ok: summary.coverage.decodedABIs > 0 },
+          ].map(({ label, ok }) => (
+            <div key={label} style={{ padding: '8px 12px', border: `1px solid ${ok ? '#22c55e35' : '#47556935'}`, borderRadius: 4, color: ok ? '#86efac' : '#475569', fontSize: 11 }}>
+              {ok ? '✓' : '✗'} {label}
+            </div>
+          ))}
+        </div>
+      </div>
+      <div style={{ borderTop: '1px solid #1e293b', paddingTop: 14 }}>
+        <div style={{ fontSize: 9, color: '#334155', textAlign: 'center', letterSpacing: 1 }}>
+          GENERATED BY EVM FORENSICS AGENT &nbsp;|&nbsp; EVIDENCE-FIRST · DETERMINISTIC · REPRODUCIBLE &nbsp;|&nbsp; {new Date().toISOString()}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 // ── Main page ──────────────────────────────────────────────────────────────
 
 export const ReportBuilder: React.FC = () => {
@@ -71,6 +190,9 @@ export const ReportBuilder: React.FC = () => {
   const [open, setOpen] = useState(false)
   const [generating, setGenerating] = useState(false)
   const [exportDone, setExportDone] = useState(false)
+  const [aiSummary, setAiSummary] = useState<string | null>(null)
+  const [aiLoading, setAiLoading] = useState(false)
+  const printRef = useRef<HTMLDivElement>(null)
 
   // Load run list
   useEffect(() => {
@@ -79,6 +201,18 @@ export const ReportBuilder: React.FC = () => {
       if (r.length > 0) setSelectedRun(r[0])
     }).catch(() => {})
   }, [])
+
+  // Try to load AI executive summary for selected run
+  useEffect(() => {
+    if (!selectedRun) return
+    setAiSummary(null)
+    setAiLoading(true)
+    fetch(`http://localhost:3001/api/forensics/${selectedRun}/ai`)
+      .then(r => r.ok ? r.json() : Promise.reject())
+      .then((d: any) => setAiSummary(d?.summary ?? d?.executive_summary ?? null))
+      .catch(() => setAiSummary(null))
+      .finally(() => setAiLoading(false))
+  }, [selectedRun])
 
   // Load run data when selection changes
   useEffect(() => {
@@ -132,16 +266,23 @@ export const ReportBuilder: React.FC = () => {
   }, [selectedRun])
 
   const handleExport = async () => {
-    if (!selectedRun) return
+    if (!summary || !printRef.current) return
     setGenerating(true)
     try {
-      await api.exportReport({ runId: selectedRun, format: 'pdf', includeGraphs: true, includeRawData: false })
-    } catch {
-      // graceful — backend may not have the endpoint ready
+      const opt = {
+        margin: [10, 10, 10, 10] as [number, number, number, number],
+        filename: `forensic-report-${summary.runId.slice(0, 12)}.pdf`,
+        image: { type: 'jpeg' as const, quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true, backgroundColor: '#0a0a0a' },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' as const },
+      }
+      await html2pdf().set(opt).from(printRef.current).save()
+      setExportDone(true)
+      setTimeout(() => setExportDone(false), 4000)
+    } catch (err) {
+      console.error('PDF generation failed:', err)
     } finally {
       setGenerating(false)
-      setExportDone(true)
-      setTimeout(() => setExportDone(false), 3000)
     }
   }
 
@@ -443,6 +584,38 @@ export const ReportBuilder: React.FC = () => {
               </div>
             </motion.div>
 
+            {/* AI Executive Summary */}
+            <motion.div variants={fadeInUp}
+              className="rounded-lg p-5"
+              style={{ background: 'rgba(0,0,0,0.4)', border: '1px solid rgba(168,85,247,0.2)', backdropFilter: 'blur(8px)' }}
+            >
+              <div className="flex items-center gap-2 mb-3">
+                <Zap size={13} className="text-purple-400" />
+                <h3 className="text-xs font-mono font-semibold text-text-primary uppercase tracking-wider">AI Executive Summary</h3>
+                <span className="ml-auto text-[9px] font-mono px-1.5 py-0.5 rounded border border-purple-500/30 text-purple-400 bg-purple-500/10">Ollama</span>
+              </div>
+              {aiLoading ? (
+                <div className="space-y-2">
+                  <div className="skeleton h-3 w-full rounded" />
+                  <div className="skeleton h-3 w-4/5 rounded" />
+                  <div className="skeleton h-3 w-3/4 rounded" />
+                </div>
+              ) : aiSummary ? (
+                <p className="text-xs text-text-secondary leading-relaxed" style={{ fontFamily: 'system-ui, sans-serif' }}>{aiSummary}</p>
+              ) : (
+                <div className="space-y-3">
+                  <p className="text-xs font-mono text-text-muted">AI narrative requires Ollama running locally.</p>
+                  <div className="rounded p-3 text-[10px] font-mono text-text-dim space-y-1" style={{ background: 'rgba(168,85,247,0.05)', border: '1px solid rgba(168,85,247,0.15)' }}>
+                    <p className="text-purple-400 font-semibold mb-2">Quick Setup:</p>
+                    <p>1. Install Ollama → <span className="text-text-secondary">ollama.ai</span></p>
+                    <p>2. <span className="text-gold-400">ollama serve</span></p>
+                    <p>3. <span className="text-gold-400">ollama pull phi3:mini</span></p>
+                    <p>4. <span className="text-gold-400">npm run ai:analyze</span></p>
+                  </div>
+                </div>
+              )}
+            </motion.div>
+
             {/* Export section */}
             <motion.div variants={fadeInUp}
               className="rounded-lg p-5"
@@ -454,10 +627,17 @@ export const ReportBuilder: React.FC = () => {
                   Export Report
                 </h3>
               </div>
-              <p className="text-xs font-mono text-text-muted mb-4">
+              <p className="text-xs font-mono text-text-muted mb-3">
                 Generates an evidence-linked PDF audit report from{' '}
                 <code className="text-gold-400">run_{selectedRun.slice(0, 12)}…</code>
               </p>
+              <ul style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', fontFamily: "'JetBrains Mono', monospace", marginBottom: 16, listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: 3 }}>
+                {['Executive summary & threat level', 'Signal detection table', 'High-risk entity table', 'Evidence coverage checklist'].map(item => (
+                  <li key={item} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <span style={{ color: '#d4af37' }}>›</span> {item}
+                  </li>
+                ))}
+              </ul>
               <motion.button
                 onClick={handleExport}
                 disabled={generating}
@@ -486,6 +666,33 @@ export const ReportBuilder: React.FC = () => {
 
           </motion.div>
         )}
+
+        {exportDone && summary && (
+          <motion.p
+            initial={{ opacity: 0, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
+            style={{ margin: '12px 0 0', fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: '#22c55e', display: 'flex', alignItems: 'center', gap: 6 }}
+          >
+            ✓ forensic-report-{summary.runId.slice(0, 12)}.pdf downloaded
+          </motion.p>
+        )}
+      </div>
+
+      {/* Hidden print template — captured by html2pdf.js */}
+      <div
+        ref={printRef}
+        style={{
+          position: 'absolute',
+          left: '-9999px',
+          top: 0,
+          width: '794px',
+          background: '#0a0a0a',
+          color: '#f1f5f9',
+          padding: '40px',
+          fontFamily: 'monospace',
+        }}
+      >
+        {summary && <PrintTemplate summary={summary} />}
       </div>
     </Layout>
   )

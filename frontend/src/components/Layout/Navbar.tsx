@@ -9,6 +9,8 @@ const NAV_LINKS = [
   { to: '/signals',   label: 'Signals'   },
   { to: '/report',    label: 'Reports'   },
   { to: '/upcoming',  label: 'Upcoming'  },
+  { to: '/about',     label: 'About'     },
+  { to: '/pitch',     label: 'Pitch'     },
 ]
 
 // ── Network definitions ────────────────────────────────────────────────────

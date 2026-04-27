@@ -214,7 +214,7 @@ const SIGNALS: SignalDef[] = [
 
 // ── Rule Card ──────────────────────────────────────────────────────────────
 
-function RuleCard({ signal, idx }: { signal: SignalDef; idx: number }) {
+function RuleCard({ signal }: { signal: SignalDef }) {
   const cat = CATEGORY_META[signal.category] ?? CATEGORY_META.fundflow
   const Icon = cat.icon
 
@@ -460,8 +460,8 @@ export const SignalsCatalog: React.FC = () => {
                 animate="animate"
                 className="grid gap-3 md:grid-cols-2"
               >
-                {rules.map((signal, idx) => (
-                  <RuleCard key={signal.id} signal={signal} idx={idx} />
+                {rules.map((signal) => (
+                  <RuleCard key={signal.id} signal={signal} />
                 ))}
               </motion.div>
             </div>

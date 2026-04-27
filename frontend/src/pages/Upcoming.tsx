@@ -1,25 +1,16 @@
 import React, { useRef } from 'react'
-import { Link } from 'react-router-dom'
 import { motion, useInView } from 'framer-motion'
 import { Player } from '@remotion/player'
-import { Shield, ArrowRight, Zap } from 'lucide-react'
+import { ArrowRight, Zap } from 'lucide-react'
 import { AmbientLoop } from '../components/animations/AmbientLoop'
 import { AttackViz } from '../components/animations/AttackViz'
 import { UpcomingTeaser } from '../components/animations/UpcomingTeaser'
-
-// ── Nav links (mirrors Landing.tsx / Navbar.tsx) ─────────────────────────────
-const NAV_LINKS = [
-  { to: '/dashboard', label: 'Dashboard' },
-  { to: '/graphs',    label: 'Graphs'    },
-  { to: '/signals',   label: 'Signals'   },
-  { to: '/report',    label: 'Reports'   },
-  { to: '/upcoming',  label: 'Upcoming'  },
-]
+import { Navbar } from '../components/Layout/Navbar'
 
 // ── Roadmap data ──────────────────────────────────────────────────────────────
 const ROADMAP = [
   {
-    quarter: 'Q3 2025',
+    quarter: 'Q3 2026',
     title: 'MULTI-CHAIN EXPANSION',
     status: 'current',
     features: [
@@ -29,7 +20,7 @@ const ROADMAP = [
     ],
   },
   {
-    quarter: 'Q4 2025',
+    quarter: 'Q4 2026',
     title: 'ENTITY INTELLIGENCE',
     status: 'upcoming',
     features: [
@@ -62,8 +53,8 @@ const ROADMAP = [
 
 // ── Quarter badge colours ─────────────────────────────────────────────────────
 const QUARTER_BADGES: Record<string, string> = {
-  'Q3 2025': 'bg-ferrari-600/20 text-ferrari-400 border-ferrari-600/40',
-  'Q4 2025': 'bg-ferrari-600/10 text-ferrari-500 border-ferrari-600/30',
+  'Q3 2026': 'bg-ferrari-600/20 text-ferrari-400 border-ferrari-600/40',
+  'Q4 2026': 'bg-ferrari-600/10 text-ferrari-500 border-ferrari-600/30',
   'Q1 2026': 'bg-yellow-500/10 text-yellow-400 border-yellow-500/30',
   'Q2 2026': 'bg-yellow-500/10 text-yellow-400 border-yellow-500/30',
 }
@@ -320,6 +311,8 @@ export const Upcoming: React.FC = () => {
   return (
     <div className="bg-bg-void text-text-primary">
 
+      <Navbar />
+
       {/* ── HERO SECTION ── */}
       <section className="relative h-screen w-full overflow-hidden">
 
@@ -383,48 +376,6 @@ export const Upcoming: React.FC = () => {
           style={{ background: 'linear-gradient(to right, rgba(2,6,23,0.25) 0%, transparent 40%)' }}
         />
 
-        {/* ── Navbar ── */}
-        <nav className="absolute top-0 left-0 right-0 z-50">
-          <div
-            className="flex items-center justify-between px-8 py-3 bg-black/90 backdrop-blur-md border-b border-border-dim"
-            style={{ borderRadius: '0 0 2px 2px' }}
-          >
-            {/* Logo */}
-            <Link to="/home" className="flex items-center gap-2 group">
-              <Shield
-                size={16}
-                className="text-ferrari-500"
-                style={{ filter: 'drop-shadow(0 0 4px rgba(220,20,60,0.8))' }}
-              />
-              <span className="font-mono font-bold text-sm text-text-primary tracking-[1px]">
-                EVM<span className="text-ferrari-500">.</span>Forensics
-              </span>
-            </Link>
-
-            {/* Links + live indicator */}
-            <div className="flex items-center gap-6">
-              {NAV_LINKS.map(({ to, label }) => (
-                <Link
-                  key={to}
-                  to={to}
-                  className={`text-[11px] font-mono uppercase tracking-[1px] transition-colors duration-200 ${
-                    to === '/upcoming'
-                      ? 'text-ferrari-500'
-                      : 'text-text-muted hover:text-text-primary'
-                  }`}
-                >
-                  {label}
-                </Link>
-              ))}
-              <div className="w-px h-4 bg-border-dim" />
-              <div className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                <span className="text-[10px] font-mono text-green-500 tracking-[1px]">LIVE</span>
-              </div>
-            </div>
-          </div>
-        </nav>
-
         {/* ── Hero content (centred) ── */}
         <div className="absolute inset-0 z-30 flex flex-col items-center justify-center text-center px-8">
 
@@ -435,7 +386,7 @@ export const Upcoming: React.FC = () => {
             transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="flex items-center gap-3 mb-10"
           >
-            {['Q3 2025', 'Q4 2025', '2026'].map((badge) => (
+            {['Q3 2026', 'Q4 2026', '2027'].map((badge) => (
               <span
                 key={badge}
                 className="text-[10px] font-mono border border-ferrari-600/40 bg-ferrari-600/10 text-ferrari-400 px-3 py-1 rounded-full tracking-[1px]"
