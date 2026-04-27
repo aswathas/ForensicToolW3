@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { Shield, Zap, AlertTriangle, TrendingUp, Settings, GitBranch } from 'lucide-react'
 import { Layout } from '../components/Layout/Layout'
 import { fadeInUp, staggerContainer } from '../components/animations/variants'
+import { WebGPUDepthMap } from '../components/ui/webgpu-depth-map'
 
 // ── Full 28-rule catalog ───────────────────────────────────────────────────
 
@@ -336,43 +337,54 @@ export const SignalsCatalog: React.FC = () => {
     <Layout>
       <div className="p-8 max-w-5xl">
 
-        {/* ── Header ── */}
-        <motion.div
-          variants={staggerContainer}
-          initial="initial"
-          animate="animate"
-          className="mb-8"
+        {/* ── Hero with WebGPU depth-map background ── */}
+        <div
+          className="relative overflow-hidden rounded-lg mb-8"
+          style={{ minHeight: '240px', background: 'rgba(2,6,23,0.95)' }}
         >
-          <motion.div variants={fadeInUp}>
-            <h1
-              className="text-4xl text-text-primary leading-none mb-1"
-              style={{ fontFamily: "'Bebas Neue', monospace", letterSpacing: '0.08em' }}
-            >
-              DETECTION ENGINE —{' '}
-              <span style={{ color: '#dc143c', filter: 'drop-shadow(0 0 12px rgba(220,20,60,0.5))' }}>
-                28 RULES
-              </span>
-            </h1>
-            <p className="text-text-muted text-xs font-mono mt-1">
-              // heuristic signal catalog · 6 attack categories · evidence-linked
-            </p>
-          </motion.div>
+          <WebGPUDepthMap />
+          {/* Dark overlay for readability */}
+          <div className="absolute inset-0 bg-black/60 pointer-events-none" />
 
-          {/* Stats row */}
-          <motion.div variants={fadeInUp} className="flex items-center gap-6 mt-4 flex-wrap">
-            {Object.entries(CATEGORY_META).map(([key, meta]) => {
-              const Icon = meta.icon
-              const count = SIGNALS.filter(s => s.category === key).length
-              return (
-                <div key={key} className="flex items-center gap-1.5 text-xs font-mono text-text-muted">
-                  <Icon size={11} style={{ color: meta.color }} />
-                  <span style={{ color: meta.color }}>{count}</span>
-                  <span>{meta.label}</span>
-                </div>
-              )
-            })}
-          </motion.div>
-        </motion.div>
+          {/* Header content floated over the depth map */}
+          <div className="relative z-10 p-8">
+            <motion.div
+              variants={staggerContainer}
+              initial="initial"
+              animate="animate"
+            >
+              <motion.div variants={fadeInUp}>
+                <h1
+                  className="text-4xl text-text-primary leading-none mb-1"
+                  style={{ fontFamily: "'Bebas Neue', monospace", letterSpacing: '0.08em' }}
+                >
+                  DETECTION ENGINE —{' '}
+                  <span style={{ color: '#dc143c', filter: 'drop-shadow(0 0 12px rgba(220,20,60,0.5))' }}>
+                    28 RULES
+                  </span>
+                </h1>
+                <p className="text-text-muted text-xs font-mono mt-1">
+                  // heuristic signal catalog · 6 attack categories · evidence-linked
+                </p>
+              </motion.div>
+
+              {/* Stats row */}
+              <motion.div variants={fadeInUp} className="flex items-center gap-6 mt-4 flex-wrap">
+                {Object.entries(CATEGORY_META).map(([key, meta]) => {
+                  const Icon = meta.icon
+                  const count = SIGNALS.filter(s => s.category === key).length
+                  return (
+                    <div key={key} className="flex items-center gap-1.5 text-xs font-mono text-text-muted">
+                      <Icon size={11} style={{ color: meta.color }} />
+                      <span style={{ color: meta.color }}>{count}</span>
+                      <span>{meta.label}</span>
+                    </div>
+                  )
+                })}
+              </motion.div>
+            </motion.div>
+          </div>
+        </div>
 
         {/* ── Filter Tabs ── */}
         <motion.div

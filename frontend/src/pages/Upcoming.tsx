@@ -6,6 +6,7 @@ import { AmbientLoop } from '../components/animations/AmbientLoop'
 import { AttackViz } from '../components/animations/AttackViz'
 import { UpcomingTeaser } from '../components/animations/UpcomingTeaser'
 import { Navbar } from '../components/Layout/Navbar'
+import { ShaderAnimation } from '../components/ui/shader-lines'
 
 // ── Roadmap data ──────────────────────────────────────────────────────────────
 const ROADMAP = [
@@ -315,6 +316,11 @@ export const Upcoming: React.FC = () => {
 
       {/* ── HERO SECTION ── */}
       <section className="relative h-screen w-full overflow-hidden">
+
+        {/* Mosaic ring shader — red background atmosphere */}
+        <div className="absolute inset-0 z-0">
+          <ShaderAnimation />
+        </div>
 
         {/* Remotion ambient background — AmbientLoop */}
         <div className="absolute inset-0 z-0">
