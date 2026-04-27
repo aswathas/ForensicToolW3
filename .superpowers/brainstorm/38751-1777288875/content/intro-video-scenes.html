@@ -1,0 +1,133 @@
+<h2>Intro Video — Scene Content</h2>
+<p class="subtitle">What should the 10s cinematic intro show? Pick one.</p>
+
+<style>
+  .scene-list { margin: 6px 0 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 4px; }
+  .scene-item { font-family: monospace; font-size: 11px; color: #64748b; padding: 2px 0; display: flex; gap: 8px; }
+  .scene-num { color: #dc143c; font-weight: bold; min-width: 20px; }
+  .scene-text { color: #94a3b8; }
+  .preview-box {
+    background: #020617; border: 1px solid #1e293b; border-radius: 8px;
+    padding: 16px 20px; margin-top: 12px; aspect-ratio: 16/9;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    gap: 8px; position: relative; overflow: hidden;
+  }
+  .preview-title { font-family: monospace; font-size: 11px; color: #475569; text-transform: uppercase; letter-spacing: 2px; }
+  .tag { display: inline-block; font-size: 10px; font-family: monospace; padding: 1px 6px; border-radius: 3px; margin-left: 6px; vertical-align: middle; }
+  .tag-premium { background: rgba(212,175,55,0.2); color: #d4af37; border: 1px solid rgba(212,175,55,0.3); }
+  .tag-fast { background: rgba(34,197,94,0.15); color: #22c55e; border: 1px solid rgba(34,197,94,0.3); }
+  .grid-bg { position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(30,41,59,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(30,41,59,0.3) 1px, transparent 1px);
+    background-size: 30px 30px; pointer-events: none; }
+</style>
+
+<div class="options">
+
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="option-header">
+      <h3>Option A — Tool Identity Reveal <span class="tag tag-premium">PREMIUM</span></h3>
+      <p>Dark cinematic open → logo materializes → tagline types out → threat numbers count up → "Enter" CTA. Pure brand moment.</p>
+    </div>
+    <div class="content">
+      <div class="preview-box">
+        <div class="grid-bg"></div>
+        <div style="text-align:center; z-index:1;">
+          <div style="font-size:11px; font-family:monospace; color:#475569; letter-spacing:3px; margin-bottom:12px;">▶ SCENE FLOW</div>
+          <div style="display:flex; gap:0; align-items:center; justify-content:center;">
+            <div style="background:#0f172a; border:1px solid #1e293b; border-radius:4px; padding:6px 10px; font-size:10px; font-family:monospace; color:#dc143c;">BLACK VOID</div>
+            <div style="color:#475569; padding:0 6px; font-size:11px;">→</div>
+            <div style="background:#0f172a; border:1px solid rgba(212,175,55,0.3); border-radius:4px; padding:6px 10px; font-size:10px; font-family:monospace; color:#d4af37;">LOGO BUILDS</div>
+            <div style="color:#475569; padding:0 6px; font-size:11px;">→</div>
+            <div style="background:#0f172a; border:1px solid rgba(220,20,60,0.3); border-radius:4px; padding:6px 10px; font-size:10px; font-family:monospace; color:#dc143c;">TAGLINE TYPES</div>
+            <div style="color:#475569; padding:0 6px; font-size:11px;">→</div>
+            <div style="background:#0f172a; border:1px solid #1e293b; border-radius:4px; padding:6px 10px; font-size:10px; font-family:monospace; color:#22c55e;">ENTER APP</div>
+          </div>
+          <div style="margin-top:12px; font-size:10px; font-family:monospace; color:#334155;">
+            "28 RULES. ZERO FABRICATION. ENTERPRISE FORENSICS."
+          </div>
+        </div>
+      </div>
+      <ul class="scene-list">
+        <li class="scene-item"><span class="scene-num">0-2s</span><span class="scene-text">Complete black. Faint grid emerges.</span></li>
+        <li class="scene-item"><span class="scene-num">2-5s</span><span class="scene-text">Logo typewriter: "EVM.FORENSICS" in Ferrari red with glow bloom.</span></li>
+        <li class="scene-item"><span class="scene-num">5-8s</span><span class="scene-text">Sub-tagline types: "DETECT. TRACE. EXPOSE." — each word a separate burst.</span></li>
+        <li class="scene-item"><span class="scene-num">8-10s</span><span class="scene-text">Stats flash: 28 rules, 6 categories, enterprise grade. "ENTER" button pulses in.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="option-header">
+      <h3>Option B — How It Works Walkthrough <span class="tag tag-fast">EDUCATIONAL</span></h3>
+      <p>5-step pipeline shown in 10s. Each step label flashes with an icon. Good for demo audiences who need to understand before using.</p>
+    </div>
+    <div class="content">
+      <div class="preview-box">
+        <div class="grid-bg"></div>
+        <div style="text-align:center; z-index:1; width:100%;">
+          <div style="font-size:11px; font-family:monospace; color:#475569; letter-spacing:3px; margin-bottom:12px;">▶ PIPELINE REVEAL</div>
+          <div style="display:flex; gap:4px; align-items:center; justify-content:center; flex-wrap:wrap;">
+            <div style="background:#0f172a; border:1px solid #1e293b; border-radius:4px; padding:5px 8px; font-size:9px; font-family:monospace; color:#64748b;">01 INGEST</div>
+            <div style="color:#dc143c; font-size:10px;">→</div>
+            <div style="background:#0f172a; border:1px solid #1e293b; border-radius:4px; padding:5px 8px; font-size:9px; font-family:monospace; color:#64748b;">02 DERIVE</div>
+            <div style="color:#dc143c; font-size:10px;">→</div>
+            <div style="background:#0f172a; border:1px solid #1e293b; border-radius:4px; padding:5px 8px; font-size:9px; font-family:monospace; color:#64748b;">03 DETECT</div>
+            <div style="color:#dc143c; font-size:10px;">→</div>
+            <div style="background:#0f172a; border:1px solid #1e293b; border-radius:4px; padding:5px 8px; font-size:9px; font-family:monospace; color:#64748b;">04 SCORE</div>
+            <div style="color:#dc143c; font-size:10px;">→</div>
+            <div style="background:#0f172a; border:1px solid rgba(220,20,60,0.4); border-radius:4px; padding:5px 8px; font-size:9px; font-family:monospace; color:#dc143c;">05 REPORT</div>
+          </div>
+          <div style="margin-top:10px; font-size:9px; font-family:monospace; color:#334155;">
+            Each step animates in with brief description text overlay
+          </div>
+        </div>
+      </div>
+      <ul class="scene-list">
+        <li class="scene-item"><span class="scene-num">0-2s</span><span class="scene-text">Raw blocks stream in — animated blockchain hex data.</span></li>
+        <li class="scene-item"><span class="scene-num">2-4s</span><span class="scene-text">36 derived datasets materialize as glowing data nodes.</span></li>
+        <li class="scene-item"><span class="scene-num">4-6s</span><span class="scene-text">28 detection rules fire — red flashes on suspicious transactions.</span></li>
+        <li class="scene-item"><span class="scene-num">6-8s</span><span class="scene-text">ML risk score bar fills up. Entity graph links appear.</span></li>
+        <li class="scene-item"><span class="scene-num">8-10s</span><span class="scene-text">Forensic report slides in. "EVIDENCE LOCKED" stamp. Enter button.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="option-header">
+      <h3>Option C — Attack Investigation Sim <span class="tag tag-premium">MOST CINEMATIC</span></h3>
+      <p>Simulates a real attack being detected in real-time. Most dramatic — shows tool actually working, not describing it.</p>
+    </div>
+    <div class="content">
+      <div class="preview-box">
+        <div class="grid-bg"></div>
+        <div style="text-align:center; z-index:1; width:100%;">
+          <div style="display:flex; gap:16px; align-items:flex-start; justify-content:center;">
+            <div style="text-align:left;">
+              <div style="font-size:9px; font-family:monospace; color:#475569; letter-spacing:2px; margin-bottom:8px;">TERMINAL FEED</div>
+              <div style="background:#0a0f1a; border:1px solid #1e293b; border-radius:4px; padding:8px 10px; width:180px;">
+                <div style="font-size:8px; font-family:monospace; color:#22c55e; margin-bottom:3px;">&gt; Scanning block 21,437,892</div>
+                <div style="font-size:8px; font-family:monospace; color:#dc143c; margin-bottom:3px;">⚠ REENTRANCY DETECTED</div>
+                <div style="font-size:8px; font-family:monospace; color:#d4af37;">✓ Evidence locked: 0x4f2a...</div>
+              </div>
+            </div>
+            <div style="text-align:left;">
+              <div style="font-size:9px; font-family:monospace; color:#475569; letter-spacing:2px; margin-bottom:8px;">FUND FLOW</div>
+              <div style="display:flex; flex-direction:column; gap:3px; align-items:flex-start;">
+                <div style="font-size:8px; font-family:monospace; color:#dc143c; background:rgba(220,20,60,0.1); border:1px solid rgba(220,20,60,0.2); border-radius:3px; padding:2px 6px;">ATTACKER 0x4f2a</div>
+                <div style="font-size:8px; font-family:monospace; color:#475569; padding-left:10px;">↓ 150 ETH</div>
+                <div style="font-size:8px; font-family:monospace; color:#d4af37; background:rgba(212,175,55,0.1); border:1px solid rgba(212,175,55,0.2); border-radius:3px; padding:2px 6px;">SINK 0x8c3b</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ul class="scene-list">
+        <li class="scene-item"><span class="scene-num">0-3s</span><span class="scene-text">Terminal boots. Blockchain data streams. "SCANNING EVM..." with block counter.</span></li>
+        <li class="scene-item"><span class="scene-num">3-6s</span><span class="scene-text">Alert fires: "REENTRANCY DETECTED". Suspicious tx highlights in red. Evidence refs appear.</span></li>
+        <li class="scene-item"><span class="scene-num">6-9s</span><span class="scene-text">Fund flow traces — ETH moves from victim → attacker → sink. Peel chain animates.</span></li>
+        <li class="scene-item"><span class="scene-num">9-10s</span><span class="scene-text">"EVIDENCE LOCKED" stamp. Report thumbnail fades in. EVM.Forensics logo.</span></li>
+      </ul>
+    </div>
+  </div>
+
+</div>

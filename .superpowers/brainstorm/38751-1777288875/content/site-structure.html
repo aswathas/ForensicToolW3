@@ -1,0 +1,108 @@
+<h2>EVM Forensics — Site Structure</h2>
+<p class="subtitle">Which overall page flow feels right? Pick one.</p>
+
+<style>
+  .flow-diagram { display: flex; flex-direction: column; gap: 6px; margin: 10px 0; }
+  .flow-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .flow-box { background: #0f172a; border: 1.5px solid #1e293b; border-radius: 6px; padding: 7px 14px; font-family: monospace; font-size: 12px; color: #94a3b8; white-space: nowrap; }
+  .flow-box.red { border-color: rgba(220,20,60,0.5); color: #dc143c; background: rgba(220,20,60,0.08); }
+  .flow-box.gold { border-color: rgba(212,175,55,0.5); color: #d4af37; background: rgba(212,175,55,0.08); }
+  .flow-box.green { border-color: rgba(34,197,94,0.5); color: #22c55e; background: rgba(34,197,94,0.08); }
+  .flow-arrow { color: #475569; font-size: 14px; }
+  .tag { display: inline-block; font-size: 10px; font-family: monospace; padding: 1px 6px; border-radius: 3px; margin-left: 6px; vertical-align: middle; }
+  .tag-new { background: rgba(220,20,60,0.2); color: #dc143c; border: 1px solid rgba(220,20,60,0.3); }
+  .tag-fix { background: rgba(34,197,94,0.15); color: #22c55e; border: 1px solid rgba(34,197,94,0.3); }
+  .options { margin-top: 20px; }
+</style>
+
+<div class="options">
+
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="option-header">
+      <h3>Option A — Cinematic Intro First</h3>
+      <p>User lands on a fullscreen Remotion video intro, then enters the app. Like a game launch screen.</p>
+    </div>
+    <div class="content">
+      <div class="flow-diagram">
+        <div class="flow-row">
+          <div class="flow-box red">/ intro <span class="tag tag-new">NEW</span></div>
+          <div class="flow-arrow">→ auto or skip →</div>
+          <div class="flow-box gold">/ landing</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box">/dashboard</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box">/investigation/:id</div>
+        </div>
+      </div>
+      <div style="margin-top:12px; font-size:12px; color:#475569; font-family:monospace;">
+        <div>• <strong style="color:#94a3b8">/intro</strong> — 10s Remotion video, "SKIP" button, auto-advances to /landing</div>
+        <div style="margin-top:4px">• <strong style="color:#94a3b8">/landing</strong> — animated hero with background video loop + split player</div>
+        <div style="margin-top:4px">• <strong style="color:#94a3b8">/dashboard</strong> — full sidebar layout, run cards</div>
+        <div style="margin-top:4px">• Single top navbar, NO sidebar on landing/intro</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="option-header">
+      <h3>Option B — Landing IS the Intro</h3>
+      <p>No separate intro page. Landing page has a fullscreen background video loop + hero text. Richer, faster entry.</p>
+    </div>
+    <div class="content">
+      <div class="flow-diagram">
+        <div class="flow-row">
+          <div class="flow-box red">/ landing <span class="tag tag-new">BG VIDEO</span></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box gold">/dashboard</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box">/investigation/:id</div>
+        </div>
+        <div class="flow-row" style="margin-top:6px">
+          <div class="flow-box green">/how-it-works <span class="tag tag-new">NEW</span></div>
+          <div class="flow-arrow">← link from nav</div>
+        </div>
+      </div>
+      <div style="margin-top:12px; font-size:12px; color:#475569; font-family:monospace;">
+        <div>• <strong style="color:#94a3b8">/landing</strong> — fullscreen BG video (ambient, dark), floating hero text over it</div>
+        <div style="margin-top:4px">• <strong style="color:#94a3b8">/how-it-works</strong> — dedicated page with the "how the tool works" Remotion video</div>
+        <div style="margin-top:4px">• Navbar only appears after scrolling past hero (or on app pages)</div>
+        <div style="margin-top:4px">• Fastest path to app</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="option-header">
+      <h3>Option C — Both: Intro + Rich Landing</h3>
+      <p>Separate intro page + enhanced landing + how-it-works section inline on landing.</p>
+    </div>
+    <div class="content">
+      <div class="flow-diagram">
+        <div class="flow-row">
+          <div class="flow-box red">/ intro <span class="tag tag-new">VIDEO</span></div>
+          <div class="flow-arrow">→ skip →</div>
+          <div class="flow-box gold">/ landing <span class="tag tag-new">BG LOOP</span></div>
+          <div class="flow-arrow">→ scroll</div>
+          <div class="flow-box">How It Works section</div>
+        </div>
+        <div class="flow-row" style="margin-top:6px">
+          <div class="flow-arrow" style="margin-left:20px">↓</div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-box">/dashboard</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box">/investigation/:id</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-box">/graphs</div>
+        </div>
+      </div>
+      <div style="margin-top:12px; font-size:12px; color:#475569; font-family:monospace;">
+        <div>• <strong style="color:#94a3b8">/intro</strong> — cinematic 10s video, one-time (sessionStorage skip after first view)</div>
+        <div style="margin-top:4px">• <strong style="color:#94a3b8">/landing</strong> — background ambient video loop + hero + "how it works" Remotion inline</div>
+        <div style="margin-top:4px">• 3 distinct Remotion compositions total</div>
+        <div style="margin-top:4px">• Most premium feel, most work</div>
+      </div>
+    </div>
+  </div>
+
+</div>

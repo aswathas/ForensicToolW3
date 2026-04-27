@@ -8,9 +8,23 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Ferrari Red - Primary accent (high severity)
+        // Core backgrounds — cyber noir
+        bg: {
+          void:      '#020617',   // deepest black
+          primary:   '#020617',
+          secondary: '#0f172a',   // slate-900
+          tertiary:  '#1e293b',   // slate-800
+          card:      '#0f172a',
+          glass:     'rgba(15,23,42,0.8)',
+        },
+        // Ferrari Red — primary accent
+        neon: {
+          red:   '#dc143c',
+          'red-dim':  'rgba(220,20,60,0.15)',
+          'red-glow': 'rgba(220,20,60,0.4)',
+        },
         ferrari: {
-          50: '#fff5f5',
+          50:  '#fff5f5',
           100: '#ffe6e6',
           200: '#ffcccc',
           300: '#ff9999',
@@ -21,103 +35,102 @@ module.exports = {
           800: '#8b0000',
           900: '#660000',
         },
-        // Gold/Brass - Premium accent (medium/warning)
         gold: {
-          50: '#fefdf8',
+          50:  '#fefdf8',
           100: '#fefcf0',
-          200: '#fef9e7',
           300: '#fdf4cd',
           400: '#fce8a6',
           500: '#d4af37',
           600: '#c9a020',
           700: '#a68b1a',
-          800: '#7a6414',
-          900: '#4a3c0f',
         },
-        // Critical - Ferrari Red tones
-        critical: {
-          50: '#fff5f5',
-          100: '#ffe6e6',
-          500: '#e8001c',
-          600: '#dc143c',
-          700: '#b91c1c',
-          900: '#660000',
-        },
-        high: {
-          50: '#fef9f0',
-          100: '#fdf4cd',
-          500: '#d4af37',
-          600: '#c9a020',
-          700: '#a68b1a',
-        },
-        medium: {
-          50: '#fffbf0',
-          100: '#fff8e6',
-          500: '#ffa500',
-          600: '#ff9500',
-          700: '#cc7700',
-        },
-        low: {
-          50: '#f0fdf4',
-          100: '#dcfce7',
-          500: '#10b981',
-          600: '#059669',
-          700: '#047857',
-        },
-        info: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          500: '#06b6d4',
-          600: '#0891b2',
-          700: '#0e7490',
-        },
-        surface: {
-          50: '#fafafa',
-          100: '#f5f5f5',
-          200: '#e5e5e5',
-          300: '#d4d4d4',
-          400: '#a3a3a3',
-          500: '#737373',
-          600: '#525252',
-          700: '#404040',
-          800: '#262626',
-          900: '#171717',
-          950: '#0a0a0a',
-        },
-        bg: {
-          primary: '#0a0a0a',     // Deep black
-          secondary: '#1a1a1a',   // Dark charcoal
-          tertiary: '#2d2d2d',    // Charcoal
-          accent: '#dc143c',      // Ferrari red
-        },
+        // Severity
+        critical: { 500: '#e8001c', 600: '#dc143c' },
+        high:     { 500: '#d4af37', 600: '#c9a020' },
+        medium:   { 500: '#f97316', 600: '#ea7316' },
+        low:      { 500: '#22c55e', 600: '#16a34a' },
+        info:     { 500: '#38bdf8', 600: '#0ea5e9' },
+        // Text
         text: {
-          primary: '#f5f5f5',     // Off-white
-          secondary: '#d1d5db',   // Light gray
-          muted: '#9ca3af',       // Medium gray
-          accent: '#d4af37',      // Gold
+          primary:   '#f1f5f9',
+          secondary: '#94a3b8',
+          muted:     '#475569',
+          dim:       '#334155',
+          accent:    '#d4af37',
+          neon:      '#dc143c',
         },
-        accent: {
-          primary: '#dc143c',     // Ferrari red
-          success: '#10b981',     // Emerald
-          warning: '#d4af37',     // Gold
-          danger: '#e8001c',      // Deep ferrari red
+        // Borders
+        border: {
+          dim:    '#1e293b',
+          subtle: '#334155',
+          neon:   'rgba(220,20,60,0.3)',
+        },
+        // Surface
+        surface: {
+          900: '#0f172a',
+          800: '#1e293b',
+          700: '#334155',
+          600: '#475569',
         },
       },
       fontFamily: {
-        sans: ['Poppins', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+        sans:    ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        mono:    ['JetBrains Mono', 'Fira Code', 'ui-monospace', 'monospace'],
+        code:    ['Fira Code', 'JetBrains Mono', 'ui-monospace', 'monospace'],
+        display: ['Bebas Neue', 'monospace'],
+      },
+      borderRadius: {
+        sharp: '2px',
       },
       backgroundImage: {
-        'gradient-ferrari': 'linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2d2d2d 100%)',
-        'gradient-red': 'linear-gradient(135deg, #dc143c 0%, #e8001c 100%)',
-        'gradient-gold': 'linear-gradient(135deg, #d4af37 0%, #c9a020 100%)',
+        'grid-cyber':       'linear-gradient(rgba(220,20,60,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(220,20,60,0.03) 1px, transparent 1px)',
+        'gradient-void':    'linear-gradient(135deg, #020617 0%, #0f172a 50%, #020617 100%)',
+        'gradient-neon':    'linear-gradient(135deg, #dc143c 0%, #e8001c 100%)',
+        'gradient-gold':    'linear-gradient(135deg, #d4af37 0%, #c9a020 100%)',
+        'gradient-hero':    'radial-gradient(ellipse 80% 60% at 50% -10%, rgba(220,20,60,0.12) 0%, transparent 70%)',
+      },
+      backgroundSize: {
+        'grid': '40px 40px',
       },
       boxShadow: {
-        'ferrari': '0 0 20px rgba(220, 20, 60, 0.3)',
-        'ferrari-lg': '0 0 40px rgba(220, 20, 60, 0.4)',
-        'gold': '0 0 15px rgba(212, 175, 55, 0.2)',
+        'neon':      '0 0 20px rgba(220,20,60,0.35), 0 0 60px rgba(220,20,60,0.12)',
+        'neon-sm':   '0 0 10px rgba(220,20,60,0.25)',
+        'neon-lg':   '0 0 40px rgba(220,20,60,0.5), 0 0 80px rgba(220,20,60,0.2)',
+        'gold':      '0 0 15px rgba(212,175,55,0.25)',
+        'card':      '0 4px 24px rgba(0,0,0,0.4)',
+        'inset-neon':'inset 0 0 20px rgba(220,20,60,0.05)',
+        'ferrari':   '0 0 20px rgba(220, 20, 60, 0.3)',
+        'ferrari-lg':'0 0 40px rgba(220, 20, 60, 0.4)',
+      },
+      animation: {
+        'scanline':    'scanline 8s linear infinite',
+        'pulse-neon':  'pulse-neon 2.5s ease-in-out infinite',
+        'flicker':     'flicker 4s linear infinite',
+        'typewriter':  'typewriter 0.05s steps(1) infinite',
+      },
+      keyframes: {
+        scanline: {
+          '0%':   { transform: 'translateY(-100%)' },
+          '100%': { transform: 'translateY(100vh)' },
+        },
+        'pulse-neon': {
+          '0%, 100%': { boxShadow: '0 0 20px rgba(220,20,60,0.35)' },
+          '50%':      { boxShadow: '0 0 40px rgba(220,20,60,0.7)' },
+        },
+        flicker: {
+          '0%, 100%': { opacity: '1' },
+          '92%':      { opacity: '1' },
+          '93%':      { opacity: '0.8' },
+          '94%':      { opacity: '1' },
+          '96%':      { opacity: '0.9' },
+          '97%':      { opacity: '1' },
+        },
+      },
+      dropShadow: {
+        'neon': '0 0 8px rgba(220,20,60,0.8)',
+        'gold': '0 0 8px rgba(212,175,55,0.6)',
       },
     },
   },
   plugins: [],
-};
+}
