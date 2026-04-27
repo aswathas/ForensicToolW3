@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   AlertTriangle, ArrowLeft, Activity, Shield, Zap, TrendingUp,
   ChevronDown, X, CheckCircle2, EyeOff, Clock, FileText, Lightbulb,
+  ChevronRight,
 } from 'lucide-react'
 import { EtherealShadow } from '../components/ui/etheral-shadow'
 import { FundFlowGraph } from '../components/Investigation/FundFlowGraph'
@@ -22,6 +23,13 @@ const SEV_COLOR: Record<string, string> = {
   low:      '#22c55e',
 }
 
+const SEV_BG: Record<string, string> = {
+  critical: 'rgba(204,26,46,0.12)',
+  high:     'rgba(212,175,55,0.12)',
+  medium:   'rgba(249,115,22,0.12)',
+  low:      'rgba(34,197,94,0.12)',
+}
+
 const ROLE_COLOR: Record<string, string> = {
   attacker:     '#cc1a2e',
   victim:       '#d4af37',
@@ -31,33 +39,33 @@ const ROLE_COLOR: Record<string, string> = {
 
 function humanizeSignal(name: string): string {
   const MAP: Record<string, string> = {
-    REENTRANCY_SAME_FUNC: 'Repeated Withdrawal Exploit',
-    REENTRANCY_CROSS_FUNC: 'Cross-Function Fund Drain',
-    REENTRANCY_CALLBACK: 'Callback Before Balance Update',
+    REENTRANCY_SAME_FUNC:    'Repeated Withdrawal Exploit',
+    REENTRANCY_CROSS_FUNC:   'Cross-Function Fund Drain',
+    REENTRANCY_CALLBACK:     'Callback Before Balance Update',
     REENTRANCY_DELEGATECALL: 'Delegated Call Exploit',
-    REENTRANCY_MULTI_WITHDRAW: 'Multiple Withdrawal Attack',
-    APPROVAL_UNLIMITED: 'Unlimited Token Permission Granted',
-    APPROVAL_DRAIN: 'Approved Funds Drained',
-    APPROVAL_BURST: 'Rapid Approval Drain Burst',
-    APPROVAL_SPENDER: 'Suspicious Spender Role',
-    FLASHLOAN_BORROW_REPAY: 'Flash Loan in Single Transaction',
-    FLASHLOAN_MULTI_POOL: 'Multi-Pool Flash Loan',
-    FLASHLOAN_PRICE_IMPACT: 'Flash Loan Price Impact',
-    FLASHLOAN_EXTRACTION: 'Flash Loan Fund Extraction',
-    ORACLE_DEVIATION: 'Price Oracle Manipulation',
-    ORACLE_SPOT_SPIKE: 'Spot Price Spike',
-    ORACLE_SANDWICH: 'Sandwich Attack via Oracle',
-    ORACLE_ARBITRAGE: 'Oracle-Enabled Arbitrage',
-    ADMIN_PROXY_CHANGE: 'Contract Logic Replaced',
-    ADMIN_ROLE_CHANGE: 'Admin Privileges Changed',
-    ADMIN_SEQUENCE: 'Suspicious Admin Sequence',
-    ADMIN_UPGRADE_OUTFLOW: 'Upgrade Followed by Fund Drain',
+    REENTRANCY_MULTI_WITHDRAW:'Multiple Withdrawal Attack',
+    APPROVAL_UNLIMITED:      'Unlimited Token Permission Granted',
+    APPROVAL_DRAIN:          'Approved Funds Drained',
+    APPROVAL_BURST:          'Rapid Approval Drain Burst',
+    APPROVAL_SPENDER:        'Suspicious Spender Role',
+    FLASHLOAN_BORROW_REPAY:  'Flash Loan in Single Transaction',
+    FLASHLOAN_MULTI_POOL:    'Multi-Pool Flash Loan',
+    FLASHLOAN_PRICE_IMPACT:  'Flash Loan Price Impact',
+    FLASHLOAN_EXTRACTION:    'Flash Loan Fund Extraction',
+    ORACLE_DEVIATION:        'Price Oracle Manipulation',
+    ORACLE_SPOT_SPIKE:       'Spot Price Spike',
+    ORACLE_SANDWICH:         'Sandwich Attack via Oracle',
+    ORACLE_ARBITRAGE:        'Oracle-Enabled Arbitrage',
+    ADMIN_PROXY_CHANGE:      'Contract Logic Replaced',
+    ADMIN_ROLE_CHANGE:       'Admin Privileges Changed',
+    ADMIN_SEQUENCE:          'Suspicious Admin Sequence',
+    ADMIN_UPGRADE_OUTFLOW:   'Upgrade Followed by Fund Drain',
     FUNDFLOW_VICTIM_OUTFLOW: 'Large Victim Fund Outflow',
-    FUNDFLOW_NEW_RECEIVER: 'New Wallet Received Large Inflow',
-    FUNDFLOW_PEEL_CHAIN: 'Layered Fund Laundering',
-    FUNDFLOW_CONSOLIDATION: 'Fund Consolidation Pattern',
-    FUNDFLOW_RISKY_HOP: 'Hop to Risky Destination',
-    FUNDFLOW_DIVERSIFICATION: 'Asset Diversification After Attack',
+    FUNDFLOW_NEW_RECEIVER:   'New Wallet Received Large Inflow',
+    FUNDFLOW_PEEL_CHAIN:     'Layered Fund Laundering',
+    FUNDFLOW_CONSOLIDATION:  'Fund Consolidation Pattern',
+    FUNDFLOW_RISKY_HOP:      'Hop to Risky Destination',
+    FUNDFLOW_DIVERSIFICATION:'Asset Diversification After Attack',
   }
   const upper = name.toUpperCase()
   for (const [key, val] of Object.entries(MAP)) {
@@ -68,11 +76,11 @@ function humanizeSignal(name: string): string {
 
 const SIGNAL_EXPLANATIONS: Record<string, string> = {
   reentrancy: 'This attack exploited a vulnerability where a contract could be called repeatedly before it updated its balance records — like withdrawing money twice before the bank registers the first withdrawal.',
-  approval: 'A wallet granted unlimited spending permission to a contract that exploited this to drain the entire token balance without further approval.',
-  flashloan: 'A flash loan attack borrows a huge sum, uses it to manipulate markets or extract value, then repays everything in the same block — the protocol never sees the funds missing.',
-  oracle: 'The price data that smart contracts rely on was manipulated, causing them to buy or sell at wrong prices — creating profit for the attacker at the expense of the protocol.',
-  admin: 'The contract\'s core logic or ownership controls were changed by an unauthorized actor, allowing silent redirection of funds.',
-  fundflow: 'Suspicious patterns detected in how funds moved between wallets — consistent with known money laundering, extraction, or layering techniques.',
+  approval:   'A wallet granted unlimited spending permission to a contract that exploited this to drain the entire token balance without further approval.',
+  flashloan:  'A flash loan attack borrows a huge sum, uses it to manipulate markets or extract value, then repays everything in the same block — the protocol never sees the funds missing.',
+  oracle:     'The price data that smart contracts rely on was manipulated, causing them to buy or sell at wrong prices — creating profit for the attacker at the expense of the protocol.',
+  admin:      "The contract's core logic or ownership controls were changed by an unauthorized actor, allowing silent redirection of funds.",
+  fundflow:   'Suspicious patterns detected in how funds moved between wallets — consistent with known money laundering, extraction, or layering techniques.',
 }
 
 // ── helpers ───────────────────────────────────────────────────────────────────
@@ -86,99 +94,135 @@ function truncHash(hash: string): string {
   return `${hash.slice(0, 12)}…${hash.slice(-8)}`
 }
 
-// ── styles ────────────────────────────────────────────────────────────────────
+// ── design tokens ─────────────────────────────────────────────────────────────
 
-const panel: React.CSSProperties = {
+const glassPanel: React.CSSProperties = {
   background: 'rgba(2, 3, 8, 0.82)',
   backdropFilter: 'blur(24px)',
   WebkitBackdropFilter: 'blur(24px)',
   border: '1px solid rgba(255,255,255,0.07)',
 }
 
-const divider: React.CSSProperties = {
-  borderTop: '1px solid rgba(255,255,255,0.05)',
+const LABEL_STYLE: React.CSSProperties = {
+  fontFamily: "'JetBrains Mono', monospace",
+  fontSize: 11,
+  letterSpacing: '0.18em',
+  textTransform: 'uppercase' as const,
+  color: 'rgba(255,255,255,0.3)',
+  fontWeight: 500,
 }
 
-// ── accordion section ─────────────────────────────────────────────────────────
+const SECTION_HEAD: React.CSSProperties = {
+  fontFamily: "'Bebas Neue', monospace",
+  letterSpacing: '0.06em',
+  color: 'rgba(255,255,255,0.9)',
+}
 
-interface SectionProps {
+// ── severity badge ────────────────────────────────────────────────────────────
+
+const SevBadge: React.FC<{ sev: string; large?: boolean }> = ({ sev, large }) => (
+  <span style={{
+    fontFamily: "'JetBrains Mono', monospace",
+    fontSize: large ? 13 : 11,
+    fontWeight: 700,
+    letterSpacing: '0.12em',
+    textTransform: 'uppercase' as const,
+    color: SEV_COLOR[sev] ?? '#22c55e',
+    border: `1px solid ${SEV_COLOR[sev] ?? '#22c55e'}45`,
+    background: SEV_BG[sev] ?? 'rgba(34,197,94,0.12)',
+    padding: large ? '5px 14px' : '3px 9px',
+    borderRadius: 6,
+    display: 'inline-flex',
+    alignItems: 'center',
+    flexShrink: 0,
+    boxShadow: `0 0 12px ${SEV_COLOR[sev] ?? '#22c55e'}20`,
+  }}>
+    {sev}
+  </span>
+)
+
+// ── section wrapper ───────────────────────────────────────────────────────────
+
+interface SectionBoxProps {
   icon: React.FC<{ size?: number; className?: string }>
   title: string
   count?: number
   accent?: string
-  defaultOpen?: boolean
-  badge?: React.ReactNode
+  subtitle?: string
+  controls?: React.ReactNode
   children: React.ReactNode
+  collapsible?: boolean
+  defaultOpen?: boolean
 }
 
-const Section: React.FC<SectionProps> = ({
+const SectionBox: React.FC<SectionBoxProps> = ({
   icon: Icon,
   title,
   count,
   accent = 'rgba(255,255,255,0.4)',
-  defaultOpen = false,
-  badge,
+  subtitle,
+  controls,
   children,
+  collapsible = false,
+  defaultOpen = true,
 }) => {
   const [open, setOpen] = useState(defaultOpen)
 
   return (
-    <div style={{ ...panel, borderRadius: 10, overflow: 'hidden' }}>
-      <button
-        onClick={() => setOpen(o => !o)}
-        className="w-full flex items-center gap-4 transition-colors duration-150"
+    <div style={{ ...glassPanel, borderRadius: 14, overflow: 'hidden' }}>
+      {/* Section header */}
+      <div
         style={{
-          padding: '18px 28px',
-          background: open ? 'rgba(255,255,255,0.02)' : 'transparent',
-          borderBottom: open ? '1px solid rgba(255,255,255,0.05)' : 'none',
+          padding: '24px 32px 20px',
+          borderBottom: '1px solid rgba(255,255,255,0.06)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 16,
+          background: 'rgba(255,255,255,0.01)',
         }}
       >
-        <span style={{ color: accent, flexShrink: 0, display: 'flex' }}><Icon size={13} /></span>
-
-        <span
-          style={{
-            fontFamily: "'JetBrains Mono', monospace",
-            fontSize: 11,
-            letterSpacing: '0.18em',
-            textTransform: 'uppercase',
-            color: 'rgba(255,255,255,0.55)',
-            fontWeight: 600,
-          }}
-        >
-          {title}
+        <span style={{ color: accent, display: 'flex', flexShrink: 0 }}>
+          <Icon size={20} />
         </span>
 
-        {count !== undefined && (
-          <span
-            style={{
-              fontFamily: "'JetBrains Mono', monospace",
-              fontSize: 10,
-              color: 'rgba(255,255,255,0.22)',
-              border: '1px solid rgba(255,255,255,0.1)',
-              padding: '1px 7px',
-              borderRadius: 4,
-            }}
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
+            <h2 style={{ ...SECTION_HEAD, fontSize: 28, margin: 0, lineHeight: 1 }}>{title}</h2>
+            {count !== undefined && (
+              <span style={{
+                fontFamily: "'Bebas Neue', monospace",
+                fontSize: 22,
+                color: accent,
+                opacity: 0.7,
+                lineHeight: 1,
+              }}>
+                {count}
+              </span>
+            )}
+          </div>
+          {subtitle && (
+            <p style={{ ...LABEL_STYLE, margin: '4px 0 0', fontSize: 11 }}>{subtitle}</p>
+          )}
+        </div>
+
+        {controls && <div style={{ display: 'flex', gap: 6, flexShrink: 0 }}>{controls}</div>}
+
+        {collapsible && (
+          <motion.button
+            onClick={() => setOpen(o => !o)}
+            animate={{ rotate: open ? 180 : 0 }}
+            transition={{ duration: 0.2 }}
+            style={{ color: 'rgba(255,255,255,0.25)', display: 'flex', flexShrink: 0, cursor: 'pointer' }}
           >
-            {count}
-          </span>
+            <ChevronDown size={18} />
+          </motion.button>
         )}
-
-        {badge && <span className="ml-1">{badge}</span>}
-
-        <div className="flex-1" />
-
-        <motion.div
-          animate={{ rotate: open ? 180 : 0 }}
-          transition={{ duration: 0.2, ease: 'easeInOut' }}
-        >
-          <ChevronDown size={13} style={{ color: 'rgba(255,255,255,0.2)' }} />
-        </motion.div>
-      </button>
+      </div>
 
       <AnimatePresence initial={false}>
         {open && (
           <motion.div
-            initial={{ height: 0, opacity: 0 }}
+            initial={collapsible ? { height: 0, opacity: 0 } : false}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.22, ease: [0.25, 0.46, 0.45, 0.94] }}
@@ -192,79 +236,58 @@ const Section: React.FC<SectionProps> = ({
   )
 }
 
-// ── severity indicator ────────────────────────────────────────────────────────
+// ── filter pill button ────────────────────────────────────────────────────────
 
-const SevPip: React.FC<{ sev: string }> = ({ sev }) => (
-  <span
-    style={{
-      display: 'inline-block',
-      width: 6,
-      height: 6,
-      borderRadius: '50%',
-      flexShrink: 0,
-      background: SEV_COLOR[sev] ?? '#22c55e',
-      boxShadow: `0 0 6px ${SEV_COLOR[sev] ?? '#22c55e'}90`,
-    }}
-  />
-)
-
-const SevTag: React.FC<{ sev: string }> = ({ sev }) => (
-  <span
+const FilterPill: React.FC<{
+  label: string
+  active: boolean
+  color?: string
+  onClick: () => void
+}> = ({ label, active, color = '#38bdf8', onClick }) => (
+  <button
+    onClick={onClick}
     style={{
       fontFamily: "'JetBrains Mono', monospace",
-      fontSize: 9,
-      fontWeight: 700,
-      letterSpacing: '0.12em',
-      textTransform: 'uppercase',
-      color: SEV_COLOR[sev] ?? '#22c55e',
-      border: `1px solid ${SEV_COLOR[sev] ?? '#22c55e'}35`,
-      background: `${SEV_COLOR[sev] ?? '#22c55e'}12`,
-      padding: '2px 7px',
-      borderRadius: 4,
-      flexShrink: 0,
+      fontSize: 11,
+      letterSpacing: '0.1em',
+      textTransform: 'uppercase' as const,
+      padding: '5px 14px',
+      borderRadius: 6,
+      border: `1px solid ${active ? color + '55' : 'rgba(255,255,255,0.1)'}`,
+      background: active ? `${color}15` : 'transparent',
+      color: active ? color : 'rgba(255,255,255,0.35)',
+      cursor: 'pointer',
+      transition: 'all 0.15s ease',
     }}
   >
-    {sev}
-  </span>
+    {label}
+  </button>
 )
 
 // ── narrative banner ──────────────────────────────────────────────────────────
 
-const NarrativeBanner: React.FC<{
-  narrative: string
-  threatColor: string
-}> = ({ narrative, threatColor }) => (
+const NarrativeBanner: React.FC<{ narrative: string; threatColor: string }> = ({ narrative, threatColor }) => (
   <motion.div
-    initial={{ opacity: 0, y: -10 }}
+    initial={{ opacity: 0, y: -8 }}
     animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.3 }}
     style={{
-      ...panel,
-      borderRadius: 10,
-      padding: '20px 28px',
-      borderLeft: `3px solid ${threatColor}`,
-      marginBottom: 0,
+      ...glassPanel,
+      borderRadius: 14,
+      padding: '28px 36px',
+      borderLeft: `4px solid ${threatColor}`,
     }}
   >
-    <div style={{ display: 'flex', alignItems: 'flex-start', gap: 16 }}>
-      <FileText size={14} style={{ color: threatColor, flexShrink: 0, marginTop: 2 }} />
+    <div style={{ display: 'flex', alignItems: 'flex-start', gap: 20 }}>
+      <FileText size={20} style={{ color: threatColor, flexShrink: 0, marginTop: 3 }} />
       <div>
-        <div style={{
-          fontFamily: "'JetBrains Mono', monospace",
-          fontSize: 9,
-          letterSpacing: '0.18em',
-          textTransform: 'uppercase',
-          color: 'rgba(255,255,255,0.25)',
-          marginBottom: 8,
-        }}>
-          Analyst Summary
-        </div>
+        <div style={{ ...LABEL_STYLE, marginBottom: 10 }}>Analyst Summary</div>
         <p style={{
-          fontSize: 14,
-          color: 'rgba(255,255,255,0.65)',
-          lineHeight: 1.75,
+          fontSize: 16,
+          color: 'rgba(255,255,255,0.75)',
+          lineHeight: 1.8,
           margin: 0,
           fontFamily: 'system-ui, -apple-system, sans-serif',
+          maxWidth: 860,
         }}>
           {narrative}
         </p>
@@ -281,206 +304,380 @@ interface RiskOverviewCardsProps {
   anomalyCount: number
   signalCount: number
   topEntity: { address: string; role?: string; riskScore: number } | undefined
+  totalTxs: number
 }
 
 const RiskOverviewCards: React.FC<RiskOverviewCardsProps> = ({
-  threat, threatColor, anomalyCount, signalCount, topEntity,
+  threat, threatColor, anomalyCount, signalCount, topEntity, totalTxs,
 }) => {
   const topEntityColor = topEntity && topEntity.riskScore >= 0.8 ? '#cc1a2e' : '#d4af37'
-  return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12 }}>
-      {/* Threat Level */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.05 }}
-        style={{ ...panel, borderRadius: 10, padding: '20px', display: 'flex', flexDirection: 'column', gap: 8 }}
-      >
-        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.2)' }}>Threat Level</span>
-        <span style={{
+
+  const cards = [
+    {
+      label: 'Threat Level',
+      content: (
+        <div style={{
           fontFamily: "'Bebas Neue', monospace",
-          fontSize: 28,
-          letterSpacing: '0.08em',
+          fontSize: 52,
           color: threatColor,
-          boxShadow: `0 0 20px ${threatColor}30`,
-          padding: '4px 10px',
-          background: `${threatColor}12`,
-          border: `1px solid ${threatColor}40`,
-          borderRadius: 6,
-          display: 'inline-block',
-          lineHeight: 1.2,
+          lineHeight: 1,
+          letterSpacing: '0.05em',
+          textShadow: `0 0 40px ${threatColor}55`,
         }}>
           {threat}
+        </div>
+      ),
+      sub: 'Overall assessment',
+      delay: 0.05,
+    },
+    {
+      label: 'Anomalous Transactions',
+      content: (
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
+          <span style={{ fontFamily: "'Bebas Neue', monospace", fontSize: 64, color: '#cc1a2e', lineHeight: 1 }}>
+            {anomalyCount}
+          </span>
+          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 13, color: 'rgba(255,255,255,0.25)' }}>
+            / {totalTxs}
+          </span>
+        </div>
+      ),
+      sub: 'flagged as suspicious',
+      delay: 0.08,
+    },
+    {
+      label: 'Detection Signals',
+      content: (
+        <span style={{ fontFamily: "'Bebas Neue', monospace", fontSize: 64, color: '#d4af37', lineHeight: 1 }}>
+          {signalCount}
         </span>
-      </motion.div>
+      ),
+      sub: 'rules triggered',
+      delay: 0.11,
+    },
+    {
+      label: 'Highest Risk Entity',
+      content: topEntity ? (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          <span style={{
+            fontFamily: "'JetBrains Mono', monospace",
+            fontSize: 13,
+            fontWeight: 700,
+            textTransform: 'uppercase' as const,
+            letterSpacing: '0.1em',
+            color: topEntityColor,
+            border: `1px solid ${topEntityColor}45`,
+            background: `${topEntityColor}12`,
+            padding: '4px 12px',
+            borderRadius: 6,
+            display: 'inline-block',
+            width: 'fit-content',
+          }}>
+            {topEntity.role ?? 'unknown'}
+          </span>
+          <div style={{ fontFamily: "'Bebas Neue', monospace", fontSize: 36, color: topEntityColor, lineHeight: 1 }}>
+            {(topEntity.riskScore * 100).toFixed(0)}%
+          </div>
+          <code style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: 'rgba(255,255,255,0.35)' }}>
+            {topEntity.address.slice(0, 10)}…{topEntity.address.slice(-6)}
+          </code>
+        </div>
+      ) : (
+        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 14, color: 'rgba(255,255,255,0.2)' }}>
+          None detected
+        </span>
+      ),
+      sub: 'risk score',
+      delay: 0.14,
+    },
+  ]
 
-      {/* Anomalous Txs */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.08 }}
-        style={{ ...panel, borderRadius: 10, padding: '20px', display: 'flex', flexDirection: 'column', gap: 8 }}
-      >
-        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.2)' }}>Anomalous Transactions</span>
-        <span style={{ fontFamily: "'Bebas Neue', monospace", fontSize: 40, color: '#cc1a2e', lineHeight: 1 }}>{anomalyCount}</span>
-        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, color: 'rgba(255,255,255,0.22)' }}>transactions flagged</span>
-      </motion.div>
-
-      {/* Signals */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.11 }}
-        style={{ ...panel, borderRadius: 10, padding: '20px', display: 'flex', flexDirection: 'column', gap: 8 }}
-      >
-        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.2)' }}>Signals Fired</span>
-        <span style={{ fontFamily: "'Bebas Neue', monospace", fontSize: 40, color: '#d4af37', lineHeight: 1 }}>{signalCount}</span>
-        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, color: 'rgba(255,255,255,0.22)' }}>detection rules triggered</span>
-      </motion.div>
-
-      {/* Top Entity */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.14 }}
-        style={{ ...panel, borderRadius: 10, padding: '20px', display: 'flex', flexDirection: 'column', gap: 8 }}
-      >
-        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.2)' }}>Highest Risk Entity</span>
-        {topEntity ? (
-          <>
-            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, fontWeight: 700, textTransform: 'uppercase', color: topEntityColor, border: `1px solid ${topEntityColor}40`, background: `${topEntityColor}12`, padding: '2px 7px', borderRadius: 4, display: 'inline-block', width: 'fit-content' }}>
-              {topEntity.role ?? 'unknown'}
-            </span>
-            <code style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: 'rgba(255,255,255,0.4)' }}>
-              {topEntity.address.slice(0, 8)}…{topEntity.address.slice(-6)}
-            </code>
-          </>
-        ) : (
-          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: 'rgba(255,255,255,0.2)' }}>—</span>
-        )}
-      </motion.div>
+  return (
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14 }}>
+      {cards.map(({ label, content, sub, delay }) => (
+        <motion.div
+          key={label}
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          style={{ ...glassPanel, borderRadius: 14, padding: '28px 28px 24px', display: 'flex', flexDirection: 'column', gap: 10 }}
+        >
+          <div style={{ ...LABEL_STYLE, fontSize: 11 }}>{label}</div>
+          {content}
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, color: 'rgba(255,255,255,0.2)' }}>
+            {sub}
+          </div>
+        </motion.div>
+      ))}
     </div>
   )
 }
 
-// ── signal rows ───────────────────────────────────────────────────────────────
+// ── signal detail modal ───────────────────────────────────────────────────────
 
-interface SignalDetailState {
-  type: 'signal'
-  data: Signal
+interface SignalDetailPanelProps {
+  signal: Signal
+  onClose: () => void
 }
-interface TxDetailState {
-  type: 'tx'
-  data: Transaction
-}
-type DetailState = SignalDetailState | TxDetailState | null
 
-const SignalList: React.FC<{
+const SignalDetailPanel: React.FC<SignalDetailPanelProps> = ({ signal: s, onClose }) => {
+  const explanation = Object.entries(SIGNAL_EXPLANATIONS).find(
+    ([key]) => s.category?.toLowerCase().includes(key)
+  )?.[1]
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: 32 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 32 }}
+      transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+      style={{
+        ...glassPanel,
+        borderRadius: 14,
+        padding: '32px',
+        borderLeft: `4px solid ${SEV_COLOR[s.severity]}`,
+      }}
+    >
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 24 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          <SevBadge sev={s.severity} large />
+          <h3 style={{ ...SECTION_HEAD, fontSize: 28, margin: 0 }}>{humanizeSignal(s.name)}</h3>
+          <code style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: 'rgba(255,255,255,0.25)' }}>
+            {s.name}
+          </code>
+        </div>
+        <button
+          onClick={onClose}
+          style={{ color: 'rgba(255,255,255,0.25)', cursor: 'pointer', marginTop: 4 }}
+          className="hover:text-white/60 transition-colors"
+        >
+          <X size={18} />
+        </button>
+      </div>
+
+      {explanation && (
+        <div style={{
+          display: 'flex',
+          gap: 14,
+          padding: '18px 20px',
+          borderRadius: 10,
+          background: 'rgba(212,175,55,0.07)',
+          border: '1px solid rgba(212,175,55,0.25)',
+          marginBottom: 20,
+        }}>
+          <Lightbulb size={18} style={{ color: '#d4af37', flexShrink: 0, marginTop: 2 }} />
+          <div>
+            <div style={{ ...LABEL_STYLE, fontSize: 10, marginBottom: 8, color: 'rgba(212,175,55,0.6)' }}>
+              Plain English Explanation
+            </div>
+            <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.65)', lineHeight: 1.7, margin: 0 }}>
+              {explanation}
+            </p>
+          </div>
+        </div>
+      )}
+
+      {s.description && (
+        <p style={{
+          fontSize: 15,
+          color: 'rgba(255,255,255,0.5)',
+          lineHeight: 1.7,
+          marginBottom: 24,
+          fontFamily: 'system-ui, -apple-system, sans-serif',
+        }}>
+          {s.description}
+        </p>
+      )}
+
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+        {[
+          { l: 'Category',    v: s.category },
+          { l: 'Confidence',  v: `${(s.confidence * 100).toFixed(0)}%` },
+          { l: 'False Positive Risk', v: `${(s.falsePositiveProbability * 100).toFixed(0)}%` },
+          { l: 'Affected Transactions', v: String(s.affectedTransactions.length) },
+        ].map(({ l, v }) => (
+          <div key={l} style={{
+            padding: '14px 18px',
+            borderRadius: 8,
+            background: 'rgba(255,255,255,0.03)',
+            border: '1px solid rgba(255,255,255,0.06)',
+          }}>
+            <div style={{ ...LABEL_STYLE, fontSize: 10, marginBottom: 6 }}>{l}</div>
+            <div style={{ fontFamily: "'Bebas Neue', monospace", fontSize: 28, color: 'rgba(255,255,255,0.8)', lineHeight: 1 }}>
+              {v}
+            </div>
+          </div>
+        ))}
+      </div>
+    </motion.div>
+  )
+}
+
+// ── tx detail panel ───────────────────────────────────────────────────────────
+
+const TxDetailPanel: React.FC<{ tx: Transaction; allSignals: Signal[]; onClose: () => void }> = ({ tx, allSignals, onClose }) => {
+  const related = allSignals.filter(s => s.affectedTransactions.includes(tx.hash))
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: 32 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 32 }}
+      transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+      style={{
+        ...glassPanel,
+        borderRadius: 14,
+        padding: '32px',
+        borderLeft: `4px solid ${tx.isAnomaly ? '#cc1a2e' : 'rgba(255,255,255,0.1)'}`,
+      }}
+    >
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 24 }}>
+        <div>
+          <div style={{ ...LABEL_STYLE, marginBottom: 10 }}>Transaction Detail</div>
+          <code style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 14, color: 'rgba(255,255,255,0.7)', wordBreak: 'break-all' as const }}>
+            {tx.hash}
+          </code>
+        </div>
+        <button onClick={onClose} style={{ color: 'rgba(255,255,255,0.25)', cursor: 'pointer' }} className="hover:text-white/60 transition-colors">
+          <X size={18} />
+        </button>
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 20 }}>
+        {[
+          { l: 'Block',  v: `#${tx.blockNumber}` },
+          { l: 'Status', v: tx.status },
+          { l: 'Gas Used', v: String(tx.gasUsed) },
+          { l: 'Anomaly Score', v: tx.anomalyScore > 0 ? `${(tx.anomalyScore * 100).toFixed(0)}%` : '—' },
+        ].map(({ l, v }) => (
+          <div key={l} style={{ padding: '14px 18px', borderRadius: 8, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
+            <div style={{ ...LABEL_STYLE, fontSize: 10, marginBottom: 6 }}>{l}</div>
+            <div style={{ fontFamily: "'Bebas Neue', monospace", fontSize: 26, color: 'rgba(255,255,255,0.8)', lineHeight: 1 }}>{v}</div>
+          </div>
+        ))}
+      </div>
+
+      {[
+        { l: 'From', v: tx.from },
+        { l: 'To',   v: tx.to },
+        { l: 'Value', v: `${tx.value} wei` },
+      ].map(({ l, v }) => (
+        <div key={l} style={{ display: 'flex', gap: 16, padding: '12px 0', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+          <span style={{ ...LABEL_STYLE, fontSize: 10, width: 48, flexShrink: 0, paddingTop: 2 }}>{l}</span>
+          <code style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 13, color: 'rgba(255,255,255,0.55)', wordBreak: 'break-all' as const, lineHeight: 1.6 }}>{v}</code>
+        </div>
+      ))}
+
+      {related.length > 0 && (
+        <div style={{ marginTop: 20 }}>
+          <div style={{ ...LABEL_STYLE, marginBottom: 12 }}>Firing Signals</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            {related.map(s => (
+              <div key={s.id} style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 12,
+                padding: '12px 16px',
+                borderRadius: 8,
+                background: `${SEV_COLOR[s.severity]}0d`,
+                border: `1px solid ${SEV_COLOR[s.severity]}25`,
+              }}>
+                <SevBadge sev={s.severity} />
+                <span style={{ fontFamily: 'system-ui, sans-serif', fontSize: 14, color: 'rgba(255,255,255,0.7)' }}>
+                  {humanizeSignal(s.name)}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </motion.div>
+  )
+}
+
+// ── signal cards ──────────────────────────────────────────────────────────────
+
+const SignalCards: React.FC<{
   signals: Signal[]
   onSelect: (s: Signal) => void
   activeId?: string
 }> = ({ signals, onSelect, activeId }) => (
-  <div style={{ padding: '8px 0' }}>
-    {/* table header */}
-    <div
-      className="flex items-center gap-4"
-      style={{
-        padding: '6px 28px 10px',
-        fontFamily: "'JetBrains Mono', monospace",
-        fontSize: 9,
-        letterSpacing: '0.14em',
-        textTransform: 'uppercase',
-        color: 'rgba(255,255,255,0.2)',
-      }}
-    >
-      <span style={{ width: 6 }} />
-      <span style={{ flex: 1 }}>Signal Name</span>
-      <span style={{ width: 80, textAlign: 'right' }}>Category</span>
-      <span style={{ width: 72, textAlign: 'right' }}>Confidence</span>
-      <span style={{ width: 48, textAlign: 'right' }}>Txs</span>
-    </div>
-
+  <div style={{ padding: '24px 32px 28px', display: 'flex', flexDirection: 'column', gap: 10 }}>
     {signals.map((s, i) => {
       const active = activeId === s.id
+      const color = SEV_COLOR[s.severity]
       return (
         <motion.button
           key={s.id}
           onClick={() => onSelect(s)}
-          className="w-full flex items-center gap-4 text-left transition-colors duration-100"
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: i * 0.03, duration: 0.3 }}
+          whileHover={{ scale: 1.005 }}
           style={{
-            padding: '13px 28px',
-            background: active ? `${SEV_COLOR[s.severity]}0d` : 'transparent',
-            borderLeft: `2px solid ${active ? SEV_COLOR[s.severity] : 'transparent'}`,
-            borderBottom: i < signals.length - 1 ? '1px solid rgba(255,255,255,0.03)' : 'none',
+            width: '100%',
+            textAlign: 'left' as const,
+            padding: '20px 24px',
+            borderRadius: 10,
+            background: active ? `${color}0e` : 'rgba(255,255,255,0.02)',
+            border: `1px solid ${active ? color + '45' : 'rgba(255,255,255,0.07)'}`,
+            borderLeft: `4px solid ${color}`,
+            cursor: 'pointer',
+            transition: 'border-color 0.15s, background 0.15s',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 20,
           }}
-          whileHover={{ background: 'rgba(255,255,255,0.02)' }}
-          initial={{ opacity: 0, x: -6 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: i * 0.025 }}
         >
-          <SevPip sev={s.severity} />
-          <div className="flex items-center gap-3 flex-1 min-w-0">
-            <SevTag sev={s.severity} />
-            <div style={{ minWidth: 0 }}>
-              <div style={{
-                fontSize: 13,
-                color: active ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.65)',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
+          {/* Signal name + code */}
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 6, flexWrap: 'wrap' }}>
+              <SevBadge sev={s.severity} />
+              <span style={{
                 fontFamily: 'system-ui, -apple-system, sans-serif',
-                fontWeight: active ? 600 : 400,
+                fontSize: 18,
+                fontWeight: 600,
+                color: active ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.8)',
+                lineHeight: 1.2,
               }}>
                 {humanizeSignal(s.name)}
-              </div>
-              <div style={{
-                fontFamily: "'JetBrains Mono', monospace",
-                fontSize: 9,
-                color: 'rgba(255,255,255,0.2)',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
-                marginTop: 2,
-              }}>
-                {s.name}
-              </div>
+              </span>
+            </div>
+            <code style={{
+              fontFamily: "'JetBrains Mono', monospace",
+              fontSize: 11,
+              color: 'rgba(255,255,255,0.22)',
+              letterSpacing: '0.04em',
+            }}>
+              {s.name}
+            </code>
+          </div>
+
+          {/* Confidence */}
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 4, flexShrink: 0 }}>
+            <div style={{ ...LABEL_STYLE, fontSize: 10 }}>Confidence</div>
+            <div style={{ fontFamily: "'Bebas Neue', monospace", fontSize: 32, color, lineHeight: 1 }}>
+              {(s.confidence * 100).toFixed(0)}%
             </div>
           </div>
-          <span
-            style={{
-              width: 80,
-              textAlign: 'right',
-              fontFamily: "'JetBrains Mono', monospace",
-              fontSize: 10,
-              color: 'rgba(255,255,255,0.28)',
-              letterSpacing: '0.06em',
-            }}
-          >
-            {s.category}
-          </span>
-          <span
-            style={{
-              width: 72,
-              textAlign: 'right',
-              fontFamily: "'JetBrains Mono', monospace",
-              fontSize: 11,
-              color: SEV_COLOR[s.severity],
-              fontWeight: 700,
-            }}
-          >
-            {(s.confidence * 100).toFixed(0)}%
-          </span>
-          <span
-            style={{
-              width: 48,
-              textAlign: 'right',
-              fontFamily: "'JetBrains Mono', monospace",
-              fontSize: 11,
-              color: 'rgba(255,255,255,0.35)',
-            }}
-          >
-            {s.affectedTransactions.length}
-          </span>
+
+          {/* Affected txs */}
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 4, flexShrink: 0, minWidth: 60 }}>
+            <div style={{ ...LABEL_STYLE, fontSize: 10 }}>Txs</div>
+            <div style={{ fontFamily: "'Bebas Neue', monospace", fontSize: 32, color: 'rgba(255,255,255,0.4)', lineHeight: 1 }}>
+              {s.affectedTransactions.length}
+            </div>
+          </div>
+
+          {/* Category */}
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 4, flexShrink: 0, minWidth: 90 }}>
+            <div style={{ ...LABEL_STYLE, fontSize: 10 }}>Category</div>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, color: 'rgba(255,255,255,0.35)', letterSpacing: '0.06em' }}>
+              {s.category}
+            </div>
+          </div>
+
+          <ChevronRight size={16} style={{ color: 'rgba(255,255,255,0.2)', flexShrink: 0 }} />
         </motion.button>
       )
     })}
@@ -493,154 +690,136 @@ const TxList: React.FC<{
   txs: Transaction[]
   onSelect: (t: Transaction) => void
   activeTx?: string
-}> = ({ txs, onSelect, activeTx }) => (
-  <div style={{ padding: '8px 0' }}>
-    <div
-      className="flex items-center gap-4"
-      style={{
-        padding: '6px 28px 10px',
-        fontFamily: "'JetBrains Mono', monospace",
-        fontSize: 9,
-        letterSpacing: '0.14em',
-        textTransform: 'uppercase',
-        color: 'rgba(255,255,255,0.2)',
-      }}
-    >
-      <span style={{ width: 8 }} />
-      <span style={{ flex: 1 }}>Hash</span>
-      <span style={{ flex: 1 }}>From → To</span>
-      <span style={{ width: 70, textAlign: 'right' }}>Block</span>
-      <span style={{ width: 70, textAlign: 'right' }}>Anomaly</span>
-      <span style={{ width: 60, textAlign: 'right' }}>Status</span>
-    </div>
+  allSignals: Signal[]
+}> = ({ txs, onSelect, activeTx, allSignals }) => {
+  const sigsByTx = new Map<string, Signal[]>()
+  for (const s of allSignals) {
+    for (const hash of s.affectedTransactions) {
+      if (!sigsByTx.has(hash)) sigsByTx.set(hash, [])
+      sigsByTx.get(hash)!.push(s)
+    }
+  }
 
-    {txs.map((tx, i) => {
-      const active = activeTx === tx.hash
-      return (
-        <motion.button
-          key={tx.hash}
-          onClick={() => onSelect(tx)}
-          className="w-full flex items-center gap-4 text-left transition-colors duration-100"
-          style={{
-            padding: '13px 28px',
-            background: active ? 'rgba(56,189,248,0.05)' : 'transparent',
-            borderLeft: `2px solid ${active ? '#38bdf8' : tx.isAnomaly ? '#cc1a2e40' : 'transparent'}`,
-            borderBottom: i < txs.length - 1 ? '1px solid rgba(255,255,255,0.03)' : 'none',
-          }}
-          whileHover={{ background: 'rgba(255,255,255,0.02)' }}
-          initial={{ opacity: 0, x: -6 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: i * 0.018 }}
-        >
-          {/* anomaly dot */}
-          <span
+  return (
+    <div style={{ padding: '8px 0' }}>
+      {/* Header */}
+      <div style={{ display: 'grid', gridTemplateColumns: '8px 1fr 1fr 90px 80px 70px', gap: 16, padding: '8px 32px 12px', ...LABEL_STYLE, fontSize: 11 }}>
+        <span />
+        <span>Transaction Hash</span>
+        <span>From → To</span>
+        <span style={{ textAlign: 'right' as const }}>Block</span>
+        <span style={{ textAlign: 'right' as const }}>Anomaly</span>
+        <span style={{ textAlign: 'right' as const }}>Status</span>
+      </div>
+
+      {txs.map((tx, i) => {
+        const active = activeTx === tx.hash
+        const signals = sigsByTx.get(tx.hash) ?? []
+        const topSev = signals[0]?.severity
+        return (
+          <motion.button
+            key={tx.hash}
+            onClick={() => onSelect(tx)}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: i * 0.015 }}
+            whileHover={{ background: 'rgba(255,255,255,0.025)' }}
             style={{
-              width: 6,
-              height: 6,
+              width: '100%',
+              textAlign: 'left' as const,
+              display: 'grid',
+              gridTemplateColumns: '8px 1fr 1fr 90px 80px 70px',
+              gap: 16,
+              padding: '14px 32px',
+              background: active ? 'rgba(56,189,248,0.06)' : 'transparent',
+              borderLeft: `3px solid ${active ? '#38bdf8' : tx.isAnomaly ? '#cc1a2e50' : 'transparent'}`,
+              borderBottom: i < txs.length - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none',
+              cursor: 'pointer',
+              alignItems: 'center',
+              transition: 'background 0.1s',
+            }}
+          >
+            {/* anomaly dot */}
+            <span style={{
+              width: 8,
+              height: 8,
               borderRadius: '50%',
               background: tx.isAnomaly ? '#cc1a2e' : 'rgba(255,255,255,0.1)',
               boxShadow: tx.isAnomaly ? '0 0 6px #cc1a2e80' : 'none',
-              flexShrink: 0,
-            }}
-          />
-          {/* hash */}
-          <code
-            style={{
-              flex: 1,
+              display: 'block',
+            }} />
+
+            {/* hash + signal tags */}
+            <div>
+              <code style={{
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: 13,
+                color: tx.isAnomaly ? '#ff5566' : 'rgba(255,255,255,0.55)',
+                display: 'block',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+              }}>
+                {truncHash(tx.hash)}
+              </code>
+              {topSev && (
+                <span style={{ marginTop: 4, display: 'inline-block' }}>
+                  <SevBadge sev={topSev} />
+                </span>
+              )}
+            </div>
+
+            {/* from → to */}
+            <div style={{
               fontFamily: "'JetBrains Mono', monospace",
-              fontSize: 11,
-              color: tx.isAnomaly ? '#ff5566' : 'rgba(255,255,255,0.5)',
+              fontSize: 12,
+              color: 'rgba(255,255,255,0.35)',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
               whiteSpace: 'nowrap',
-            }}
-          >
-            {truncHash(tx.hash)}
-          </code>
-          {/* from → to */}
-          <div
-            style={{
-              flex: 1,
-              fontFamily: "'JetBrains Mono', monospace",
-              fontSize: 10,
-              color: 'rgba(255,255,255,0.3)',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap',
-            }}
-          >
-            {truncAddr(tx.from, 6)}
-            <span style={{ margin: '0 6px', color: 'rgba(255,255,255,0.15)' }}>→</span>
-            {truncAddr(tx.to, 6)}
-          </div>
-          {/* block */}
-          <span
-            style={{
-              width: 70,
-              textAlign: 'right',
-              fontFamily: "'JetBrains Mono', monospace",
-              fontSize: 10,
-              color: 'rgba(255,255,255,0.25)',
-            }}
-          >
-            #{tx.blockNumber}
-          </span>
-          {/* anomaly score */}
-          <span
-            style={{
-              width: 70,
-              textAlign: 'right',
-              fontFamily: "'JetBrains Mono', monospace",
-              fontSize: 11,
-              fontWeight: 700,
+            }}>
+              {truncAddr(tx.from, 6)}
+              <span style={{ margin: '0 8px', color: 'rgba(255,255,255,0.15)' }}>→</span>
+              {truncAddr(tx.to, 6)}
+            </div>
+
+            {/* block */}
+            <div style={{ textAlign: 'right' as const, fontFamily: "'JetBrains Mono', monospace", fontSize: 13, color: 'rgba(255,255,255,0.3)' }}>
+              #{tx.blockNumber}
+            </div>
+
+            {/* anomaly score */}
+            <div style={{
+              textAlign: 'right' as const,
+              fontFamily: "'Bebas Neue', monospace",
+              fontSize: 20,
               color: tx.anomalyScore > 0.7 ? '#cc1a2e' : tx.anomalyScore > 0 ? '#d4af37' : 'rgba(255,255,255,0.2)',
-            }}
-          >
-            {tx.anomalyScore > 0 ? `${(tx.anomalyScore * 100).toFixed(0)}%` : '—'}
-          </span>
-          {/* status */}
-          <span
-            style={{
-              width: 60,
-              textAlign: 'right',
+            }}>
+              {tx.anomalyScore > 0 ? `${(tx.anomalyScore * 100).toFixed(0)}%` : '—'}
+            </div>
+
+            {/* status */}
+            <div style={{
+              textAlign: 'right' as const,
               fontFamily: "'JetBrains Mono', monospace",
-              fontSize: 9,
+              fontSize: 12,
               letterSpacing: '0.08em',
+              textTransform: 'uppercase' as const,
               color: tx.status === 'success' ? '#22c55e' : '#cc1a2e',
-              textTransform: 'uppercase',
-            }}
-          >
-            {tx.status}
-          </span>
-        </motion.button>
-      )
-    })}
-  </div>
-)
-
-// ── entity rows ───────────────────────────────────────────────────────────────
-
-const EntityList: React.FC<{ entities: Entity[] }> = ({ entities }) => (
-  <div style={{ padding: '8px 0' }}>
-    <div
-      className="flex items-center gap-4"
-      style={{
-        padding: '6px 28px 10px',
-        fontFamily: "'JetBrains Mono', monospace",
-        fontSize: 9,
-        letterSpacing: '0.14em',
-        textTransform: 'uppercase',
-        color: 'rgba(255,255,255,0.2)',
-      }}
-    >
-      <span style={{ width: 72 }}>Role</span>
-      <span style={{ flex: 1 }}>Address</span>
-      <span style={{ width: 120, textAlign: 'center' }}>Risk</span>
-      <span style={{ width: 48, textAlign: 'right' }}>Score</span>
-      <span style={{ width: 48, textAlign: 'right' }}>Txs</span>
-      <span style={{ width: 52, textAlign: 'right' }}>Type</span>
+            }}>
+              {tx.status}
+            </div>
+          </motion.button>
+        )
+      })}
     </div>
+  )
+}
 
+// ── entity cards ──────────────────────────────────────────────────────────────
+
+const EntityCards: React.FC<{ entities: Entity[] }> = ({ entities }) => (
+  <div style={{ padding: '24px 32px 28px', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 12 }}>
     {entities.map((e, i) => {
       const pct = e.riskScore * 100
       const color =
@@ -648,105 +827,79 @@ const EntityList: React.FC<{ entities: Entity[] }> = ({ entities }) => (
         e.riskScore >= 0.6 ? '#d4af37' :
         e.riskScore >= 0.4 ? '#f97316' :
         '#22c55e'
+      const roleColor = ROLE_COLOR[e.role ?? ''] ?? 'rgba(255,255,255,0.3)'
 
       return (
         <motion.div
           key={e.address}
-          className="flex items-center gap-4"
+          initial={{ opacity: 0, scale: 0.97 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: i * 0.04, duration: 0.3 }}
           style={{
-            padding: '13px 28px',
-            borderBottom: i < entities.length - 1 ? '1px solid rgba(255,255,255,0.03)' : 'none',
+            padding: '22px 24px',
+            borderRadius: 10,
+            background: 'rgba(255,255,255,0.02)',
+            border: `1px solid ${color}30`,
+            borderLeft: `4px solid ${color}`,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 12,
           }}
-          initial={{ opacity: 0, x: -6 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: i * 0.03 }}
         >
-          <span
-            style={{
-              width: 72,
-              fontFamily: "'JetBrains Mono', monospace",
-              fontSize: 9,
-              fontWeight: 700,
-              letterSpacing: '0.1em',
-              textTransform: 'uppercase',
-              color: ROLE_COLOR[e.role ?? ''] ?? 'rgba(255,255,255,0.3)',
-              border: `1px solid ${ROLE_COLOR[e.role ?? ''] ?? 'rgba(255,255,255,0.1)'}40`,
-              background: `${ROLE_COLOR[e.role ?? ''] ?? 'rgba(255,255,255,0.05)'}12`,
-              padding: '2px 7px',
-              borderRadius: 4,
-              whiteSpace: 'nowrap',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-            }}
-          >
-            {e.role ?? 'unknown'}
-          </span>
-          <code
-            style={{
-              flex: 1,
-              fontFamily: "'JetBrains Mono', monospace",
-              fontSize: 11,
-              color: 'rgba(255,255,255,0.55)',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap',
-            }}
-          >
-            {truncAddr(e.address, 12)}
-          </code>
-          {/* risk bar */}
-          <div
-            style={{
-              width: 120,
-              height: 2,
-              background: 'rgba(255,255,255,0.07)',
-              borderRadius: 2,
-              overflow: 'hidden',
-            }}
-          >
-            <motion.div
-              style={{ height: '100%', background: color, borderRadius: 2 }}
-              initial={{ width: 0 }}
-              animate={{ width: `${pct}%` }}
-              transition={{ duration: 0.7, delay: 0.1 + i * 0.04, ease: 'easeOut' }}
-            />
-          </div>
-          <span
-            style={{
-              width: 48,
-              textAlign: 'right',
+          {/* Role + score */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <span style={{
               fontFamily: "'JetBrains Mono', monospace",
               fontSize: 12,
               fontWeight: 700,
-              color,
-            }}
-          >
-            {pct.toFixed(0)}%
-          </span>
-          <span
-            style={{
-              width: 48,
-              textAlign: 'right',
-              fontFamily: "'JetBrains Mono', monospace",
-              fontSize: 10,
-              color: 'rgba(255,255,255,0.28)',
-            }}
-          >
-            {e.transactionCount}
-          </span>
-          <span
-            style={{
-              width: 52,
-              textAlign: 'right',
-              fontFamily: "'JetBrains Mono', monospace",
-              fontSize: 9,
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              color: 'rgba(255,255,255,0.22)',
-            }}
-          >
-            {e.type}
-          </span>
+              letterSpacing: '0.12em',
+              textTransform: 'uppercase' as const,
+              color: roleColor,
+              border: `1px solid ${roleColor}40`,
+              background: `${roleColor}12`,
+              padding: '4px 10px',
+              borderRadius: 6,
+            }}>
+              {e.role ?? 'unknown'}
+            </span>
+            <span style={{ fontFamily: "'Bebas Neue', monospace", fontSize: 40, color, lineHeight: 1 }}>
+              {pct.toFixed(0)}%
+            </span>
+          </div>
+
+          {/* Address */}
+          <code style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 13, color: 'rgba(255,255,255,0.55)' }}>
+            {truncAddr(e.address, 14)}
+          </code>
+
+          {/* Risk bar */}
+          <div>
+            <div style={{ ...LABEL_STYLE, fontSize: 10, marginBottom: 6 }}>Risk Score</div>
+            <div style={{ height: 4, background: 'rgba(255,255,255,0.07)', borderRadius: 4, overflow: 'hidden' }}>
+              <motion.div
+                style={{ height: '100%', background: color, borderRadius: 4 }}
+                initial={{ width: 0 }}
+                animate={{ width: `${pct}%` }}
+                transition={{ duration: 0.8, delay: 0.1 + i * 0.04, ease: 'easeOut' }}
+              />
+            </div>
+          </div>
+
+          {/* Stats */}
+          <div style={{ display: 'flex', gap: 16 }}>
+            <div>
+              <div style={{ ...LABEL_STYLE, fontSize: 10, marginBottom: 2 }}>Transactions</div>
+              <div style={{ fontFamily: "'Bebas Neue', monospace", fontSize: 24, color: 'rgba(255,255,255,0.55)', lineHeight: 1 }}>
+                {e.transactionCount}
+              </div>
+            </div>
+            <div>
+              <div style={{ ...LABEL_STYLE, fontSize: 10, marginBottom: 2 }}>Type</div>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase' as const, letterSpacing: '0.1em', marginTop: 4 }}>
+                {e.type}
+              </div>
+            </div>
+          </div>
         </motion.div>
       )
     })}
@@ -788,8 +941,8 @@ const AttackTimeline: React.FC<{
 }> = ({ events, activeHash, onSelect }) => {
   if (events.length === 0) {
     return (
-      <div style={{ padding: '24px 28px' }}>
-        <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: 'rgba(255,255,255,0.2)' }}>
+      <div style={{ padding: '32px', textAlign: 'center' as const }}>
+        <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 14, color: 'rgba(255,255,255,0.2)' }}>
           No suspicious events detected
         </p>
       </div>
@@ -797,91 +950,63 @@ const AttackTimeline: React.FC<{
   }
 
   return (
-    <div style={{ padding: '20px 28px 24px' }}>
-      <div
-        className="flex items-start gap-0 overflow-x-auto"
-        style={{ scrollbarWidth: 'none' }}
-      >
+    <div style={{ padding: '24px 32px 28px' }}>
+      <div className="flex items-start gap-0 overflow-x-auto" style={{ scrollbarWidth: 'none', paddingBottom: 8 }}>
         {events.map((ev, i) => {
           const isActive = activeHash === ev.tx.hash
           const topSev = ev.signals[0]?.severity ?? 'low'
           const color = SEV_COLOR[topSev]
 
           return (
-            <div key={ev.tx.hash} className="flex items-center">
-              <button
+            <div key={ev.tx.hash} className="flex items-center" style={{ flexShrink: 0 }}>
+              <motion.button
                 onClick={() => onSelect(ev.tx)}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.04 }}
+                whileHover={{ scale: 1.03 }}
                 style={{
                   display: 'flex',
-                  flexDirection: 'column',
-                  gap: 8,
-                  padding: '12px 16px',
-                  borderRadius: 8,
-                  background: isActive ? `${color}12` : 'rgba(255,255,255,0.02)',
-                  border: `1px solid ${isActive ? color + '45' : 'rgba(255,255,255,0.07)'}`,
-                  minWidth: 140,
+                  flexDirection: 'column' as const,
+                  gap: 10,
+                  padding: '16px 20px',
+                  borderRadius: 10,
+                  background: isActive ? `${color}10` : 'rgba(255,255,255,0.02)',
+                  border: `1px solid ${isActive ? color + '50' : 'rgba(255,255,255,0.08)'}`,
+                  borderTop: `3px solid ${color}`,
+                  minWidth: 180,
                   cursor: 'pointer',
+                  textAlign: 'left' as const,
                   transition: 'all 0.15s ease',
-                  textAlign: 'left',
                 }}
               >
-                <span
-                  style={{
-                    fontFamily: "'JetBrains Mono', monospace",
-                    fontSize: 9,
-                    letterSpacing: '0.12em',
-                    color: isActive ? color : 'rgba(255,255,255,0.25)',
-                    textTransform: 'uppercase',
-                  }}
-                >
-                  block {ev.block}
+                <span style={{ fontFamily: "'Bebas Neue', monospace", fontSize: 20, color: isActive ? color : 'rgba(255,255,255,0.4)', lineHeight: 1, letterSpacing: '0.06em' }}>
+                  Block {ev.block}
                 </span>
-                <code
-                  style={{
-                    fontFamily: "'JetBrains Mono', monospace",
-                    fontSize: 10,
-                    color: isActive ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.5)',
-                  }}
-                >
+                <code style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: isActive ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.4)' }}>
                   {truncHash(ev.tx.hash)}
                 </code>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 3 }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap' as const, gap: 4 }}>
                   {ev.signals.slice(0, 2).map((s, si) => (
-                    <span
-                      key={si}
-                      style={{
-                        fontFamily: "'JetBrains Mono', monospace",
-                        fontSize: 8,
-                        padding: '1px 5px',
-                        borderRadius: 3,
-                        background: `${SEV_COLOR[s.severity]}15`,
-                        color: SEV_COLOR[s.severity],
-                        border: `1px solid ${SEV_COLOR[s.severity]}30`,
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.06em',
-                      }}
-                    >
-                      {s.category}
-                    </span>
+                    <SevBadge key={si} sev={s.severity} />
                   ))}
                   {ev.signals.length > 2 && (
-                    <span
-                      style={{
-                        fontFamily: "'JetBrains Mono', monospace",
-                        fontSize: 8,
-                        color: 'rgba(255,255,255,0.2)',
-                      }}
-                    >
-                      +{ev.signals.length - 2}
+                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: 'rgba(255,255,255,0.25)', alignSelf: 'center' }}>
+                      +{ev.signals.length - 2} more
                     </span>
                   )}
                 </div>
-              </button>
+                {ev.signals[0] && (
+                  <div style={{ fontFamily: 'system-ui, sans-serif', fontSize: 12, color: 'rgba(255,255,255,0.4)', lineHeight: 1.4 }}>
+                    {humanizeSignal(ev.signals[0].name)}
+                  </div>
+                )}
+              </motion.button>
 
               {i < events.length - 1 && (
-                <div style={{ display: 'flex', alignItems: 'center', padding: '0 6px', flexShrink: 0 }}>
-                  <div style={{ width: 24, height: 1, background: 'rgba(255,255,255,0.08)' }} />
-                  <div style={{ width: 3, height: 3, borderRadius: '50%', background: 'rgba(255,255,255,0.15)' }} />
+                <div style={{ display: 'flex', alignItems: 'center', padding: '0 8px', flexShrink: 0 }}>
+                  <div style={{ width: 28, height: 1, background: 'rgba(255,255,255,0.1)' }} />
+                  <div style={{ width: 4, height: 4, borderRadius: '50%', background: 'rgba(255,255,255,0.18)' }} />
                 </div>
               )}
             </div>
@@ -892,215 +1017,12 @@ const AttackTimeline: React.FC<{
   )
 }
 
-// ── detail overlay ────────────────────────────────────────────────────────────
-
-const DetailOverlay: React.FC<{
-  detail: DetailState
-  allSignals: Signal[]
-  onClose: () => void
-}> = ({ detail, allSignals, onClose }) => {
-  if (!detail) return null
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: -8 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -8 }}
-      transition={{ duration: 0.18 }}
-      style={{
-        ...panel,
-        borderRadius: 10,
-        padding: '24px 28px',
-        position: 'relative',
-      }}
-    >
-      <div className="flex items-start justify-between mb-5">
-        <span
-          style={{
-            fontFamily: "'JetBrains Mono', monospace",
-            fontSize: 9,
-            letterSpacing: '0.18em',
-            textTransform: 'uppercase',
-            color: 'rgba(255,255,255,0.25)',
-          }}
-        >
-          {detail.type === 'tx' ? 'Transaction Detail' : 'Signal Detail'}
-        </span>
-        <button
-          onClick={onClose}
-          style={{ color: 'rgba(255,255,255,0.25)', lineHeight: 1 }}
-          className="hover:text-white/60 transition-colors"
-        >
-          <X size={13} />
-        </button>
-      </div>
-
-      {detail.type === 'tx' && (() => {
-        const tx = detail.data
-        const related = allSignals.filter(s => s.affectedTransactions.includes(tx.hash))
-        return (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-            {[
-              { l: 'Hash',   v: tx.hash },
-              { l: 'From',   v: tx.from },
-              { l: 'To',     v: tx.to },
-              { l: 'Block',  v: String(tx.blockNumber) },
-              { l: 'Value',  v: `${tx.value} wei` },
-              { l: 'Gas',    v: String(tx.gasUsed) },
-              { l: 'Status', v: tx.status },
-            ].map(({ l, v }) => (
-              <div key={l} className="flex gap-4">
-                <span
-                  style={{
-                    fontFamily: "'JetBrains Mono', monospace",
-                    fontSize: 9,
-                    letterSpacing: '0.1em',
-                    textTransform: 'uppercase',
-                    color: 'rgba(255,255,255,0.22)',
-                    width: 48,
-                    flexShrink: 0,
-                    paddingTop: 1,
-                  }}
-                >
-                  {l}
-                </span>
-                <code
-                  style={{
-                    fontFamily: "'JetBrains Mono', monospace",
-                    fontSize: 11,
-                    color: 'rgba(255,255,255,0.6)',
-                    wordBreak: 'break-all',
-                    lineHeight: 1.6,
-                  }}
-                >
-                  {v}
-                </code>
-              </div>
-            ))}
-
-            {related.length > 0 && (
-              <div style={{ marginTop: 8, ...divider, paddingTop: 16 }}>
-                <p
-                  style={{
-                    fontFamily: "'JetBrains Mono', monospace",
-                    fontSize: 9,
-                    letterSpacing: '0.14em',
-                    textTransform: 'uppercase',
-                    color: 'rgba(255,255,255,0.2)',
-                    marginBottom: 10,
-                  }}
-                >
-                  Firing Signals
-                </p>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                  {related.map(s => (
-                    <div
-                      key={s.id}
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 10,
-                        padding: '8px 12px',
-                        borderRadius: 6,
-                        background: `${SEV_COLOR[s.severity]}0c`,
-                        border: `1px solid ${SEV_COLOR[s.severity]}25`,
-                      }}
-                    >
-                      <SevPip sev={s.severity} />
-                      <span
-                        style={{
-                          fontFamily: "'JetBrains Mono', monospace",
-                          fontSize: 11,
-                          color: 'rgba(255,255,255,0.65)',
-                        }}
-                      >
-                        {s.name}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        )
-      })()}
-
-      {detail.type === 'signal' && (() => {
-        const s = detail.data
-        return (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-            <div className="flex items-center gap-3 mb-2">
-              <SevPip sev={s.severity} />
-              <SevTag sev={s.severity} />
-              <span
-                style={{
-                  fontFamily: "'JetBrains Mono', monospace",
-                  fontSize: 13,
-                  fontWeight: 600,
-                  color: 'rgba(255,255,255,0.85)',
-                }}
-              >
-                {s.name}
-              </span>
-            </div>
-            {/* Plain-English explanation */}
-            {(() => {
-              const explanation = Object.entries(SIGNAL_EXPLANATIONS).find(
-                ([key]) => s.category?.toLowerCase().includes(key)
-              )?.[1]
-              if (!explanation) return null
-              return (
-                <div style={{ display: 'flex', gap: 10, padding: '12px 16px', borderRadius: 8, background: 'rgba(212,175,55,0.07)', border: '1px solid rgba(212,175,55,0.22)', marginBottom: 8 }}>
-                  <Lightbulb size={13} style={{ color: '#d4af37', flexShrink: 0, marginTop: 1 }} />
-                  <div>
-                    <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(212,175,55,0.6)', marginBottom: 5 }}>What this means</div>
-                    <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.55)', lineHeight: 1.6, margin: 0, fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-                      {explanation}
-                    </p>
-                  </div>
-                </div>
-              )
-            })()}
-            <p
-              style={{
-                fontFamily: "'JetBrains Mono', monospace",
-                fontSize: 11,
-                color: 'rgba(255,255,255,0.42)',
-                lineHeight: 1.7,
-              }}
-            >
-              {s.description}
-            </p>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginTop: 4 }}>
-              {[
-                { l: 'Category',    v: s.category },
-                { l: 'Confidence',  v: `${(s.confidence * 100).toFixed(0)}%` },
-                { l: 'FP Risk',     v: `${(s.falsePositiveProbability * 100).toFixed(0)}%` },
-                { l: 'Affected Txs', v: String(s.affectedTransactions.length) },
-              ].map(({ l, v }) => (
-                <div key={l}>
-                  <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.2)' }}>
-                    {l}
-                  </span>
-                  <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, color: 'rgba(255,255,255,0.65)', marginTop: 2 }}>
-                    {v}
-                  </p>
-                </div>
-              ))}
-            </div>
-            {s.sourceDataPath && (
-              <code style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, color: 'rgba(255,255,255,0.2)', marginTop: 4 }}>
-                {s.sourceDataPath}
-              </code>
-            )}
-          </div>
-        )
-      })()}
-    </motion.div>
-  )
-}
-
 // ── main component ────────────────────────────────────────────────────────────
+
+type DetailState =
+  | { type: 'signal'; data: Signal }
+  | { type: 'tx'; data: Transaction }
+  | null
 
 export const Investigation: React.FC = () => {
   const { runId } = useParams<{ runId: string }>()
@@ -1110,7 +1032,6 @@ export const Investigation: React.FC = () => {
   const [detail, setDetail] = useState<DetailState>(null)
   const [txFilter, setTxFilter] = useState<'anomaly' | 'all'>('anomaly')
   const [sigFilter, setSigFilter] = useState<'all' | 'critical' | 'high'>('all')
-  const [techOpen, setTechOpen] = useState(false)
 
   const openSignal = useCallback((s: Signal) => {
     setDetail(prev => prev?.type === 'signal' && prev.data.id === s.id ? null : { type: 'signal', data: s })
@@ -1125,16 +1046,12 @@ export const Investigation: React.FC = () => {
     return (
       <div style={{ position: 'relative', minHeight: '100vh', background: '#010208', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ position: 'fixed', inset: 0, zIndex: 0 }}>
-          <EtherealShadow
-            color="rgba(130, 12, 28, 0.9)"
-            animation={{ scale: 80, speed: 60 }}
-            noise={{ opacity: 0.4, scale: 1 }}
-          />
+          <EtherealShadow color="rgba(130, 12, 28, 0.9)" animation={{ scale: 80, speed: 60 }} noise={{ opacity: 0.4, scale: 1 }} />
         </div>
-        <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16 }}>
-          <div style={{ width: 28, height: 28, border: '1.5px solid rgba(204,26,46,0.4)', borderTopColor: '#cc1a2e', borderRadius: '50%', animation: 'spin 0.9s linear infinite' }} />
-          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)' }}>
-            Loading forensic data
+        <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20 }}>
+          <div style={{ width: 36, height: 36, border: '2px solid rgba(204,26,46,0.4)', borderTopColor: '#cc1a2e', borderRadius: '50%', animation: 'spin 0.9s linear infinite' }} />
+          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 13, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)' }}>
+            Loading Forensic Data
           </span>
         </div>
         <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
@@ -1149,17 +1066,17 @@ export const Investigation: React.FC = () => {
         <div style={{ position: 'fixed', inset: 0, zIndex: 0 }}>
           <EtherealShadow color="rgba(130, 12, 28, 0.9)" animation={{ scale: 80, speed: 60 }} noise={{ opacity: 0.4, scale: 1 }} />
         </div>
-        <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
-          <AlertTriangle size={22} style={{ color: '#cc1a2e' }} />
-          <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, color: 'rgba(204,26,46,0.8)' }}>
+        <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16 }}>
+          <AlertTriangle size={32} style={{ color: '#cc1a2e' }} />
+          <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 14, color: 'rgba(204,26,46,0.8)' }}>
             {error || 'Failed to load forensic data'}
           </p>
           <button
             onClick={() => navigate('/dashboard')}
-            style={{ display: 'flex', alignItems: 'center', gap: 6, fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.1em', marginTop: 8 }}
+            style={{ display: 'flex', alignItems: 'center', gap: 8, fontFamily: "'JetBrains Mono', monospace", fontSize: 12, color: 'rgba(255,255,255,0.35)', letterSpacing: '0.1em', marginTop: 8, cursor: 'pointer' }}
             className="hover:text-white/60 transition-colors"
           >
-            <ArrowLeft size={11} />
+            <ArrowLeft size={14} />
             Back to dashboard
           </button>
         </div>
@@ -1189,8 +1106,8 @@ export const Investigation: React.FC = () => {
   const threatColor = threat === 'CRITICAL' ? '#cc1a2e' : threat === 'HIGH' ? '#d4af37' : '#22c55e'
 
   const timeline = buildTimeline(data.transactions, data.signals)
-
   const topEntity = [...data.entities].sort((a, b) => b.riskScore - a.riskScore)[0]
+
   const narrative =
     `We analyzed ${data.transactions.length} transactions in this forensic run. ` +
     `Our engine detected ${data.signals.length} suspicious pattern${data.signals.length !== 1 ? 's' : ''} — ` +
@@ -1200,11 +1117,11 @@ export const Investigation: React.FC = () => {
     `Threat assessment: ${threat}.`
 
   const metrics = [
-    { label: 'Transactions', value: data.transactions.length, color: '#38bdf8' },
-    { label: 'Anomalies',    value: anomalyTxs.length,        color: '#cc1a2e' },
-    { label: 'Signals',      value: data.signals.length,      color: '#d4af37' },
-    { label: 'Entities',     value: data.entities.length,     color: '#a855f7' },
-    { label: 'Fund Flows',   value: data.fundFlows.length,    color: '#14b8a6' },
+    { label: 'Txs',       value: data.transactions.length, color: '#38bdf8' },
+    { label: 'Anomalies', value: anomalyTxs.length,        color: '#cc1a2e' },
+    { label: 'Signals',   value: data.signals.length,      color: '#d4af37' },
+    { label: 'Entities',  value: data.entities.length,     color: '#a855f7' },
+    { label: 'Flows',     value: data.fundFlows.length,    color: '#14b8a6' },
   ]
 
   const activeSignalId = detail?.type === 'signal' ? detail.data.id : undefined
@@ -1213,7 +1130,7 @@ export const Investigation: React.FC = () => {
   return (
     <div style={{ position: 'relative', minHeight: '100vh', background: '#010208', color: '#f1f5f9' }}>
 
-      {/* ── ethereal shadow background ── */}
+      {/* Background */}
       <div style={{ position: 'fixed', inset: 0, zIndex: 0, pointerEvents: 'none' }}>
         <EtherealShadow
           color="rgba(140, 12, 28, 0.88)"
@@ -1223,141 +1140,101 @@ export const Investigation: React.FC = () => {
         />
       </div>
 
-      {/* ── content ── */}
       <div style={{ position: 'relative', zIndex: 1 }}>
 
-        {/* ── header ── */}
-        <header
-          style={{
-            position: 'sticky',
-            top: 0,
-            zIndex: 50,
-            background: 'rgba(1,2,8,0.92)',
-            backdropFilter: 'blur(24px)',
-            WebkitBackdropFilter: 'blur(24px)',
-            borderBottom: '1px solid rgba(255,255,255,0.06)',
-            padding: '0 40px',
-            height: 60,
-            display: 'flex',
-            alignItems: 'center',
-            gap: 24,
-          }}
-        >
-          {/* back */}
+        {/* ── Header ── */}
+        <header style={{
+          position: 'sticky',
+          top: 0,
+          zIndex: 50,
+          background: 'rgba(1,2,8,0.94)',
+          backdropFilter: 'blur(24px)',
+          WebkitBackdropFilter: 'blur(24px)',
+          borderBottom: '1px solid rgba(255,255,255,0.06)',
+          padding: '0 48px',
+          height: 72,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 24,
+        }}>
+          {/* Back */}
           <button
             onClick={() => navigate('/dashboard')}
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: 7,
+              gap: 8,
               fontFamily: "'JetBrains Mono', monospace",
-              fontSize: 9,
-              letterSpacing: '0.2em',
+              fontSize: 12,
+              letterSpacing: '0.15em',
               textTransform: 'uppercase',
-              color: 'rgba(255,255,255,0.28)',
+              color: 'rgba(255,255,255,0.3)',
+              cursor: 'pointer',
               flexShrink: 0,
-              transition: 'color 0.15s',
             }}
-            className="hover:text-white/55"
+            className="hover:text-white/60 transition-colors"
           >
-            <ArrowLeft size={11} />
+            <ArrowLeft size={14} />
             Dashboard
           </button>
 
-          <div style={{ width: 1, height: 20, background: 'rgba(255,255,255,0.08)' }} />
+          <div style={{ width: 1, height: 24, background: 'rgba(255,255,255,0.1)' }} />
 
-          {/* run id */}
-          <span
-            style={{
-              fontFamily: "'Bebas Neue', monospace",
-              fontSize: 17,
-              letterSpacing: '0.08em',
-              color: 'rgba(255,255,255,0.75)',
-            }}
-          >
+          {/* Run ID */}
+          <span style={{ fontFamily: "'Bebas Neue', monospace", fontSize: 22, letterSpacing: '0.08em', color: 'rgba(255,255,255,0.8)' }}>
             Investigation
-            <span style={{ color: threatColor, marginLeft: 10 }}>run_{runId}</span>
+            <span style={{ color: threatColor, marginLeft: 12 }}>run_{runId}</span>
           </span>
 
-          {/* threat */}
-          <span
-            style={{
-              fontFamily: "'JetBrains Mono', monospace",
-              fontSize: 9,
-              fontWeight: 700,
-              letterSpacing: '0.18em',
-              textTransform: 'uppercase',
-              color: threatColor,
-              border: `1px solid ${threatColor}45`,
-              background: `${threatColor}10`,
-              padding: '4px 10px',
-              borderRadius: 5,
-              boxShadow: `0 0 16px ${threatColor}18`,
-            }}
-          >
+          {/* Threat badge */}
+          <span style={{
+            fontFamily: "'JetBrains Mono', monospace",
+            fontSize: 11,
+            fontWeight: 700,
+            letterSpacing: '0.2em',
+            textTransform: 'uppercase',
+            color: threatColor,
+            border: `1px solid ${threatColor}50`,
+            background: `${threatColor}12`,
+            padding: '6px 14px',
+            borderRadius: 6,
+            boxShadow: `0 0 20px ${threatColor}20`,
+          }}>
             {threat}
           </span>
 
           <div style={{ flex: 1 }} />
 
-          {/* metrics strip */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 28 }}>
+          {/* Metrics strip */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
             {metrics.map(({ label, value, color }) => (
-              <div key={label} style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
-                <span
-                  style={{
-                    fontFamily: "'Bebas Neue', monospace",
-                    fontSize: 20,
-                    color,
-                    lineHeight: 1,
-                  }}
-                >
+              <div key={label} style={{ display: 'flex', alignItems: 'baseline', gap: 7 }}>
+                <span style={{ fontFamily: "'Bebas Neue', monospace", fontSize: 26, color, lineHeight: 1 }}>
                   {value}
                 </span>
-                <span
-                  style={{
-                    fontFamily: "'JetBrains Mono', monospace",
-                    fontSize: 8,
-                    letterSpacing: '0.14em',
-                    textTransform: 'uppercase',
-                    color: 'rgba(255,255,255,0.2)',
-                  }}
-                >
-                  {label}
-                </span>
+                <span style={{ ...LABEL_STYLE, fontSize: 10 }}>{label}</span>
               </div>
             ))}
           </div>
 
-          {/* coverage */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginLeft: 16 }}>
+          {/* Coverage indicators */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginLeft: 8 }}>
             {[
               { label: 'traces',     ok: data.coverage.tracesAvailable },
               { label: 'state-diff', ok: data.coverage.stateDiffsAvailable },
             ].map(({ label, ok }) => (
-              <span
-                key={label}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 4,
-                  fontFamily: "'JetBrains Mono', monospace",
-                  fontSize: 9,
-                  letterSpacing: '0.08em',
-                  color: ok ? '#22c55e' : 'rgba(255,255,255,0.18)',
-                }}
-              >
-                {ok ? <CheckCircle2 size={8} /> : <EyeOff size={8} />}
+              <span key={label} style={{ display: 'flex', alignItems: 'center', gap: 5, fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: ok ? '#22c55e' : 'rgba(255,255,255,0.2)' }}>
+                {ok ? <CheckCircle2 size={12} /> : <EyeOff size={12} />}
                 {label}
               </span>
             ))}
           </div>
         </header>
 
-        {/* ── main content ── */}
-        <main style={{ padding: '32px 40px', display: 'flex', flexDirection: 'column', gap: 12, maxWidth: 1400, margin: '0 auto' }}>
+        {/* ── Main content ── */}
+        <main style={{ padding: '36px 48px', display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 1440, margin: '0 auto' }}>
 
-          {/* Narrative banner */}
+          {/* Narrative */}
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.01 }}>
             <NarrativeBanner narrative={narrative} threatColor={threatColor} />
           </motion.div>
@@ -1370,241 +1247,151 @@ export const Investigation: React.FC = () => {
               anomalyCount={anomalyTxs.length}
               signalCount={data.signals.length}
               topEntity={topEntity}
+              totalTxs={data.transactions.length}
             />
           </motion.div>
 
-          {/* detail overlay — appears at top when something is selected */}
+          {/* Detail panel — appears inline when something selected */}
           <AnimatePresence mode="wait">
-            {detail && (
-              <DetailOverlay
-                key={detail.type === 'tx' ? detail.data.hash : detail.data.id}
-                detail={detail}
-                allSignals={data.signals}
-                onClose={() => setDetail(null)}
-              />
+            {detail?.type === 'signal' && (
+              <SignalDetailPanel key={detail.data.id} signal={detail.data} onClose={() => setDetail(null)} />
+            )}
+            {detail?.type === 'tx' && (
+              <TxDetailPanel key={detail.data.hash} tx={detail.data} allSignals={data.signals} onClose={() => setDetail(null)} />
             )}
           </AnimatePresence>
 
-          {/* ── attack timeline ── */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.04 }}
-          >
-            <Section
+          {/* Attack Timeline */}
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.06 }}>
+            <SectionBox
               icon={Clock}
               title="Attack Timeline"
               count={timeline.length}
               accent="#38bdf8"
-              defaultOpen={true}
+              subtitle={`${timeline.length} suspicious events in chronological order`}
             >
-              <AttackTimeline
-                events={timeline}
-                activeHash={activeTxHash}
-                onSelect={openTx}
-              />
-            </Section>
+              <AttackTimeline events={timeline} activeHash={activeTxHash} onSelect={openTx} />
+            </SectionBox>
           </motion.div>
 
-          {/* ── signals ── */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.08 }}
-          >
-            <Section
+          {/* Signals */}
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.09 }}>
+            <SectionBox
               icon={Zap}
-              title="Signals"
+              title="Detection Signals"
               count={filteredSignals.length}
               accent="#cc1a2e"
-              defaultOpen={true}
-              badge={
-                <div style={{ display: 'flex', gap: 4, marginLeft: 4 }}>
+              subtitle="Heuristic rules that fired — click any signal for explanation"
+              controls={
+                <>
                   {(['all', 'critical', 'high'] as const).map(f => (
-                    <button
+                    <FilterPill
                       key={f}
-                      onClick={e => { e.stopPropagation(); setSigFilter(f) }}
-                      style={{
-                        fontFamily: "'JetBrains Mono', monospace",
-                        fontSize: 8,
-                        letterSpacing: '0.1em',
-                        textTransform: 'uppercase',
-                        padding: '2px 7px',
-                        borderRadius: 4,
-                        border: `1px solid ${sigFilter === f ? '#cc1a2e50' : 'rgba(255,255,255,0.1)'}`,
-                        background: sigFilter === f ? '#cc1a2e15' : 'transparent',
-                        color: sigFilter === f ? '#cc1a2e' : 'rgba(255,255,255,0.28)',
-                        transition: 'all 0.12s ease',
-                      }}
-                    >
-                      {f}
-                    </button>
+                      label={f}
+                      active={sigFilter === f}
+                      color="#cc1a2e"
+                      onClick={() => setSigFilter(f)}
+                    />
                   ))}
-                </div>
+                </>
               }
             >
               {filteredSignals.length === 0 ? (
-                <div style={{ padding: '20px 28px' }}>
-                  <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: 'rgba(255,255,255,0.2)' }}>
+                <div style={{ padding: '32px', textAlign: 'center' as const }}>
+                  <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 14, color: 'rgba(255,255,255,0.2)' }}>
                     No signals match this filter
                   </p>
                 </div>
               ) : (
-                <SignalList signals={filteredSignals} onSelect={openSignal} activeId={activeSignalId} />
+                <SignalCards signals={filteredSignals} onSelect={openSignal} activeId={activeSignalId} />
               )}
-            </Section>
+            </SectionBox>
           </motion.div>
 
-          {/* ── transactions ── */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.12 }}
-          >
-            <Section
+          {/* Transactions */}
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.12 }}>
+            <SectionBox
               icon={Activity}
               title="Transactions"
               count={filteredTxs.length}
               accent="#38bdf8"
+              subtitle="Click any row to see full transaction detail"
+              collapsible
               defaultOpen={false}
-              badge={
-                <div style={{ display: 'flex', gap: 4, marginLeft: 4 }}>
-                  {([
-                    { key: 'anomaly' as const, label: `anomalies (${anomalyTxs.length})` },
-                    { key: 'all' as const,     label: `all (${data.transactions.length})` },
-                  ]).map(({ key, label }) => (
-                    <button
-                      key={key}
-                      onClick={e => { e.stopPropagation(); setTxFilter(key) }}
-                      style={{
-                        fontFamily: "'JetBrains Mono', monospace",
-                        fontSize: 8,
-                        letterSpacing: '0.1em',
-                        textTransform: 'uppercase',
-                        padding: '2px 7px',
-                        borderRadius: 4,
-                        border: `1px solid ${txFilter === key ? '#38bdf850' : 'rgba(255,255,255,0.1)'}`,
-                        background: txFilter === key ? '#38bdf815' : 'transparent',
-                        color: txFilter === key ? '#38bdf8' : 'rgba(255,255,255,0.28)',
-                        transition: 'all 0.12s ease',
-                      }}
-                    >
-                      {label}
-                    </button>
-                  ))}
-                </div>
+              controls={
+                <>
+                  <FilterPill
+                    label={`Anomalies (${anomalyTxs.length})`}
+                    active={txFilter === 'anomaly'}
+                    color="#cc1a2e"
+                    onClick={() => setTxFilter('anomaly')}
+                  />
+                  <FilterPill
+                    label={`All (${data.transactions.length})`}
+                    active={txFilter === 'all'}
+                    color="#38bdf8"
+                    onClick={() => setTxFilter('all')}
+                  />
+                </>
               }
             >
               {filteredTxs.length === 0 ? (
-                <div style={{ padding: '20px 28px' }}>
-                  <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: 'rgba(255,255,255,0.2)' }}>
+                <div style={{ padding: '32px', textAlign: 'center' as const }}>
+                  <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 14, color: 'rgba(255,255,255,0.2)' }}>
                     No transactions in this view
                   </p>
                 </div>
               ) : (
-                <TxList txs={filteredTxs} onSelect={openTx} activeTx={activeTxHash} />
+                <TxList txs={filteredTxs} onSelect={openTx} activeTx={activeTxHash} allSignals={data.signals} />
               )}
-            </Section>
+            </SectionBox>
           </motion.div>
 
-          {/* ── entities ── */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.16 }}
-          >
-            <Section
+          {/* Entities */}
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}>
+            <SectionBox
               icon={Shield}
-              title="Entities"
+              title="High-Risk Entities"
               count={highRiskEntities.length}
               accent="#a855f7"
-              defaultOpen={false}
-              badge={
-                <span
-                  style={{
-                    fontFamily: "'JetBrains Mono', monospace",
-                    fontSize: 8,
-                    letterSpacing: '0.1em',
-                    textTransform: 'uppercase',
-                    color: 'rgba(255,255,255,0.22)',
-                    marginLeft: 4,
-                  }}
-                >
-                  risk ≥ 50%
-                </span>
-              }
+              subtitle="Wallets with risk score ≥ 50% — sorted by risk"
+              collapsible
+              defaultOpen
             >
               {highRiskEntities.length === 0 ? (
-                <div style={{ padding: '20px 28px' }}>
-                  <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: 'rgba(255,255,255,0.2)' }}>
+                <div style={{ padding: '32px', textAlign: 'center' as const }}>
+                  <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 14, color: 'rgba(255,255,255,0.2)' }}>
                     No high-risk entities detected
                   </p>
                 </div>
               ) : (
-                <EntityList entities={highRiskEntities} />
+                <EntityCards entities={highRiskEntities} />
               )}
-            </Section>
+            </SectionBox>
           </motion.div>
 
-          {/* ── fund flow ── */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-          >
-            <Section
+          {/* Fund Flow */}
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.18 }}>
+            <SectionBox
               icon={TrendingUp}
               title="Fund Flow Graph"
               count={data.fundFlows.length}
               accent="#14b8a6"
+              subtitle="How value moved between wallets"
+              collapsible
               defaultOpen={false}
             >
-              <div style={{ height: 340, borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+              <div style={{ height: 380, borderTop: '1px solid rgba(255,255,255,0.05)' }}>
                 <FundFlowGraph flows={data.fundFlows} />
               </div>
-            </Section>
+            </SectionBox>
           </motion.div>
 
-          {/* Technical Details accordion */}
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.24 }}>
-            <div style={{ ...panel, borderRadius: 10, overflow: 'hidden' }}>
-              <button
-                onClick={() => setTechOpen(o => !o)}
-                className="w-full flex items-center gap-4 transition-colors duration-150"
-                style={{ padding: '18px 28px', background: techOpen ? 'rgba(255,255,255,0.02)' : 'transparent', borderBottom: techOpen ? '1px solid rgba(255,255,255,0.05)' : 'none' }}
-              >
-                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)', fontWeight: 600 }}>
-                  Technical Details — For Analysts
-                </span>
-                <div style={{ flex: 1 }} />
-                <motion.div animate={{ rotate: techOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
-                  <ChevronDown size={13} style={{ color: 'rgba(255,255,255,0.2)' }} />
-                </motion.div>
-              </button>
-              <AnimatePresence initial={false}>
-                {techOpen && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.22, ease: [0.25, 0.46, 0.45, 0.94] }}
-                    style={{ overflow: 'hidden' }}
-                  >
-                    <div style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-                      <TxList txs={filteredTxs} onSelect={openTx} activeTx={activeTxHash} />
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          </motion.div>
-
-          {/* bottom spacer */}
-          <div style={{ height: 60 }} />
+          <div style={{ height: 80 }} />
         </main>
       </div>
 
-      {/* ── copilot panel ── */}
+      {/* Copilot panel */}
       <CopilotPanel
         runId={runId}
         runData={data}
