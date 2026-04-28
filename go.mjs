@@ -101,7 +101,7 @@ function buildSimArgs() {
         '--num-users', String(cfg.numUsers),
         '--user-txs', String(cfg.txsPerUser),
         '--num-attackers', String(enabledAttacks),
-        '--repeat', '1',
+        '--repeat', String(cfg.numAttacks || 1),
         '--accounts', String(cfg.anvil.accounts),
         '--balance', String(cfg.anvil.balance),
         '--depth', String(cfg.attackParams.attack1_depth),
@@ -190,8 +190,8 @@ const forensicsStart = Date.now();
 await run('node', [
     'src/index.js',
     '--mode', 'raw_import',
-    '--raw-root', rawRoot,
-    '--output-dir', forensicBundleDir,
+    '--raw-root', `"${rawRoot}"`,
+    '--output-dir', `"${forensicBundleDir}"`,
 ]);
 const forensicsDuration = ((Date.now() - forensicsStart) / 1000).toFixed(1);
 console.log(`\n[go] ✓ Forensics done in ${forensicsDuration}s`);
@@ -207,7 +207,7 @@ if (cfg.ai.enabled && !SKIP_AI) {
     const aiStart = Date.now();
     const aiCode = await run('node', [
         'src/ai/ollama_analyst.js',
-        '--bundle-dir', forensicBundleDir,
+        '--bundle-dir', `"${forensicBundleDir}"`,
         '--model', cfg.ai.model,
     ], { allowFail: true });
     const aiDuration = ((Date.now() - aiStart) / 1000).toFixed(1);
@@ -218,7 +218,7 @@ if (cfg.ai.enabled && !SKIP_AI) {
         // ── STEP 4: MANAGER STORYBOARD ──────────────────────────────────
         console.log('\n[go] ══ Step 4: Manager Storyboard ════════════════════════');
         const sbStart = Date.now();
-        await run('node', ['src/ai/storyboard_generator.js', '--bundle-dir', forensicBundleDir], { allowFail: true });
+        await run('node', ['src/ai/storyboard_generator.js', '--bundle-dir', `"${forensicBundleDir}"`], { allowFail: true });
         const sbDuration = ((Date.now() - sbStart) / 1000).toFixed(1);
         console.log(`\n[go] ✓ Storyboard generated in ${sbDuration}s`);
     }
@@ -240,7 +240,7 @@ if (existsSync(graphsDir) && existsSync(dotScript)) {
     for (const sub of subgraphs) {
         const inputPath = join(graphsDir, sub);
         if (existsSync(inputPath)) {
-            await run('node', ['src/graphs/dot_exporter.js', '--input', inputPath, '--output', vizDir], { allowFail: true });
+            await run('node', ['src/graphs/dot_exporter.js', '--input', `"${inputPath}"`, '--output', `"${vizDir}"`], { allowFail: true });
         }
     }
 }
@@ -250,7 +250,7 @@ console.log('\n[go] ══ Step 6: Generating Deep Analysis Report ════�
 const deepAnalysisSkipAi = !cfg.ai.enabled || SKIP_AI ? '--skip-ai' : '';
 await run('node', [
     'src/ai/deep_analysis_generator.js',
-    '--run-dir', runDir,
+    '--run-dir', `"${runDir}"`,
     '--model', cfg.ai.model || 'gemma3:1b',
     ...(deepAnalysisSkipAi ? [deepAnalysisSkipAi] : []),
 ], { allowFail: true });

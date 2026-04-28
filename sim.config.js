@@ -15,11 +15,11 @@ export default {
 
     // ── HOW MANY TRANSACTIONS TO GENERATE ───────────────────────────
     // Total txs ≈ (numUsers × txsPerUser × 2) + numAttacks + setupTxs
-    // Target: ~50 txs
-    // 5 users × 5 txs = 25 sets × 2 = 50 transactions + 1 attack
-    numUsers: 5,
-    txsPerUser: 5,
-    numAttacks: 1,    // 1 attack transaction
+    // Target: ~150+ txs and many anomalies
+    // 15 users × 6 txs = 90 sets × 2 = 180 background transactions
+    numUsers: 15,
+    txsPerUser: 6,
+    numAttacks: 5,    // Repeat the attacks 5 times for massive anomaly generation
 
     // ── ATTACK CONFIGURATION ─────────────────────────────────────────
     // Which attacks to enable (set to false to skip)
