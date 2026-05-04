@@ -1,0 +1,18 @@
+{
+  "total_logs": 21,
+  "victim_contract_logs": 20,
+  "attacker_unknown_logs": 1,
+  "successfully_decoded": 19,
+  "decode_rate_pct": "90.5",
+  "victim_contracts_seen": [
+    "TokenVaultVictim",
+    "ERC777VaultVictim"
+  ],
+  "event_types_decoded": [
+    "Deposited",
+    "TokensDeposited",
+    "Withdrawn"
+  ],
+  "note": "Attacker contract logs intentionally not decoded — no ABI available in real forensics.",
+  "generated_at": "2026-04-27T10:39:12.925Z"
+}

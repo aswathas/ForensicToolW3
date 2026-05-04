@@ -2,7 +2,6 @@ import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
 import forensicsRouter from './api/routes/forensics'
-import ollamaRouter from './api/routes/ollama'
 
 dotenv.config()
 
@@ -13,7 +12,10 @@ app.use(cors())
 app.use(express.json())
 
 app.use('/api/forensics', forensicsRouter)
-app.use('/api/chat', ollamaRouter)
+
+app.use('/api/chat', (_req, res) => {
+  res.status(503).json({ success: false, error: 'AI chat not available in this deployment.' })
+})
 
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() })

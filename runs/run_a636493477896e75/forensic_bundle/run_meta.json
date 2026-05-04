@@ -1,0 +1,22 @@
+{
+  "run_id": "a636493477896e75",
+  "mode": "raw_import",
+  "started_at": "2026-04-27T11:55:34.337Z",
+  "args": {
+    "mode": "raw_import",
+    "rawRoot": "./runs/run_a636493477896e75/client/01_raw",
+    "rpcUrl": null,
+    "window": "markers_onchain",
+    "fromBlock": null,
+    "toBlock": null,
+    "lastN": 100,
+    "runId": "a636493477896e75",
+    "outputDir": "./runs/run_a636493477896e75/forensic_bundle",
+    "traces": "auto"
+  },
+  "window": {
+    "method": "since_mark",
+    "runId": "a636493477896e75"
+  },
+  "completed_at": "2026-04-27T11:55:34.725Z"
+}

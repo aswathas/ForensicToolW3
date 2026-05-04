@@ -12,7 +12,6 @@ backend/dist/
 # Temporary / Output files
 logs/
 *.log
-runs/
 evidence_run_*/
 *.zip
 *.txt
