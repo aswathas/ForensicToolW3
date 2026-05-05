@@ -4,7 +4,7 @@
 
 ---
 
-> **[SRM Logo]** — Place `srm_logo.png` here when converting to PDF/DOCX
+![SRM Institute of Science and Technology](../srm_logo.png)
 
 ---
 
